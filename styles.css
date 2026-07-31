@@ -1,12 +1,26 @@
 :root {
+    --bg-main: #F4F1E8; /* paper */
+    --bg-card: #FFFDF7; /* paper-raised */
+    --border-color: #E1DBC8; /* paper-line */
+    --text-main: #1B1F23; /* ink */
+    --text-muted: #4A5058; /* ink-soft */
+    --accent-color: #C89B3C; /* gold */
+    --accent-glow: rgba(200, 155, 60, 0.2);
+    --danger-color: #C0483C; /* bear */
+    --success-color: #2F8F5B; /* bull */
+    --glass-blur: blur(0px); /* Remove blur for academic look */
+}
+
+[data-theme="dark"] {
     --bg-main: #0f1115;
-    --bg-card: rgba(26, 29, 36, 0.7);
+    --bg-card: #1a1d24;
     --border-color: rgba(255, 255, 255, 0.08);
     --text-main: #ffffff;
     --text-muted: #8b92a5;
     --accent-color: #00e676; /* Neon green */
     --accent-glow: rgba(0, 230, 118, 0.2);
     --danger-color: #ff5252;
+    --success-color: #00e676;
     --glass-blur: blur(12px);
 }
 
@@ -22,8 +36,8 @@ body {
     color: var(--text-main);
     min-height: 100vh;
     overflow-x: hidden;
-    background-image: radial-gradient(circle at 15% 50%, rgba(0, 230, 118, 0.05), transparent 25%),
-                      radial-gradient(circle at 85% 30%, rgba(255, 82, 82, 0.05), transparent 25%);
+    /* Remove radial gradient for clean paper look */
+    background-image: none; 
 }
 
 .dashboard-container {
@@ -74,7 +88,7 @@ body {
 
 .sidebar nav ul li a:hover,
 .sidebar nav ul li.active a {
-    background: rgba(255, 255, 255, 0.05);
+    background: #E1DBC8;
     color: var(--text-main);
 }
 

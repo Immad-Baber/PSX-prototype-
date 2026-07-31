@@ -18,7 +18,24 @@
   --radius:3px;
   --shadow:0 1px 2px rgba(27,31,35,0.06), 0 8px 24px -12px rgba(27,31,35,0.12);
 }
-*{box-sizing:border-box;}
+
+[data-theme="dark"] {
+  --paper: #0F1720; 
+  --paper-raised: #16202C; 
+  --paper-line: #26374A;
+  --ink: #DCE4EC; 
+  --ink-soft: #7C8DA3; 
+  --ink-faint: #4A5058;
+  --term-bg: #0F1720;
+  --term-line: #26374A;
+  --term-text: #DCE4EC;
+  --gold-bg: #2C2616;
+  --bull-bg: #1A3623;
+  --bear-bg: #4A211D;
+  --neutral-bg: #2C3038;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{
   margin:0; background:var(--paper); color:var(--ink);
@@ -834,7 +851,7 @@ histRows.forEach(h => {
   });
   body.appendChild(table);
   body.appendChild(el('div',{class:'plain-note'}, `Plain language: ENGRO is ${f.profitStatus.split('—')[0].trim().toLowerCase()} and carries meaningful debt (${f.debtEquity.toFixed(1)}x equity), typical for a capital-intensive fertilizer/power/petrochem group — not a red flag by itself, but financing costs matter while SBP's policy rate stays elevated.`));
-  body.appendChild(el('div',{class:'src-note'}, 'Sources (verify before presenting): ' + f.sources.join(' · ') + ' · as of ' + f.asOf));
+  // Sources removed per user request
 })();
 
 // ---------- Macro card ----------
@@ -855,7 +872,7 @@ histRows.forEach(h => {
   impactRow.appendChild(el('span',{class:'impact-pill '+pillCls}, 'Macro impact on this sector: ' + m.impact));
   body.appendChild(impactRow);
   body.appendChild(el('div',{class:'plain-note'}, m.impactNote));
-  body.appendChild(el('div',{class:'src-note'}, 'Sources (verify before presenting): ' + m.sources.join(' · ') + ' · as of ' + m.asOf));
+  // Sources removed per user request
 })();
 
 // ---------- Regime line (HMM-style label built from existing market + calibration context) ----------
@@ -1246,6 +1263,26 @@ drawMacdChart();
 drawAdxChart();
 drawVolChart();
 window.addEventListener('resize', () => { drawPriceChart(); drawRsiChart(); drawMacdChart(); drawAdxChart(); drawVolChart(); });
-</script>
+
+// ---------- Live Scraped Data Override ----------
+fetch('psx_data.json?t=' + Date.now())
+  .then(res => res.json())
+  .then(psx => {
+    const liveData = psx.find(s => s.symbol === DATA.ticker);
+    if(liveData) {
+      const table = document.querySelector('#fundBody table');
+      if(table) {
+        const tr = document.createElement('tr');
+        tr.style.background = 'var(--gold-bg)';
+        tr.style.borderLeft = '3px solid var(--gold-deep)';
+        tr.innerHTML = `<td style="color:var(--ink-soft); font-weight:bold;"><b>LIVE SCRAPED (Module 3)</b></td>
+                        <td style="color:var(--ink-soft);"><b>Sector: ${liveData.sector || 'Unknown'} | P/E: ${liveData.peRatio ? liveData.peRatio.toFixed(2) : 'N/A'}</b> <span class="impact-pill pos" style="margin-left:8px; font-size:9px;">Live from Sarmaaya.pk</span></td>`;
+        table.prepend(tr);
+      }
+    }
+  }).catch(e => console.log('Could not fetch live scraped data for report:', e));
+
+  </script>
+  <script src="theme.js"></script>
 </body>
 </html>

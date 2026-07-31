@@ -91,20 +91,20 @@
         }
 
         .stat-box {
-            background: rgba(255, 255, 255, 0.02);
+            background: var(--bg-main);
             padding: 20px;
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
             transition: transform 0.3s;
         }
 
         .stat-box:hover {
             transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.04);
+            background: #EAE7DC;
         }
 
         .about-section {
-            background: rgba(0, 0, 0, 0.2);
+            background: var(--bg-main);
             padding: 30px;
             border-radius: 16px;
             border: 1px solid var(--border-color);
@@ -157,6 +157,14 @@
                     <span>Market Cap</span>
                     <h4 id="stockCap">0</h4>
                 </div>
+                <div class="stat-box" style="border: 1px solid var(--accent-color);">
+                    <span>Scraped P/E Ratio <span style="display: inline-block; font-size: 8px; background: var(--accent-color); color: #000; padding: 2px 4px; border-radius: 2px; margin-left:4px; vertical-align: middle;">LIVE</span></span>
+                    <h4 id="stockPe">0</h4>
+                </div>
+                <div class="stat-box" style="border: 1px solid var(--accent-color);">
+                    <span>Scraped Sector <span style="display: inline-block; font-size: 8px; background: var(--accent-color); color: #000; padding: 2px 4px; border-radius: 2px; margin-left:4px; vertical-align: middle;">LIVE</span></span>
+                    <h4 id="stockSector">Unknown</h4>
+                </div>
             </div>
 
             <div class="about-section">
@@ -190,7 +198,7 @@
 
             try {
                 // Try to load data
-                const response = await fetch('psx_data.json');
+                const response = await fetch('psx_data.json?t=' + Date.now());
                 const data = await response.json();
                 const stock = data.find(s => s.symbol === symbol);
                 
@@ -205,9 +213,17 @@
         });
 
         function useMock(symbol) {
-            // Basic mock
+            // Basic mock in case yfinance API fails (e.g., ENGRO.KA sometimes returns no data on weekends)
             const mock = {
-                symbol: symbol, name: symbol + " Corporation", price: 285.50, change: 4.20, changePercent: 1.49, volume: 1542300, marketCap: 165000000000
+                symbol: symbol, 
+                name: symbol + " Corporation", 
+                price: 285.50, 
+                change: 4.20, 
+                changePercent: 1.49, 
+                volume: 1542300, 
+                marketCap: 165000000000,
+                peRatio: 5.6,
+                sector: "Fertilizer"
             };
             populateDetails(mock);
         }
@@ -224,9 +240,17 @@
             chgEl.style.color = isPos ? 'var(--accent-color)' : 'var(--danger-color)';
 
             document.getElementById('stockVolume').textContent = stock.volume.toLocaleString();
-            let mcapStr = stock.marketCap > 1000000000 ? (stock.marketCap / 1000000000).toFixed(2) + ' Billion' : stock.marketCap.toLocaleString();
+            
+            let mcapStr = stock.marketCap.toLocaleString();
+            if(stock.marketCap > 1000000000) {
+                mcapStr = (stock.marketCap / 1000000000).toFixed(2) + ' Billion';
+            }
             document.getElementById('stockCap').textContent = `₨ ${mcapStr}`;
+
+            document.getElementById('stockPe').textContent = stock.peRatio ? stock.peRatio : 'N/A';
+            document.getElementById('stockSector').textContent = stock.sector ? stock.sector : 'Unknown';
         }
     </script>
+    <script src="theme.js"></script>
 </body>
 </html>

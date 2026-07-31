@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function initDashboard() {
     try {
         // Try fetching the generated data
-        const response = await fetch('psx_data.json');
+        const response = await fetch('psx_data.json?t=' + Date.now());
         if (!response.ok) throw new Error('Network response was not ok');
         allStocks = await response.json();
     } catch (error) {
