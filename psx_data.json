@@ -3,10 +3,10 @@
         "symbol": "SYS",
         "name": "Systems Limited",
         "sector": "Technology",
-        "price": 132.53,
-        "change": -2.48,
-        "changePercent": -1.84,
-        "volume": 929681,
+        "price": 129.97,
+        "change": -2.56,
+        "changePercent": -1.93,
+        "volume": 1555772,
         "marketCap": 664785321984,
         "peRatio": 58.52,
         "chart": [
@@ -31,18 +31,19 @@
             132.24,
             135.87,
             135.01,
-            132.53
+            132.53,
+            129.97
         ],
-        "scrapeStatus": "Success"
+        "scrapeStatus": "Failed"
     },
     {
         "symbol": "LUCK",
         "name": "Lucky Cement Limited",
         "sector": "Cement",
-        "price": 445.76,
-        "change": -9.28,
-        "changePercent": -2.04,
-        "volume": 1291410,
+        "price": 437.91,
+        "change": -7.85,
+        "changePercent": -1.76,
+        "volume": 1458139,
         "marketCap": 1329707220992,
         "peRatio": 15.96,
         "chart": [
@@ -67,18 +68,19 @@
             433.01,
             456.6,
             455.04,
-            445.76
+            445.76,
+            437.91
         ],
-        "scrapeStatus": "Success"
+        "scrapeStatus": "Failed"
     },
     {
         "symbol": "HUBC",
         "name": "The Hub Power Company Limited",
         "sector": "Power Generation",
-        "price": 219.33,
-        "change": -3.68,
-        "changePercent": -1.65,
-        "volume": 1670307,
+        "price": 217.22,
+        "change": -2.11,
+        "changePercent": -0.96,
+        "volume": 2041608,
         "marketCap": 198853771264,
         "peRatio": 4.52,
         "chart": [
@@ -103,18 +105,19 @@
             213.97,
             224.39,
             223.01,
-            219.33
+            219.33,
+            217.22
         ],
-        "scrapeStatus": "Success"
+        "scrapeStatus": "Failed"
     },
     {
         "symbol": "OGDC",
         "name": "Oil and Gas Development Company Limited",
         "sector": "Oil & Gas Exploration",
-        "price": 317.05,
-        "change": -3.95,
-        "changePercent": -1.23,
-        "volume": 1456028,
+        "price": 314.0,
+        "change": -3.05,
+        "changePercent": -0.96,
+        "volume": 1574164,
         "marketCap": 567163420672,
         "peRatio": 3.64,
         "chart": [
@@ -139,18 +142,19 @@
             310.38,
             323.45,
             321.0,
-            317.05
+            317.05,
+            314.0
         ],
-        "scrapeStatus": "Success"
+        "scrapeStatus": "Failed"
     },
     {
         "symbol": "MEBL",
         "name": "Meezan Bank Limited",
         "sector": "Commercial Banks",
-        "price": 555.82,
-        "change": -6.86,
-        "changePercent": -1.22,
-        "volume": 725700,
+        "price": 558.85,
+        "change": 3.03,
+        "changePercent": 0.55,
+        "volume": 903940,
         "marketCap": 428279922688,
         "peRatio": 4.74,
         "chart": [
@@ -175,20 +179,21 @@
             540.11,
             563.8,
             562.68,
-            555.82
+            555.82,
+            558.85
         ],
-        "scrapeStatus": "Success"
+        "scrapeStatus": "Failed"
     },
     {
         "symbol": "POL",
         "name": "Pakistan Oilfields Limited",
         "sector": "Oil & Gas Exploration",
-        "price": 685.41,
-        "change": 1.22,
-        "changePercent": 0.18,
-        "volume": 75016,
+        "price": 683.0,
+        "change": -2.41,
+        "changePercent": -0.35,
+        "volume": 99390,
         "marketCap": 155373764608,
-        "peRatio": 5.73,
+        "peRatio": 5.72,
         "chart": [
             687.91,
             687.9,
@@ -211,18 +216,19 @@
             670.02,
             682.24,
             684.19,
-            685.41
+            685.41,
+            683.0
         ],
-        "scrapeStatus": "Success"
+        "scrapeStatus": "Failed"
     },
     {
         "symbol": "FFC",
         "name": "Fauji Fertilizer Company Limited",
         "sector": "Fertilizer",
-        "price": 558.73,
-        "change": 11.02,
-        "changePercent": 2.01,
-        "volume": 4987103,
+        "price": 565.07,
+        "change": 6.34,
+        "changePercent": 1.13,
+        "volume": 2381799,
         "marketCap": 235352260608,
         "peRatio": 2.73,
         "chart": [
@@ -247,20 +253,21 @@
             533.52,
             548.17,
             547.71,
-            558.73
+            558.73,
+            565.07
         ],
-        "scrapeStatus": "Success"
+        "scrapeStatus": "Failed"
     },
     {
         "symbol": "MCB",
         "name": "MCB Bank Limited",
         "sector": "Commercial Banks",
-        "price": 406.88,
-        "change": -2.27,
-        "changePercent": -0.55,
-        "volume": 28378,
+        "price": 406.99,
+        "change": 0.11,
+        "changePercent": 0.03,
+        "volume": 90673,
         "marketCap": 268866404352,
-        "peRatio": 4.73,
+        "peRatio": 4.72,
         "chart": [
             405.51,
             426.84,
@@ -283,9 +290,10 @@
             402.02,
             410.21,
             409.15,
-            406.88
+            406.88,
+            406.99
         ],
-        "scrapeStatus": "Success"
+        "scrapeStatus": "Failed"
     },
     {
         "symbol": "UBL",
@@ -298,30 +306,31 @@
         "marketCap": 650077667328,
         "peRatio": 4.3,
         "chart": [
-            447.67,
-            479.73,
-            484.99,
-            490.77,
-            494.67,
-            490.29,
-            477.6,
-            479.01,
-            484.06,
-            476.41,
-            453.98,
-            462.58,
-            470.23,
-            465.98,
-            471.94,
-            474.36,
-            464.79,
-            452.12,
-            446.7,
-            477.91,
-            473.33,
-            469.11,
+            440.11,
+            471.63,
+            476.8,
+            482.49,
+            486.32,
+            482.01,
+            469.54,
+            470.92,
+            475.89,
+            468.37,
+            446.32,
+            454.77,
+            462.29,
+            458.11,
+            463.97,
+            466.35,
+            456.94,
+            444.49,
+            439.16,
+            469.84,
+            465.34,
+            461.19,
+            465.96,
             null
         ],
-        "scrapeStatus": "Success"
+        "scrapeStatus": "Failed"
     }
 ]
