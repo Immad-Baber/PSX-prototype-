@@ -109,6 +109,14 @@ a{color:inherit;}
 }
 .gloss:hover .tip{visibility:visible; opacity:1;}
 
+/* ============ LIVE STATUS BANNER ============ */
+.live-status-banner{
+  font-family:'IBM Plex Mono', monospace; font-size:12px; padding:9px 14px;
+  border-radius:var(--radius); display:flex; align-items:center; gap:8px;
+}
+.live-status-banner.warn{ background:var(--gold-bg); color:var(--gold-deep); border:1px solid var(--gold); }
+.live-status-banner.ok{ background:var(--bull-bg); color:var(--bull); border:1px solid var(--bull); }
+
 /* ============ SNAPSHOT STRIP ============ */
 .snapshot{
   display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--paper-line);
@@ -266,6 +274,71 @@ footer{
   display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
 }
 footer a{text-decoration:underline; color:var(--ink-soft);}
+
+/* ============ SIMPLE / TECHNICAL MODE ============ */
+.mode-bar{
+  position:sticky; top:0; z-index:60; background:var(--paper-raised);
+  border-bottom:2px solid var(--ink); padding:10px 0;
+}
+.mode-bar-inner{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+.mode-bar-label{
+  font-family:'IBM Plex Mono', monospace; font-size:11px; text-transform:uppercase;
+  letter-spacing:.1em; color:var(--ink-faint);
+}
+.mode-switch{display:inline-flex; border:1.5px solid var(--paper-line); border-radius:20px; padding:2px; background:var(--paper);}
+.mode-btn{
+  font-family:'IBM Plex Sans', sans-serif; font-weight:600; font-size:12.5px;
+  padding:6px 16px; border-radius:18px; border:none; background:transparent;
+  color:var(--ink-soft); cursor:pointer; transition:background .15s, color .15s;
+}
+.mode-btn.active{background:var(--gold); color:#1B1F23;}
+.mode-bar-hint{font-size:12px; color:var(--ink-faint); font-style:italic;}
+
+/* visibility */
+body.mode-simple .tech-only{display:none !important;}
+body.mode-technical .simple-only{display:none !important;}
+.hero-summary{display:none;}
+body.mode-simple .hero-summary{
+  display:block; background:var(--paper-raised); border:1.5px solid var(--gold);
+  border-radius:var(--radius); padding:18px 22px; margin:0 0 22px; box-shadow:var(--shadow);
+}
+.hero-summary .hero-title{
+  font-family:'IBM Plex Mono', monospace; font-size:11px; text-transform:uppercase;
+  letter-spacing:.1em; color:var(--gold-deep); margin-bottom:8px; font-weight:600;
+}
+.hero-summary-body{font-size:15px; line-height:1.75; color:var(--ink);}
+.simple-note{
+  font-size:14px; line-height:1.7; color:var(--ink); background:var(--gold-bg);
+  border-left:3px solid var(--gold); padding:12px 14px; border-radius:4px; margin-top:8px;
+}
+body.mode-simple .card-title, body.mode-simple .terminal-title{font-size:15px;}
+
+.beginner-intro{
+  display:none; font-size:13px; color:var(--ink-soft); background:var(--paper-raised);
+  border:1px dashed var(--paper-line); border-radius:var(--radius); padding:10px 14px;
+  margin-bottom:18px; line-height:1.6;
+}
+body.mode-simple .beginner-intro{display:block;}
+
+.verdict-badge{
+  display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:20px;
+  font-family:'IBM Plex Sans', sans-serif; font-weight:700; font-size:14px; margin-bottom:12px;
+}
+.verdict-badge.pos{background:var(--bull-bg); color:var(--bull);}
+.verdict-badge.neg{background:var(--bear-bg); color:var(--bear);}
+.verdict-badge.neu{background:var(--neutral-bg); color:var(--ink-soft);}
+.hero-summary-body ul{margin:10px 0 0 0; padding-left:0; list-style:none;}
+.hero-summary-body ul li{padding:5px 0 5px 26px; position:relative; font-size:14.5px; line-height:1.6;}
+.hero-summary-body ul li .ico{position:absolute; left:0; top:5px;}
+.hero-caveat{margin-top:12px; padding-top:10px; border-top:1px solid var(--paper-line); font-size:12.5px; color:var(--ink-faint); font-style:italic;}
+
+.fact-simple{display:flex; flex-direction:column; gap:10px;}
+.fact-simple .frow{display:flex; align-items:flex-start; gap:10px; font-size:14px; line-height:1.55;}
+.fact-simple .frow .ico{font-size:16px; line-height:1.4;}
+.fact-simple .frow b{color:var(--ink);}
+
+body.mode-simple .snapshot{gap:10px;}
+body.mode-simple .snap-cell .val{font-size:24px;}
 </style>
 </head>
 <body>
@@ -275,13 +348,29 @@ footer a{text-decoration:underline; color:var(--ink-soft);}
   <span class="tag mono" id="topTicker">ENGRO</span>
 </div></div>
 
+<div class="mode-bar"><div class="wrap mode-bar-inner">
+  <span class="mode-bar-label">Viewing</span>
+  <span class="mode-switch">
+    <button class="mode-btn active" data-mode="simple" onclick="setMode('simple')" type="button">Simple</button>
+    <button class="mode-btn" data-mode="technical" onclick="setMode('technical')" type="button">Technical</button>
+  </span>
+  <span class="mode-bar-hint" id="modeHint">Plain-English view — no chart-reading experience needed</span>
+</div></div>
+
+
+<div class="wrap" id="liveStatusWrap" style="display:none; padding-top:14px;">
+  <div id="liveStatusBanner" class="live-status-banner"></div>
+</div>
+
 <div class="wrap">
+
+  <div class="beginner-intro">👋 New to reading stock charts? This page is set to <b>Simple</b> mode — it explains ENGRO in plain English, with the technical indicators tucked away. Tap <b>Technical</b> above anytime to see the full data underneath.</div>
 
   <div class="masthead">
     <div class="masthead-row">
       <div>
         <div class="eyebrow">
-          Module 2: Technical Analysis Engine
+          <span id="eyebrowLabel">Module 2: Technical Analysis Engine</span>
           <span class="info-btn">i<span class="tip">This describes current chart conditions using rules-based indicators — trend, momentum, volatility, and patterns. It is not a price forecast and issues no buy or sell call. A separate check below actively searches history for cases where this same setup was wrong.</span></span>
         </div>
         <h1 id="tickerName">ENGRO</h1>
@@ -297,34 +386,43 @@ footer a{text-decoration:underline; color:var(--ink-soft);}
 
   <div class="snapshot" id="snapshot"></div>
 
+  <div class="hero-summary" id="heroSummary">
+    <div class="hero-title">Bottom line</div>
+    <div id="verdictBadge"></div>
+    <div class="hero-summary-body" id="heroSummaryBody">—</div>
+  </div>
+
   <div class="grid-top">
     <div class="card compass-card">
-      <div class="card-title">Confidence Compass</div>
+      <div class="card-title" id="compassTitle">Confidence Compass</div>
       <svg id="needleSvg" viewBox="0 0 260 160" width="220"></svg>
       <div class="compass-label" id="needleLabel">—</div>
-      <div class="compass-sub" id="needleScore">—</div>
+      <div class="compass-sub tech-only" id="needleScore">—</div>
       <div class="track-dots" id="trackDots"></div>
       <div class="compass-foot" id="compassFoot">—</div>
     </div>
 
     <div class="card">
-      <div class="card-title">Why — Supporting Evidence</div>
+      <div class="card-title" id="whyTitle">Why — Supporting Evidence</div>
       <ul class="ledger-list" id="reasonsList"></ul>
-      <div class="card-title" style="margin-top:18px;">Candlestick Patterns <span class="mono" style="text-transform:none; letter-spacing:0; font-size:11px;">(last 5 sessions)</span></div>
+      <div class="card-title" style="margin-top:18px;"><span id="patternsTitle">Candlestick Patterns</span> <span class="mono" style="text-transform:none; letter-spacing:0; font-size:11px;">(last 5 sessions)</span></div>
       <div class="pattern-strip" id="patternStrip"></div>
+      <div class="simple-note simple-only" style="margin-top:8px; font-size:12.5px;">💡 These are shapes formed by recent daily price moves that chart-watchers keep an eye on — not a guarantee of what happens next.</div>
     </div>
   </div>
 
   <div class="terminal-card">
     <div class="terminal-head">
-      <div class="terminal-title">Price · Indicators</div>
-      <div class="toggle-row" id="toggleRow">
+      <div class="terminal-title" id="chartTitle">Price · Indicators</div>
+      <div class="toggle-row tech-only" id="toggleRow">
         <button class="toggle-btn active" data-series="sma20">SMA20</button>
         <button class="toggle-btn active" data-series="sma50">SMA50</button>
         <button class="toggle-btn active" data-series="bb">Bollinger</button>
         <button class="toggle-btn active" data-series="rsi">RSI14</button>
         <button class="toggle-btn active" data-series="macd">MACD</button>
         <button class="toggle-btn active" data-series="adx">ADX/DMI</button>
+        <button class="toggle-btn active" data-series="stoch">Stochastic</button>
+        <button class="toggle-btn active" data-series="atr">ATR</button>
         <button class="toggle-btn active" data-series="vol">Volume/OBV</button>
       </div>
       <div class="toggle-row" id="tfRow" style="margin-top:6px;">
@@ -337,47 +435,56 @@ footer a{text-decoration:underline; color:var(--ink-soft);}
       <canvas id="priceChart" height="320"></canvas>
       <div class="chart-tooltip" id="chartTip"></div>
     </div>
-    <div id="srNote" class="mono" style="font-size:11.5px; color:var(--term-faint); margin:6px 0 0;"></div>
+    <div class="simple-note simple-only">The gold line is the 20-day trend, the grey line is the 50-day trend. When gold sits above grey, the stock has been climbing recently. Green bars are up days, red bars are down days.</div>
+    <div id="srNote" class="mono tech-only" style="font-size:11.5px; color:var(--term-faint); margin:6px 0 0;"></div>
+    <div class="tech-only">
     <canvas id="rsiChart" height="80" style="margin-top:8px;"></canvas>
     <div id="rsiPlain" class="mono" style="font-size:11.5px; color:var(--term-faint); margin:2px 0 8px;"></div>
     <canvas id="macdChart" height="90" style="margin-top:4px;"></canvas>
     <div id="macdPlain" class="mono" style="font-size:11.5px; color:var(--term-faint); margin:2px 0 8px;"></div>
     <canvas id="adxChart" height="90" style="margin-top:4px;"></canvas>
     <div id="adxPlain" class="mono" style="font-size:11.5px; color:var(--term-faint); margin:2px 0 8px;"></div>
+    <canvas id="stochChart" height="90" style="margin-top:4px;"></canvas>
+    <div id="stochPlain" class="mono" style="font-size:11.5px; color:var(--term-faint); margin:2px 0 8px;"></div>
+    <canvas id="atrChart" height="90" style="margin-top:4px;"></canvas>
+    <div id="atrPlain" class="mono" style="font-size:11.5px; color:var(--term-faint); margin:2px 0 8px;"></div>
     <canvas id="volChart" height="90" style="margin-top:4px;"></canvas>
     <div id="volPlain" class="mono" style="font-size:11.5px; color:var(--term-faint); margin:2px 0 8px;"></div>
     <div id="divergenceFlag" class="mono" style="font-size:12px; margin-top:4px;"></div>
     <div id="regimeLine" class="mono" style="font-size:12px; color:var(--term-faint); margin-top:10px; padding-top:10px; border-top:1px solid var(--term-line);"></div>
+    </div>
   </div>
 
   <div class="evidence-grid">
     <div class="card">
-      <div class="card-title">Module 3: Fundamental Analysis Module <span class="mono" style="text-transform:none; letter-spacing:0; font-size:11px;">(Trust Layer)</span></div>
+      <div class="card-title"><span id="fundTitle">Module 3: Fundamental Analysis Module</span> <span class="mono" style="text-transform:none; letter-spacing:0; font-size:11px;">(Trust Layer)</span></div>
       <div id="fundBody"></div>
     </div>
     <div class="card">
-      <div class="card-title">Macro / Commodity Context</div>
+      <div class="card-title" id="macroTitle">Macro / Commodity Context</div>
       <div id="macroBody"></div>
     </div>
   </div>
 
   <div class="card" style="margin-bottom:20px;">
-    <div class="card-title">Module 4: GenAI Report Generator <span class="mono" style="text-transform:none; letter-spacing:0; font-size:11px;">(Plain Language Summary)</span></div>
+    <div class="card-title"><span id="genaiTitle">Module 4: GenAI Report Generator</span> <span class="mono" style="text-transform:none; letter-spacing:0; font-size:11px;">(Plain Language Summary)</span></div>
     <div id="genAiParagraph" style="font-size:14.5px; line-height:1.7; color:var(--ink-soft);"></div>
   </div>
 
   <div class="evidence-grid">
     <div class="card">
-      <div class="card-title">Module 4: Disconfirmation Agent <span class="mono" style="text-transform:none; letter-spacing:0; font-size:11px;">(Counter-Evidence Check)</span></div>
+      <div class="card-title"><span id="discTitle">Module 4: Disconfirmation Agent</span> <span class="mono" style="text-transform:none; letter-spacing:0; font-size:11px;">(Counter-Evidence Check)</span></div>
       <div id="discBody"></div>
     </div>
     <div class="card">
-      <div class="card-title">Market Context</div>
-      <div class="market-line" id="marketLine"></div>
-      <div class="card-title" style="margin-top:22px;">Track Record</div>
-      <div class="calib-summary" id="calibSummary"></div>
+      <div class="card-title" id="marketTitle">Market Context</div>
+      <div class="market-line tech-only" id="marketLine"></div>
+      <div class="simple-note simple-only" id="marketLineSimple"></div>
+      <div class="card-title" id="trackTitle" style="margin-top:22px;">Track Record</div>
+      <div class="calib-summary tech-only" id="calibSummary"></div>
+      <div class="simple-note simple-only" id="calibSummarySimple"></div>
       <div class="timeline" id="timeline"></div>
-      <details class="calib-detail">
+      <details class="calib-detail tech-only">
         <summary>Show scored calls in detail</summary>
         <table class="calib-table" id="calibTable"></table>
       </details>
@@ -508,6 +615,58 @@ function computeADX(period=14){
 }
 const ADX = computeADX();
 
+// ATR (Average True Range, Wilder-smoothed) — measures volatility magnitude, independent of direction.
+// Feeds the GA optimizer's regime-adaptive parameter tuning and gives readers a sense of "how much
+// this stock typically moves" so a given price swing can be judged as normal or unusual for this ticker.
+function computeATR(period=14){
+  const n = candles.length;
+  const tr = new Array(n).fill(null);
+  for(let i=1;i<n;i++){
+    tr[i] = Math.max(
+      candles[i].high - candles[i].low,
+      Math.abs(candles[i].high - candles[i-1].close),
+      Math.abs(candles[i].low - candles[i-1].close)
+    );
+  }
+  const atr = new Array(n).fill(null);
+  if(n>period){
+    let sum = 0;
+    for(let i=1;i<=period;i++) sum += tr[i];
+    atr[period] = sum/period;
+    for(let i=period+1;i<n;i++) atr[i] = (atr[i-1]*(period-1) + tr[i]) / period;
+  }
+  return atr;
+}
+const ATR = computeATR();
+
+// Stochastic Oscillator (%K, %D) — momentum indicator comparing close to the recent high/low range.
+// %K crossing %D near the 20/80 bands is a classic overbought/oversold timing signal, complementary to RSI.
+function computeStochastic(kPeriod=14, dPeriod=3){
+  const n = candles.length;
+  const rawK = new Array(n).fill(null);
+  for(let i=kPeriod-1;i<n;i++){
+    let hi=-Infinity, lo=Infinity;
+    for(let j=i-kPeriod+1;j<=i;j++){ hi=Math.max(hi,candles[j].high); lo=Math.min(lo,candles[j].low); }
+    rawK[i] = (hi-lo)===0 ? 50 : ((candles[i].close-lo)/(hi-lo))*100;
+  }
+  const k = new Array(n).fill(null);
+  for(let i=0;i<n;i++){
+    if(i<kPeriod+1) continue;
+    let sum=0, cnt=0;
+    for(let j=i-2;j<=i;j++){ if(rawK[j]!=null){ sum+=rawK[j]; cnt++; } }
+    k[i] = cnt ? sum/cnt : null; // light 3-period smoothing on raw %K (slow stochastic convention)
+  }
+  const d = new Array(n).fill(null);
+  for(let i=0;i<n;i++){
+    if(i<kPeriod+dPeriod) continue;
+    let sum=0, cnt=0;
+    for(let j=i-dPeriod+1;j<=i;j++){ if(k[j]!=null){ sum+=k[j]; cnt++; } }
+    d[i] = cnt ? sum/cnt : null;
+  }
+  return {k, d};
+}
+const STOCH = computeStochastic();
+
 // Volume: real intraday volume isn't present in this feed; we derive an illustrative
 // volume proxy from range x price-move so OBV direction is directionally meaningful for demo purposes.
 function computeVolumeProxy(){
@@ -607,16 +766,19 @@ function buildSnapshot(){
   const rsiNow = DATA.candles[DATA.candles.length-1].rsi;
 
   const cells = [
-    {lbl:`${candles.length}-Session High`, val:'Rs '+periodHigh.toFixed(2)},
-    {lbl:`${candles.length}-Session Low`, val:'Rs '+periodLow.toFixed(2)},
-    {lbl:'Period Return', val:fmt(periodReturn)+'%', cls: periodReturn>=0?'bull':'bear'},
-    {lbl:'Daily Volatility', val:dailyVol.toFixed(2)+'%'},
-    {lbl:'Trend (SMA20 vs 50)', val: trendUp ? 'Uptrend' : 'Downtrend', cls: trendUp?'bull':'bear'},
+    {lbl:`${candles.length}-Session High`, simple:'Highest price recently', val:'Rs '+periodHigh.toFixed(2)},
+    {lbl:`${candles.length}-Session Low`, simple:'Lowest price recently', val:'Rs '+periodLow.toFixed(2)},
+    {lbl:'Period Return', simple:'Change over this period', val:fmt(periodReturn)+'%', cls: periodReturn>=0?'bull':'bear'},
+    {lbl:'Daily Volatility', simple:'How choppy the price has been', val:dailyVol.toFixed(2)+'%'},
+    {lbl:'Trend (SMA20 vs 50)', simple:'Recent direction', val: trendUp ? 'Uptrend' : 'Downtrend', cls: trendUp?'bull':'bear'},
   ];
   const snap = document.getElementById('snapshot');
   cells.forEach(c=>{
+    const lblNode = el('div',{class:'lbl ms-swap'}, c.lbl);
+    lblNode.dataset.tech = c.lbl;
+    lblNode.dataset.simple = c.simple || c.lbl;
     snap.appendChild(el('div',{class:'snap-cell'},
-      el('div',{class:'lbl'}, c.lbl),
+      lblNode,
       el('div',{class:'val mono '+(c.cls||'')}, c.val)));
   });
 }
@@ -711,21 +873,68 @@ function linkGlossary(text){
   });
   return out;
 }
+// ---------- Plain-language reason simplifier ----------
+function simplifyReason(text){
+  const t = text.toLowerCase();
+  if(t.includes('sma20 is above sma50') || t.includes('sma20 above sma50'))
+    return 'Price has been climbing over the last month, faster than its slower 2-month trend — a sign of short-term strength.';
+  if(t.includes('sma20 is below sma50') || t.includes('sma20 below sma50'))
+    return 'Price has been falling over the last month, faster than its slower 2-month trend — a sign of short-term weakness.';
+  if(t.includes('rsi')){
+    if(t.includes('overbought')) return 'Momentum has run unusually hot recently — some chart-watchers see this as due for a pause.';
+    if(t.includes('oversold')) return 'Momentum has run unusually cold recently — some chart-watchers see this as a possible rebound zone.';
+    if(t.includes('bullish')) return 'Momentum is leaning positive right now, without being stretched in either direction.';
+    if(t.includes('bearish')) return 'Momentum is leaning negative right now, without being stretched in either direction.';
+    return 'Momentum is balanced right now — neither excited nor exhausted.';
+  }
+  if(t.includes('macd')){
+    const expanding = t.includes('expanding') && !t.includes('not expanding');
+    if(t.includes('positive')) return expanding ? 'Momentum is picking up in the stock\u2019s favor.' : 'Momentum favors the stock, but isn\u2019t gaining extra steam.';
+    if(t.includes('negative')) return expanding ? 'Momentum is working against the stock and getting stronger.' : 'Momentum is working against the stock, but it isn\u2019t getting worse.';
+  }
+  if(t.includes('adx') || t.includes('dmi') || t.includes('dm+') || t.includes('dm-')){
+    if(t.includes('strong')) return 'The current trend, up or down, looks strong and likely to continue for now.';
+    return 'There isn\u2019t a clear, strong trend right now — price is more choppy/range-bound.';
+  }
+  if(t.includes('bollinger') || t.includes('band'))
+    return 'Price is stretched near the edge of its usual recent trading range.';
+  if(t.includes('volume') || t.includes('obv'))
+    return 'Trading activity has picked up compared to normal, which can signal bigger players moving in.';
+  return text; // fall back to the original wording if nothing matched
+}
+
 const reasonsList = document.getElementById('reasonsList');
 DATA.reasons.forEach(r => {
   const li = document.createElement('li');
-  li.innerHTML = linkGlossary(r);
+  li.dataset.tech = linkGlossary(r);
+  li.dataset.simple = simplifyReason(r);
+  li.innerHTML = li.dataset.tech;
   reasonsList.appendChild(li);
 });
 
 // ---------- Pattern chips ----------
+const PATTERN_PLAIN = {
+  'Bullish Engulfing': 'Buyers took control',
+  'Bearish Engulfing': 'Sellers took control',
+  'Doji': 'Market indecision',
+  'Hammer': 'Possible bottom forming',
+  'Inverted Hammer': 'Possible bottom forming',
+  'Morning Star': 'Possible turn upward',
+  'Evening Star': 'Possible turn downward',
+  'Shooting Star': 'Possible turn downward',
+  'Hanging Man': 'Possible top forming',
+};
 const strip = document.getElementById('patternStrip');
 if(DATA.patterns.length === 0){
   strip.appendChild(el('span', {class:'pattern-chip neutral'}, 'None detected'));
 } else {
   DATA.patterns.forEach(p => {
     const cls = p.bias.includes('bullish') ? 'bullish' : p.bias.includes('bearish') ? 'bearish' : 'neutral';
-    strip.appendChild(el('span', {class:'pattern-chip ' + cls}, p.pattern + ' · ' + p.date));
+    const chip = el('span', {class:'pattern-chip ' + cls});
+    chip.dataset.tech = p.pattern + ' · ' + p.date;
+    chip.dataset.simple = (PATTERN_PLAIN[p.pattern] || p.pattern) + ' · ' + p.date;
+    chip.textContent = chip.dataset.tech;
+    strip.appendChild(chip);
   });
 }
 
@@ -759,10 +968,19 @@ if(disc.nMatches === 0){
   row.appendChild(ringWrap);
   row.appendChild(el('div', {class:'counter-rate-text'},
     `We looked for the ${disc.nMatches} most similar setups in ${DATA.ticker}'s history. ${pct}% of them moved the opposite way within 10 sessions — worth weighing before acting on today's read.`));
+  row.classList.add('tech-only');
   discBody.appendChild(row);
 
+  const worst = disc.examples.slice().sort((a,b)=>a.forward_return_pct-b.forward_return_pct)[0];
+  const simpleTxt = pct === 0
+    ? `We checked ${disc.nMatches} times ENGRO looked like this before. Every single time, price kept moving the way this read expected — no counter-examples found.`
+    : `We checked ${disc.nMatches} times ENGRO looked like this before. In ${pct} out of 100 of those cases, price actually went the opposite way soon after` +
+      (worst ? ` — the worst case was around ${worst.date}, when the stock fell about ${Math.abs(worst.forward_return_pct).toFixed(1)}% afterward.` : '.') +
+      ` This is a reminder that today's read is a probability, not a guarantee.`;
+  discBody.appendChild(el('div', {class:'simple-note simple-only'}, simpleTxt));
+
   if(disc.examples.length){
-    const table = el('table', {class:'examples'});
+    const table = el('table', {class:'examples tech-only'});
     table.appendChild(el('tr', {}, el('th',{},'Date'), el('th',{},'10-day fwd return')));
     disc.examples.forEach(ex => {
       const cls = ex.forward_return_pct < 0 ? 'neg' : 'pos';
@@ -777,6 +995,9 @@ const marketLine = document.getElementById('marketLine');
 const dotColor = DATA.market.trend_up ? '#2F8F5B' : '#C0483C';
 marketLine.appendChild(el('span', {class:'dot', style:`background:${dotColor}`}));
 marketLine.appendChild(el('span', {}, DATA.market.summary));
+document.getElementById('marketLineSimple').textContent = DATA.market.trend_up
+  ? `The overall Pakistan stock market has been trending up recently. That's generally a tailwind for individual stocks, including ${DATA.ticker}.`
+  : `The overall Pakistan stock market has been soft or flat recently, without a clear up-trend. That's a mild headwind worth keeping in mind for ${DATA.ticker}.`;
 
 // ---------- Calibration summary + timeline + table ----------
 const calibSummary = document.getElementById('calibSummary');
@@ -790,6 +1011,10 @@ calibSummary.appendChild(el('div', {class:'stat'},
 calibSummary.appendChild(el('div', {class:'stat'},
   el('div', {class:'num mono'}, '×' + DATA.calibration.confidenceMultiplier.toFixed(2)),
   el('div', {class:'lbl'}, 'confidence multiplier')));
+
+document.getElementById('calibSummarySimple').textContent = nScored > 0
+  ? `Out of the last ${nScored} calls this system made on ${DATA.ticker}, ${Math.round(DATA.calibration.runningAccuracy/100*nScored)} turned out to be right — that's ${DATA.calibration.runningAccuracy.toFixed(0)}% accuracy. Today's confidence level has already been adjusted based on that track record.`
+  : `This system hasn't made enough past calls on ${DATA.ticker} yet to have a scored track record. Treat today's read as unproven until more history builds up.`;
 
 const timeline = document.getElementById('timeline');
 const hist = DATA.calibration.history;
@@ -843,14 +1068,14 @@ histRows.forEach(h => {
     ['Debt / loan status', f.loanStatus],
     ['Profit or loss status', f.profitStatus],
   ];
-  const table = el('table',{class:'fact-table'});
+  const table = el('table',{class:'fact-table tech-only'});
   rows.forEach(([k,v])=>{
     const td = el('td',{});
     td.innerHTML = v;
     table.appendChild(el('tr',{}, el('td',{},k), td));
   });
   body.appendChild(table);
-  body.appendChild(el('div',{class:'plain-note'}, `Plain language: ENGRO is ${f.profitStatus.split('—')[0].trim().toLowerCase()} and carries meaningful debt (${f.debtEquity.toFixed(1)}x equity), typical for a capital-intensive fertilizer/power/petrochem group — not a red flag by itself, but financing costs matter while SBP's policy rate stays elevated.`));
+  body.appendChild(el('div',{class:'plain-note tech-only'}, `Plain language: ENGRO is ${f.profitStatus.split('—')[0].trim().toLowerCase()} and carries meaningful debt (${f.debtEquity.toFixed(1)}x equity), typical for a capital-intensive fertilizer/power/petrochem group — not a red flag by itself, but financing costs matter while SBP's policy rate stays elevated.`));
   // Sources removed per user request
 })();
 
@@ -864,14 +1089,16 @@ histRows.forEach(h => {
     ['SBP policy rate', `${m.sbpPolicyRatePct.toFixed(1)}% ${m.sbpTrend==='up'?'↑':m.sbpTrend==='down'?'↓':'→'} — ${m.sbpNote}`],
     ['Natural gas / RLNG', m.gasNote],
   ];
-  const table = el('table',{class:'fact-table'});
+  const table = el('table',{class:'fact-table tech-only'});
   rows.forEach(([k,v])=> table.appendChild(el('tr',{}, el('td',{},k), el('td',{},v))));
   body.appendChild(table);
   const pillCls = m.impact.includes('POSITIVE') ? 'pos' : m.impact.includes('NEGATIVE') ? 'neg' : 'mix';
   const impactRow = el('div',{style:'margin-top:12px;'});
   impactRow.appendChild(el('span',{class:'impact-pill '+pillCls}, 'Macro impact on this sector: ' + m.impact));
   body.appendChild(impactRow);
-  body.appendChild(el('div',{class:'plain-note'}, m.impactNote));
+  body.appendChild(el('div',{class:'plain-note tech-only'}, m.impactNote));
+  body.appendChild(el('div',{class:'simple-note simple-only'},
+    `Oil prices, the rupee's strength, and interest rates all affect this company's costs. Right now, together, they add up to a ${m.impact.toLowerCase()} for the sector.`));
   // Sources removed per user request
 })();
 
@@ -942,7 +1169,7 @@ histRows.forEach(h => {
 })();
 
 // ---------- Series toggles ----------
-const seriesState = {sma20:true, sma50:true, bb:true, rsi:true, macd:true, adx:true, vol:true};
+const seriesState = {sma20:true, sma50:true, bb:true, rsi:true, macd:true, adx:true, stoch:true, atr:true, vol:true};
 document.getElementById('toggleRow').addEventListener('click', (e)=>{
   const btn = e.target.closest('.toggle-btn');
   if(!btn || !btn.dataset.series) return;
@@ -956,11 +1183,17 @@ document.getElementById('toggleRow').addEventListener('click', (e)=>{
   document.getElementById('macdPlain').style.display = seriesState.macd ? 'block' : 'none';
   document.getElementById('adxChart').style.display = seriesState.adx ? 'block' : 'none';
   document.getElementById('adxPlain').style.display = seriesState.adx ? 'block' : 'none';
+  document.getElementById('stochChart').style.display = seriesState.stoch ? 'block' : 'none';
+  document.getElementById('stochPlain').style.display = seriesState.stoch ? 'block' : 'none';
+  document.getElementById('atrChart').style.display = seriesState.atr ? 'block' : 'none';
+  document.getElementById('atrPlain').style.display = seriesState.atr ? 'block' : 'none';
   document.getElementById('volChart').style.display = seriesState.vol ? 'block' : 'none';
   document.getElementById('volPlain').style.display = seriesState.vol ? 'block' : 'none';
   if(seriesState.rsi) drawRsiChart();
   if(seriesState.macd) drawMacdChart();
   if(seriesState.adx) drawAdxChart();
+  if(seriesState.stoch) drawStochChart();
+  if(seriesState.atr) drawAtrChart();
   if(seriesState.vol) drawVolChart();
 });
 
@@ -1207,6 +1440,57 @@ function drawAdxChart(){
   ctx.fillStyle = '#7C8DA3'; ctx.fillText('ADX (white) · DM+ (green) · DM- (red)', padL, 12);
 }
 
+function drawStochChart(){
+  if(!seriesState.stoch) return;
+  const {ctx,w,h,padL,padT} = genericPanelSetup('stochChart', 90);
+  const n = candles.length, slot = w/n;
+  const yScale = v => padT + h - (v/100)*h;
+  [20,80].forEach(v=>{
+    const y = yScale(v);
+    ctx.strokeStyle = v===80 ? 'rgba(192,72,60,0.4)' : 'rgba(47,143,91,0.4)'; ctx.setLineDash([3,3]);
+    ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(padL+w,y); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#7C8DA3'; ctx.fillText(String(v), 4, y+3);
+  });
+  function line(arr, color){
+    ctx.beginPath(); let started=false;
+    arr.forEach((v,i)=>{ if(v==null) return; const x=padL+slot*i+slot/2, y=yScale(v); if(!started){ctx.moveTo(x,y);started=true;} else ctx.lineTo(x,y); });
+    ctx.strokeStyle=color; ctx.lineWidth=1.5; ctx.stroke();
+  }
+  line(STOCH.k, '#DCE4EC');
+  line(STOCH.d, '#C89B3C');
+  ctx.fillStyle = '#7C8DA3'; ctx.fillText('Stochastic %K (white) · %D (gold) · >80 overbought, <20 oversold', padL, 12);
+
+  const lastK = STOCH.k[STOCH.k.length-1], lastD = STOCH.d[STOCH.d.length-1];
+  const plain = document.getElementById('stochPlain');
+  if(lastK!=null && lastD!=null){
+    const zone = lastK>80?'overbought':lastK<20?'oversold':'neutral';
+    plain.textContent = `%K ${lastK.toFixed(1)} / %D ${lastD.toFixed(1)} — currently ${zone}${lastK>lastD?' and turning up':lastK<lastD?' and turning down':''}.`;
+  }
+}
+
+function drawAtrChart(){
+  if(!seriesState.atr) return;
+  const {ctx,w,h,padL,padT} = genericPanelSetup('atrChart', 90);
+  const n = candles.length, slot = w/n;
+  const vals = ATR.filter(v=>v!=null);
+  const maxAtr = vals.length ? Math.max(...vals) : 1;
+  const yScale = v => padT + h - (v/(maxAtr||1))*h;
+  ctx.beginPath(); let started=false;
+  ATR.forEach((v,i)=>{ if(v==null) return; const x=padL+slot*i+slot/2, y=yScale(v); if(!started){ctx.moveTo(x,y);started=true;} else ctx.lineTo(x,y); });
+  ctx.strokeStyle = '#7C8DA3'; ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.fillStyle = '#7C8DA3'; ctx.fillText('ATR (14) — average true range, in Rs · rising = expanding volatility', padL, 12);
+
+  const lastAtr = ATR[ATR.length-1];
+  const priorWindow = ATR.slice(Math.max(0,ATR.length-40), ATR.length-1).filter(v=>v!=null);
+  const avgPrior = priorWindow.length ? priorWindow.reduce((a,b)=>a+b,0)/priorWindow.length : lastAtr;
+  const plain = document.getElementById('atrPlain');
+  if(lastAtr!=null){
+    const pctOfPrice = (lastAtr/DATA.close*100).toFixed(1);
+    const trend = lastAtr > avgPrior*1.1 ? 'expanding' : lastAtr < avgPrior*0.9 ? 'contracting' : 'stable';
+    plain.textContent = `ATR(14) is Rs ${lastAtr.toFixed(2)} (${pctOfPrice}% of price) — volatility currently ${trend} vs its recent average.`;
+  }
+}
+
 function drawVolChart(){
   if(!seriesState.vol) return;
   const {ctx,w,h,padL,padT} = genericPanelSetup('volChart', 90);
@@ -1261,12 +1545,24 @@ drawPriceChart();
 drawRsiChart();
 drawMacdChart();
 drawAdxChart();
+drawStochChart();
+drawAtrChart();
 drawVolChart();
-window.addEventListener('resize', () => { drawPriceChart(); drawRsiChart(); drawMacdChart(); drawAdxChart(); drawVolChart(); });
+window.addEventListener('resize', () => { drawPriceChart(); drawRsiChart(); drawMacdChart(); drawAdxChart(); drawStochChart(); drawAtrChart(); drawVolChart(); });
 
 // ---------- Live Scraped Data Override ----------
+function showLiveStatus(kind, html){
+  const wrap = document.getElementById('liveStatusWrap');
+  const banner = document.getElementById('liveStatusBanner');
+  banner.className = 'live-status-banner ' + kind;
+  banner.innerHTML = html;
+  wrap.style.display = 'block';
+}
 fetch('psx_data.json?t=' + Date.now())
-  .then(res => res.json())
+  .then(res => {
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  })
   .then(psx => {
     const liveData = psx.find(s => s.symbol === DATA.ticker);
     if(liveData) {
@@ -1279,8 +1575,136 @@ fetch('psx_data.json?t=' + Date.now())
                         <td style="color:var(--ink-soft);"><b>Sector: ${liveData.sector || 'Unknown'} | P/E: ${liveData.peRatio ? liveData.peRatio.toFixed(2) : 'N/A'}</b> <span class="impact-pill pos" style="margin-left:8px; font-size:9px;">Live from Sarmaaya.pk</span></td>`;
         table.prepend(tr);
       }
+      showLiveStatus('ok', `🟢 Live fundamentals loaded for ${DATA.ticker} from <b>psx_data.json</b>.`);
+    } else {
+      showLiveStatus('warn', `⚠️ <b>psx_data.json</b> loaded, but no entry found for ${DATA.ticker}. Showing cached fundamentals below — not live.`);
     }
-  }).catch(e => console.log('Could not fetch live scraped data for report:', e));
+  }).catch(e => {
+    console.log('Could not fetch live scraped data for report:', e);
+    showLiveStatus('warn', `⚠️ Live data feed unavailable (${e.message}). Showing cached fundamentals as of ${DATA.fundamentals.asOf} — not live.`);
+  });
+
+  // ---------- Beginner-friendly "Bottom line" summary ----------
+  function polarityOf(label){
+    const l = label.toLowerCase();
+    if(l.includes('bullish')) return 'pos';
+    if(l.includes('bearish')) return 'neg';
+    return 'neu';
+  }
+  function intensityOf(label){
+    const l = label.toLowerCase();
+    if(l.includes('strong')) return 'strong';
+    if(l.includes('mild')) return 'mild';
+    return 'moderate';
+  }
+  function friendlyVerdict(label){
+    const pol = polarityOf(label), inten = intensityOf(label);
+    const phrases = {
+      pos: {mild:'Leaning slightly positive', moderate:'Leaning positive', strong:'Looking strongly positive'},
+      neg: {mild:'Leaning slightly negative', moderate:'Leaning negative', strong:'Looking strongly negative'},
+      neu: {mild:'No clear direction', moderate:'No clear direction', strong:'No clear direction'},
+    };
+    const icons = {pos:'🟢', neg:'🔴', neu:'⚪'};
+    return {pol, text: phrases[pol][inten], icon: icons[pol]};
+  }
+
+  function buildBeginnerSummary(){
+    const last = candles[candles.length-1];
+    const f = DATA.fundamentals, m = DATA.macro;
+    const trendUp = last.sma20 > last.sma50;
+    const epsGrowing = f.epsTTM >= f.epsPrior;
+    const acc = DATA.calibration.nScored > 0 ? DATA.calibration.runningAccuracy : null;
+    const disc = DATA.disconfirmation;
+
+    const v = friendlyVerdict(DATA.label);
+    document.getElementById('verdictBadge').innerHTML = `<span class="verdict-badge ${v.pol}">${v.icon} ${v.text}</span>`;
+
+    const points = [];
+    points.push({ico: trendUp ? '📈' : '📉', text: trendUp
+      ? `${DATA.ticker}'s price has been climbing over the last month.`
+      : `${DATA.ticker}'s price has been slipping over the last month.`});
+    points.push({ico: epsGrowing ? '💰' : '⚠️', text: epsGrowing
+      ? `The company's earnings are growing compared to last year.`
+      : `The company's earnings have shrunk compared to last year.`});
+    points.push({ico: '🌍', text: `Big-picture factors (oil prices, the rupee, interest rates) are currently a ${m.impact.toLowerCase()} for this sector.`});
+    if(acc !== null){
+      points.push({ico:'🎯', text:`This system's past reads on ${DATA.ticker} have been right ${acc.toFixed(0)}% of the time, based on ${DATA.calibration.nScored} tracked calls.`});
+    }
+    if(disc.nMatches > 0){
+      const pct = Math.round(disc.counterRate * 100);
+      points.push({ico:'🔎', text:`Looking back at ${disc.nMatches} similar moments in ${DATA.ticker}'s history, price actually went the other way ${pct}% of the time — so this isn't a sure thing.`});
+    }
+
+    const ul = document.createElement('ul');
+    points.forEach(p => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="ico">${p.ico}</span>${p.text}`;
+      ul.appendChild(li);
+    });
+    const body = document.getElementById('heroSummaryBody');
+    body.innerHTML = '';
+    body.appendChild(ul);
+    body.appendChild(el('div', {class:'hero-caveat'},
+      `Rs ${DATA.close.toFixed(2)} as of ${DATA.asOf}. This is an automated, rules-based read of chart and company data — not financial advice or a buy/sell recommendation.`));
+  }
+  buildBeginnerSummary();
+
+  // ---------- Beginner-friendly Company Health Check ----------
+  function buildFundamentalsSimple(){
+    const f = DATA.fundamentals;
+    const epsGrowing = f.epsTTM >= f.epsPrior;
+    const cheap = f.peRatio < f.peSector;
+    const debtLevel = f.debtEquity < 0.5 ? 'Low' : f.debtEquity < 1.5 ? 'Moderate' : 'High';
+    const rows = [
+      {ico: epsGrowing ? '💰' : '⚠️', text: `<b>Profitability:</b> ${f.profitStatus.split('—')[0].trim()}, and earnings are ${epsGrowing?'growing':'shrinking'} year-on-year.`},
+      {ico: '💳', text: `<b>Debt level:</b> ${debtLevel} (${f.debtEquity.toFixed(1)}x its equity) — typical for a capital-heavy business, but financing costs matter more when debt is higher.`},
+      {ico: '🏷️', text: `<b>Valuation:</b> Trades ${cheap ? 'cheaper' : 'pricier'} than similar companies in its sector.`},
+      {ico: f.dividendYieldPct > 0 ? '💵' : '➖', text: f.dividendYieldPct > 0 ? `<b>Dividend:</b> Pays shareholders ${f.dividendYieldPct.toFixed(1)}% of the share price per year.` : `<b>Dividend:</b> Does not currently pay a dividend.`},
+    ];
+    const wrap = el('div', {class:'fact-simple simple-only'});
+    rows.forEach(r => {
+      const row = el('div', {class:'frow'});
+      row.innerHTML = `<span class="ico">${r.ico}</span><span>${r.text}</span>`;
+      wrap.appendChild(row);
+    });
+    document.getElementById('fundBody').appendChild(wrap);
+  }
+  buildFundamentalsSimple();
+
+  // ---------- Simple / Technical mode switch ----------
+  const STATIC_LABELS = {
+    eyebrowLabel:   {simple: 'Technical Read',                    tech: 'Module 2: Technical Analysis Engine'},
+    compassTitle:   {simple: 'Overall Signal',                    tech: 'Confidence Compass'},
+    whyTitle:       {simple: 'Why We Think This',                 tech: 'Why — Supporting Evidence'},
+    patternsTitle:  {simple: 'Recent Chart Patterns',              tech: 'Candlestick Patterns'},
+    chartTitle:     {simple: 'Price Chart',                       tech: 'Price · Indicators'},
+    fundTitle:      {simple: 'Company Health Check',              tech: 'Module 3: Fundamental Analysis Module'},
+    macroTitle:     {simple: 'Bigger-Picture Factors',            tech: 'Macro / Commodity Context'},
+    genaiTitle:     {simple: 'In Plain English',                  tech: 'Module 4: GenAI Report Generator'},
+    discTitle:      {simple: 'Times This Read Was Wrong Before',  tech: 'Module 4: Disconfirmation Agent'},
+    marketTitle:    {simple: 'Overall Market Mood',                tech: 'Market Context'},
+    trackTitle:     {simple: 'How Reliable Has This Been?',        tech: 'Track Record'},
+  };
+
+  function setMode(mode){
+    document.body.classList.toggle('mode-simple', mode === 'simple');
+    document.body.classList.toggle('mode-technical', mode !== 'simple');
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+    document.getElementById('modeHint').textContent = mode === 'simple'
+      ? 'Plain-English view — no chart-reading experience needed'
+      : 'Full indicator-level view for chart analysts';
+
+    Object.keys(STATIC_LABELS).forEach(id => {
+      const node = document.getElementById(id);
+      if(node) node.textContent = STATIC_LABELS[id][mode === 'simple' ? 'simple' : 'tech'];
+    });
+
+    document.querySelectorAll('#reasonsList li, #patternStrip .pattern-chip, .ms-swap').forEach(node => {
+      if(node.dataset.tech === undefined) return;
+      node.innerHTML = mode === 'simple' ? (node.dataset.simple || node.dataset.tech) : node.dataset.tech;
+    });
+  }
+  setMode('simple');
 
   </script>
   <script src="theme.js"></script>
