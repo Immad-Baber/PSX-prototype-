@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestGen | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-body">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="logo">Invest<span>Gen</span></a>
+        </div>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
+            <li><a href="screener.html"><i class="fas fa-filter"></i> AI Screener</a></li>
+            <li><a href="portfolio.html" class="active"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+            <li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
+            <li><a href="recommendations.html"><i class="fas fa-robot"></i> Recommendations</a></li>
+            <li><a href="disconfirmation.html"><i class="fas fa-shield-alt"></i> Disconfirmation</a></li>
+            <li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
+            <li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+        <header class="top-nav">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search ticker or company...">
+            </div>
+            <div class="top-nav-actions">
+                <button id="theme-toggle" aria-label="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="notifications.html" class="nav-icon-btn"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+                <a href="profile.html" class="user-profile" style="text-decoration: none; color: inherit;">
+                    <div class="avatar">IB</div>
+                    <span>Immad Baber</span>
+                </a>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <div class="welcome-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h1>My Portfolio</h1>
+                    <p class="market-status">Overall Portfolio AI Health: <strong class="bullish">Excellent (82%)</strong></p>
+                </div>
+                <button class="btn btn-primary">+ Add Holding</button>
+            </div>
+
+            <div class="widget-card">
+                <div class="widget-body">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Ticker</th>
+                                <th>Shares</th>
+                                <th>Avg Buy Price</th>
+                                <th>Current Price</th>
+                                <th>P&L</th>
+                                <th>AI Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>ENGRO</strong></td>
+                                <td>500</td>
+                                <td>Rs. 280.50</td>
+                                <td>Rs. 305.20</td>
+                                <td class="bullish">+8.8%</td>
+                                <td><span class="badge bullish-badge">Holding Strong</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>OGDC</strong></td>
+                                <td>1000</td>
+                                <td>Rs. 95.00</td>
+                                <td>Rs. 91.50</td>
+                                <td class="bearish">-3.6%</td>
+                                <td><span class="badge bearish-badge">Review Log</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

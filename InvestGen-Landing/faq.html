@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestGen | FAQ</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Invest<span>Gen</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="how-it-works.html">How We Work</a></li>
+                <li><a href="faq.html" style="color: var(--accent-color);">FAQ</a></li>
+                <li><a href="glossary.html">Glossary</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="theme-toggle" aria-label="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="login.html" class="btn btn-secondary">Login</a>
+                <a href="signup.html" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="section container" style="max-width: 800px;">
+            <h1 class="section-title">Frequently Asked Questions</h1>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    What makes InvestGen different from competitors?
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    Unlike standard platforms that rely on fixed technical indicators, InvestGen uses an adaptive multi-agent system. It identifies the current market regime and dynamically adjusts which indicators are most relevant. Furthermore, we provide calibrated confidence scores backed by walk-forward testing, rather than black-box guarantees.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Does InvestGen execute trades automatically?
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    No. InvestGen is a decision-support and investment intelligence system. Real-money trade execution or brokerage integration is out of scope. We provide the insights, and you execute the trades with your preferred broker.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    What is a Disconfirmation Agent?
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    It is a specialized AI agent within our system designed to find historical situations that looked exactly like the current market but resulted in an opposing outcome. By presenting counter-evidence, we protect investors from overconfidence.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Does InvestGen support markets other than PSX?
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    Currently, our system is entirely optimized and calibrated for the Pakistan Stock Exchange (PSX). Multi-market support is not available at this time.
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="logo">Invest<span>Gen</span></div>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="disclaimer.html">Disclaimer</a>
+            </div>
+            <div class="copyright">&copy; 2026 PSX Mentor Team. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

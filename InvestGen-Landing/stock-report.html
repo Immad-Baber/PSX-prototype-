@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestGen | Stock Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body class="dashboard-body">
+    <aside class="sidebar">
+        <div class="sidebar-header"><a href="index.html" class="logo">Invest<span>Gen</span></a></div>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
+            <li><a href="screener.html"><i class="fas fa-filter"></i> AI Screener</a></li>
+            <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+            <li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
+            <li><a href="recommendations.html"><i class="fas fa-robot"></i> Recommendations</a></li>
+            <li><a href="disconfirmation.html"><i class="fas fa-shield-alt"></i> Disconfirmation</a></li>
+            <li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
+            <li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
+        </ul>
+        <div class="sidebar-footer"><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></div>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="top-nav">
+            <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search ticker or company..."></div>
+            <div class="top-nav-actions">
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+                <a href="notifications.html" class="nav-icon-btn"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+                <a href="profile.html" class="user-profile" style="text-decoration: none; color: inherit;"><div class="avatar">IB</div><span>Immad Baber</span></a>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <div class="welcome-header" style="display: flex; justify-content: space-between; align-items: flex-end;">
+                <div>
+                    <h1 id="stock-report-title" style="font-size: 2.5rem; margin-bottom: 0;">ENGRO <span style="font-size: 1.2rem; color: var(--text-secondary); font-weight: normal;">Engro Corporation Limited</span></h1>
+                    <p id="stock-price-header" class="market-status" style="font-size: 1.8rem; font-weight: bold;">Rs. 305.20 <span class="bullish" style="font-size: 1.1rem; margin-left: 0.5rem;">+2.4% Today</span></p>
+                </div>
+                <button class="btn btn-secondary"><i class="fas fa-star"></i> Add to Watchlist</button>
+            </div>
+
+            <div class="widgets-grid" style="margin-bottom: 2rem;">
+                <div class="widget-card">
+                    <div class="widget-header">
+                        <h3>GenAI Report & Outlook</h3>
+                        <span id="stock-confidence" class="badge bullish-badge">92% Confidence</span>
+                    </div>
+                    <div class="widget-body">
+                        <p id="stock-ai-summary" style="color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.8;">
+                            <strong>AI Summary:</strong> ENGRO is currently exhibiting strong bullish momentum within a low-volatility market regime. The Hidden Markov Model (HMM) confirms the trend is stable. Our Genetic Algorithm has heavily weighted the MACD crossover and ADX/DMI indicators, which both align positively. 
+                        </p>
+                        <p style="color: var(--text-secondary); line-height: 1.8;">
+                            Fundamental tailwinds, specifically robust P/E positioning relative to the sector, further support this view. Expected Calibration Error (ECE) for similar past predictions is low (4.1%), indicating high reliability.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="widget-card">
+                    <div class="widget-header" style="background-color: rgba(37, 99, 235, 0.05);">
+                        <h3 style="color: var(--accent-color);"><i class="fas fa-shield-alt"></i> Disconfirmation Check</h3>
+                    </div>
+                    <div class="widget-body">
+                        <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                            <i class="fas fa-check-circle" style="color: #10b981; font-size: 2rem;"></i>
+                            <div>
+                                <h4 style="margin-bottom: 0.5rem;">Disconfirmation Check</h4>
+                                <p id="stock-disconf-summary" style="color: var(--text-secondary); font-size: 0.95rem;">The Disconfirmation Agent analyzed 14 historical analogs with similar technical setups. In 85% of cases, the stock continued to trend upwards. No major macro contradictions detected.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="widget-card" style="margin-bottom: 2rem;">
+                <div class="widget-header">
+                    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                        <h3 style="margin: 0;">Technical Chart (OHLCV)</h3>
+                        <div class="chart-filters" style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-primary filter-btn" data-period="ALL" style="padding: 0.2rem 0.8rem; font-size: 0.85rem;">All</button>
+                            <button class="btn filter-btn" data-period="3M" style="padding: 0.2rem 0.8rem; font-size: 0.85rem;">3M</button>
+                            <button class="btn filter-btn" data-period="1M" style="padding: 0.2rem 0.8rem; font-size: 0.85rem;">1M</button>
+                            <button class="btn filter-btn" data-period="7D" style="padding: 0.2rem 0.8rem; font-size: 0.85rem;">7D</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="lightweight-chart-container" class="widget-body" style="height: 300px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--border-color); border-radius: 8px;">
+                    <span style="color: var(--text-secondary);"><i class="fas fa-chart-bar"></i> Loading Interactive Chart...</span>
+                </div>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <span class="metric-label">HMM Regime</span>
+                    <div id="metric-regime" class="metric-value bullish-text">Trending Bullish</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">RSI (14)</span>
+                    <div id="metric-rsi" class="metric-value">64.2</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">P/E Ratio</span>
+                    <div id="metric-pe" class="metric-value">6.8x</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Volume</span>
+                    <div id="metric-volume" class="metric-value">1,542,300</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Market Cap</span>
+                    <div id="metric-market-cap" class="metric-value">Rs 165.00 Billion</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">MACD</span>
+                    <div id="metric-macd" class="metric-value bullish-text">Crossover UP</div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+    <script src="js/dashboard_data.js"></script>
+</body>
+</html>

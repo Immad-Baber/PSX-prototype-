@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestGen | Glossary</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Invest<span>Gen</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="how-it-works.html">How We Work</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="glossary.html" style="color: var(--accent-color);">Glossary</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="theme-toggle" aria-label="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="login.html" class="btn btn-secondary">Login</a>
+                <a href="signup.html" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="section container" style="max-width: 800px;">
+            <h1 class="section-title">Glossary of Terms</h1>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 3rem;">Definitions of core financial and technical concepts used in the InvestGen platform.</p>
+            
+            <dl>
+                <div class="glossary-term">
+                    <dt>Hidden Markov Model (HMM)</dt>
+                    <dd>A statistical model used in InvestGen to classify hidden market "regimes" (e.g., bull market, sideways volatility) based on observable data like price and volume.</dd>
+                </div>
+                
+                <div class="glossary-term">
+                    <dt>Genetic Algorithm (GA)</dt>
+                    <dd>An optimization technique inspired by natural evolution. We use it to dynamically tune technical indicator weights to fit the currently detected market regime.</dd>
+                </div>
+
+                <div class="glossary-term">
+                    <dt>Expected Calibration Error (ECE)</dt>
+                    <dd>A metric that measures the difference between an AI model's stated confidence and its actual accuracy over time. Lower ECE means the confidence score is highly reliable.</dd>
+                </div>
+
+                <div class="glossary-term">
+                    <dt>Walk-Forward Testing</dt>
+                    <dd>A robust backtesting strategy where the model is continuously retrained on past data and tested on the immediate future data, preventing overfitting.</dd>
+                </div>
+
+                <div class="glossary-term">
+                    <dt>Disconfirmation Agent</dt>
+                    <dd>A unique part of the InvestGen pipeline that actively searches for historical evidence that contradicts the primary investment recommendation.</dd>
+                </div>
+            </dl>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="logo">Invest<span>Gen</span></div>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="disclaimer.html">Disclaimer</a>
+            </div>
+            <div class="copyright">&copy; 2026 PSX Mentor Team. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestGen | Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-body">
+    <aside class="sidebar">
+        <div class="sidebar-header"><a href="index.html" class="logo">Invest<span>Gen</span></a></div>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
+            <li><a href="screener.html"><i class="fas fa-filter"></i> AI Screener</a></li>
+            <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+            <li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
+            <li><a href="recommendations.html"><i class="fas fa-robot"></i> Recommendations</a></li>
+            <li><a href="disconfirmation.html"><i class="fas fa-shield-alt"></i> Disconfirmation</a></li>
+            <li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
+            <li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
+        </ul>
+        <div class="sidebar-footer"><a href="settings.html" class="active"><i class="fas fa-cog"></i> Settings</a></div>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="top-nav">
+            <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search ticker or company..."></div>
+            <div class="top-nav-actions">
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+                <a href="notifications.html" class="nav-icon-btn"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+                <a href="profile.html" class="user-profile" style="text-decoration: none; color: inherit;"><div class="avatar">IB</div><span>Immad Baber</span></a>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <div class="welcome-header">
+                <h1>Settings</h1>
+                <p class="market-status">Manage your platform preferences.</p>
+            </div>
+
+            <div class="widget-card" style="max-width: 600px;">
+                <div class="widget-body">
+                    <div class="form-group">
+                        <label>Email Notifications</label>
+                        <select style="width: 100%; padding: 0.8rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+                            <option>Only urgent disconfirmation alerts</option>
+                            <option>Daily Portfolio Digest</option>
+                            <option>None</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Theme Preference</label>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">Use the toggle in the top right to switch between Light and Dark mode.</p>
+                    </div>
+                    <button class="btn btn-primary">Save Settings</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

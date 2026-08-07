@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestGen | Notifications</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-body">
+    <aside class="sidebar">
+        <div class="sidebar-header"><a href="index.html" class="logo">Invest<span>Gen</span></a></div>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
+            <li><a href="screener.html"><i class="fas fa-filter"></i> AI Screener</a></li>
+            <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+            <li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
+            <li><a href="recommendations.html"><i class="fas fa-robot"></i> Recommendations</a></li>
+            <li><a href="disconfirmation.html"><i class="fas fa-shield-alt"></i> Disconfirmation</a></li>
+            <li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
+            <li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
+        </ul>
+        <div class="sidebar-footer"><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></div>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="top-nav">
+            <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search ticker or company..."></div>
+            <div class="top-nav-actions">
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+                <a href="notifications.html" class="nav-icon-btn"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+                <a href="profile.html" class="user-profile" style="text-decoration: none; color: inherit;"><div class="avatar">IB</div><span>Immad Baber</span></a>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <div class="welcome-header">
+                <h1>Notifications</h1>
+                <p class="market-status">Recent updates from the Multi-Agent System.</p>
+            </div>
+
+            <div class="widget-card" style="max-width: 800px;">
+                <div class="widget-body" style="padding: 0;">
+                    <div style="padding: 1.5rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: flex-start; gap: 1rem;">
+                        <i class="fas fa-exclamation-circle" style="color: #ef4444; font-size: 1.5rem; margin-top: 0.2rem;"></i>
+                        <div>
+                            <h4 style="margin-bottom: 0.2rem;">Disconfirmation Agent Alert</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.95rem;">New counter-evidence found for your holding: OGDC.</p>
+                            <span style="font-size: 0.8rem; color: var(--text-secondary);">2 hours ago</span>
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem; display: flex; align-items: flex-start; gap: 1rem;">
+                        <i class="fas fa-chart-line" style="color: #10b981; font-size: 1.5rem; margin-top: 0.2rem;"></i>
+                        <div>
+                            <h4 style="margin-bottom: 0.2rem;">Regime Shift Detected</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.95rem;">HMM has confirmed a shift to a Trending Bullish regime for KSE100.</p>
+                            <span style="font-size: 0.8rem; color: var(--text-secondary);">Yesterday</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
