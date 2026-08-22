@@ -3,10 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InvestOPak | Disconfirmation</title>
+    <title>InvestOPak | Disconfirmation Engine</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .premium-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .agent-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .agent-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .agent-title h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--text-main);
+        }
+        .agent-title p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .compare-box {
+            background: var(--bg-main);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .compare-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        
+        .compare-box.current {
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        
+        .compare-box.analog {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        
+        .box-badge {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .current .box-badge { background: #10b981; }
+        .analog .box-badge { background: #ef4444; }
+        
+        .feature-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--border-color);
+        }
+        
+        .agent-terminal {
+            background: #0a0a0f;
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: #10b981;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+            height: 120px;
+            overflow-y: hidden;
+            position: relative;
+        }
+        
+        .terminal-line {
+            opacity: 0;
+            animation: fadeIn 0.3s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        .action-bar {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: flex-end;
+        }
+        
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { background: #2563eb; transform: scale(1.02); }
+        
+        .btn-outline {
+            background: transparent;
+            color: #ef4444;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #ef4444;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-outline:hover { background: rgba(239, 68, 68, 0.1); }
+    </style>
 </head>
 <body class="dashboard-body">
     <aside class="sidebar">
@@ -14,8 +160,7 @@
         <ul class="sidebar-nav">
             <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
             <li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
-            <li><a href="screener.html"><i class="fas fa-filter"></i> AI Screener</a></li>
-            <li><a href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener (Demo)</a></li>
+            <li><a href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener</a></li>
             <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
             <li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
             <li><a href="recommendations.html"><i class="fas fa-robot"></i> Recommendations</a></li>
@@ -31,7 +176,7 @@
             <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search ticker or company..."></div>
             <div class="top-nav-actions">
                 <button id="theme-toggle"><i class="fas fa-moon"></i></button>
-                <a href="notifications.html" class="nav-icon-btn"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+                <a href="notifications.html" class="nav-icon-btn"><i class="fas fa-bell"></i><span class="badge" style="background:#ef4444;">1</span></a>
                 <a href="profile.html" class="user-profile" style="text-decoration: none; color: inherit;"><div class="avatar">IB</div><span>Immad Baber</span></a>
             </div>
         </header>
@@ -39,37 +184,83 @@
         <main class="dashboard-content">
             <div class="welcome-header">
                 <h1>Disconfirmation Engine</h1>
-                <p class="market-status">Protecting you from overconfidence by finding contradictory historical analogs.</p>
+                <p class="market-status">Human-in-the-Loop Safeguard: Identifying historical contradictions to prevent overconfidence.</p>
             </div>
 
-            <div class="widget-card">
-                <div class="widget-header" style="background-color: rgba(239, 68, 68, 0.05);">
-                    <h3 style="color: #ef4444;"><i class="fas fa-exclamation-triangle"></i> New Counter-Evidence for OGDC</h3>
+            <div class="premium-card">
+                <div class="agent-header">
+                    <div class="agent-icon"><i class="fas fa-brain"></i></div>
+                    <div class="agent-title">
+                        <h2>Critical Alert: OGDC</h2>
+                        <p>The AI Screener recommended a Bullish outlook (74% confidence). The Disconfirmation Agent disagrees.</p>
+                    </div>
                 </div>
-                <div class="widget-body">
-                    <p style="margin-bottom: 1.5rem;">The AI predicts OGDC will trend UP with 74% confidence based on current RSI/MACD. However, the Disconfirmation Agent found a highly similar pattern in 2024 where the price dropped.</p>
-                    
-                    <div style="display: flex; gap: 2rem;">
-                        <div style="flex: 1; border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 8px;">
-                            <h4 style="color: var(--text-secondary); margin-bottom: 1rem;">Current Setup (Today)</h4>
-                            <ul style="list-style: none;">
-                                <li style="margin-bottom: 0.5rem;"><i class="fas fa-check" style="color: #10b981;"></i> RSI at 68 (Bullish momentum)</li>
-                                <li style="margin-bottom: 0.5rem;"><i class="fas fa-check" style="color: #10b981;"></i> MACD Crossover</li>
-                            </ul>
+
+                <div class="comparison-grid">
+                    <!-- Current State -->
+                    <div class="compare-box current">
+                        <div class="box-badge">Current Setup (Today)</div>
+                        <h3 style="margin-bottom: 0.5rem;">Bullish Momentum</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Initial Technical Agent Analysis</p>
+                        
+                        <div class="feature-row">
+                            <span>RSI</span>
+                            <span style="color: #10b981; font-weight: bold;"><i class="fas fa-arrow-up"></i> 68 (Overbought)</span>
                         </div>
-                        <div style="flex: 1; border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 8px;">
-                            <h4 style="color: var(--text-secondary); margin-bottom: 1rem;">Analog Match (March 2024)</h4>
-                            <ul style="list-style: none;">
-                                <li style="margin-bottom: 0.5rem;"><i class="fas fa-times" style="color: #ef4444;"></i> RSI at 69 (Matched)</li>
-                                <li style="margin-bottom: 0.5rem;"><i class="fas fa-times" style="color: #ef4444;"></i> MACD Crossover (Matched)</li>
-                                <li style="margin-top: 1rem; font-weight: bold; color: #ef4444;">Outcome: Price dropped 12% in 2 weeks.</li>
-                            </ul>
+                        <div class="feature-row">
+                            <span>MACD</span>
+                            <span style="color: #10b981; font-weight: bold;"><i class="fas fa-check"></i> Bullish Crossover</span>
+                        </div>
+                        <div class="feature-row">
+                            <span>Volume</span>
+                            <span style="color: #10b981; font-weight: bold;"><i class="fas fa-arrow-up"></i> +12% Avg</span>
                         </div>
                     </div>
+
+                    <!-- Historical Analog -->
+                    <div class="compare-box analog">
+                        <div class="box-badge">Historical Analog (March 2024)</div>
+                        <h3 style="margin-bottom: 0.5rem;">Bearish Reversal</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">94% Vector Similarity Match found via RAG</p>
+                        
+                        <div class="feature-row">
+                            <span>RSI Match</span>
+                            <span style="color: #ef4444; font-weight: bold;">69 (Near exact)</span>
+                        </div>
+                        <div class="feature-row">
+                            <span>MACD Match</span>
+                            <span style="color: #ef4444; font-weight: bold;">Identical Crossover</span>
+                        </div>
+                        <div class="feature-row">
+                            <span>Market Outcome</span>
+                            <span style="color: #ef4444; font-weight: bold;"><i class="fas fa-arrow-down"></i> Price dropped 12%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agent Working Terminal -->
+                <div class="agent-terminal" id="term-box">
+                    <div class="terminal-line" style="animation-delay: 0.2s;">> DISCONFIRMATION_AGENT initialized.</div>
+                    <div class="terminal-line" style="animation-delay: 1.0s;">> Extracting current technical embeddings for [OGDC]... Done.</div>
+                    <div class="terminal-line" style="animation-delay: 2.5s;">> Querying vector database for historical analogs... Found 12 matches.</div>
+                    <div class="terminal-line" style="animation-delay: 3.8s; color: #f59e0b;">> WARNING: Top match (March 2024, dist=0.06) resulted in bearish reversal.</div>
+                    <div class="terminal-line" style="animation-delay: 4.5s; color: #ef4444;">> RECOMMENDATION: Downgrade confidence score. Requesting user intervention.</div>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn-outline"><i class="fas fa-times"></i> Ignore Agent (Keep Bullish)</button>
+                    <button class="btn-primary" onclick="alert('Adjusting portfolio weight and recalculating risk matrix...')"><i class="fas fa-sliders-h"></i> Accept Risk (Adjust Weights)</button>
                 </div>
             </div>
         </main>
     </div>
+
     <script src="js/main.js"></script>
+    <script>
+        // Simple auto-scroll for terminal effect
+        setTimeout(() => {
+            document.getElementById('term-box').scrollTop = 100;
+        }, 4000);
+    </script>
 </body>
 </html>
