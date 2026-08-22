@@ -6,6 +6,7 @@
     <title>InvestOPak | AI Screener Demo</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <style>
         /* Specific Styles for AI Screener Demo adapting to Themes */
@@ -517,16 +518,7 @@
                         <div class="regime-badge" id="regime-badge">
                             <i class="fas fa-arrows-alt-h"></i> Sideways Market
                         </div>
-                        <svg class="mock-chart" viewBox="0 0 400 200" preserveAspectRatio="none">
-                            <defs>
-                                <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stop-color="rgba(59, 130, 246, 0.2)" />
-                                    <stop offset="100%" stop-color="rgba(59, 130, 246, 0)" />
-                                </linearGradient>
-                            </defs>
-                            <path class="chart-line" d="M0,150 Q40,140 80,160 T160,130 T240,150 T320,110 T400,120" />
-                            <path fill="url(#chartGrad)" d="M0,150 Q40,140 80,160 T160,130 T240,150 T320,110 T400,120 L400,200 L0,200 Z" />
-                        </svg>
+                        <canvas id="stockChart" style="width:100%; height:200px; margin-top: 20px;"></canvas>
                     </div>
 
                     <div class="indicators-box">
@@ -635,6 +627,59 @@
         ];
 
         // Helpers
+        let isTyping = false;
+        let chartInstance = null;
+
+        function initChart() {
+            const ctx = document.getElementById('stockChart').getContext('2d');
+            
+            // Generate some realistic-looking jagged mock data
+            const labels = Array.from({length: 40}, (_, i) => i);
+            let val = 100;
+            const data = labels.map(i => {
+                val += (Math.random() - 0.5) * 5; // random walk
+                // force a slight sideways/upward trend
+                if (val < 90) val += 3;
+                if (val > 115) val -= 3;
+                return val;
+            });
+
+            // Gradient fill
+            const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+            gradient.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
+            gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Price',
+                        data: data,
+                        borderColor: '#3b82f6',
+                        backgroundColor: gradient,
+                        borderWidth: 2,
+                        fill: true,
+                        pointRadius: 0,
+                        pointHoverRadius: 4,
+                        tension: 0.1 // jagged realistic line
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, tooltip: { enabled: true } },
+                    scales: {
+                        x: { display: false },
+                        y: { display: true, border: { display: false }, grid: { color: 'rgba(0,0,0,0.05)' } }
+                    }
+                }
+            });
+        }
+
+        // Initialize the chart on load
+        initChart();
+
         function scrollToBottom() {
             chat.scrollTop = chat.scrollHeight;
         }
@@ -708,6 +753,9 @@
         }
 
         async function appendAIMessage(textFnOrString, stateObj) {
+            if (isTyping) return; // Prevent concurrent messages
+            isTyping = true;
+            
             if (stateObj?.isAgentWorking) {
                 await showAgentWorking();
             } else {
@@ -745,6 +793,7 @@
             }
             
             scrollToBottom();
+            isTyping = false;
         }
 
         function appendUserMessage(text) {
@@ -881,8 +930,11 @@
                 setTimeout(() => document.getElementById('chip-bb').classList.add('active'), 1000);
             } else if (trigger === 'activate-adx') {
                 document.getElementById('chip-adx').classList.add('active');
-                document.querySelector('.chart-line').style.stroke = '#f59e0b';
-                document.querySelector('.chart-line').style.filter = 'drop-shadow(0 0 8px rgba(245, 158, 11, 0.4))';
+                // modify chart line color slightly to show "weakening"
+                if(chartInstance) {
+                    chartInstance.data.datasets[0].borderColor = '#f59e0b';
+                    chartInstance.update();
+                }
             } else if (trigger === 'finalize') {
                 const meter = document.getElementById('conf-meter');
                 const val = document.getElementById('conf-val');
@@ -915,6 +967,8 @@
         const sendBtn = document.getElementById('send-btn');
         
         function handleSend() {
+            if (isTyping) return; // don't accept input while AI is typing
+            
             const text = chatInput.value.trim();
             if(!text) return;
             
@@ -946,7 +1000,10 @@
 
         sendBtn.addEventListener('click', handleSend);
         chatInput.addEventListener('keypress', (e) => {
-            if(e.key === 'Enter') handleSend();
+            if(e.key === 'Enter') {
+                e.preventDefault();
+                handleSend();
+            }
         });
 
         // Start Conversation
