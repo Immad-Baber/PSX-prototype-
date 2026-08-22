@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestOPak | AI Screener Demo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Specific Styles for AI Screener Demo adapting to Themes */
+        .demo-wrapper {
+            display: flex;
+            height: calc(100vh - 80px);
+            overflow: hidden;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Glassmorphism utility using theme variables */
+        .glass-panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Left Panel - Chat */
+        .chat-container {
+            flex: 0 0 55%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 1.2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .demo-badge {
+            font-size: 0.7rem;
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            scroll-behavior: smooth;
+        }
+        
+        .chat-messages::-webkit-scrollbar { width: 6px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            max-width: 85%;
+            animation: fadeIn 0.3s ease forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.ai {
+            align-self: flex-start;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .message.ai .avatar { background: rgba(59, 130, 246, 0.15); color: var(--accent-color); border: 1px solid rgba(59, 130, 246, 0.3); }
+        .message.user .avatar { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+
+        .msg-bubble {
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .message.ai .msg-bubble {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-top-left-radius: 4px;
+            color: var(--text-primary);
+        }
+
+        .message.user .msg-bubble {
+            background: var(--accent-color);
+            color: #fff;
+            border-top-right-radius: 4px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 8px 12px;
+            background: var(--bg-primary);
+            border-radius: 16px;
+            border-top-left-radius: 4px;
+            border: 1px solid var(--border-color);
+            width: fit-content;
+        }
+
+        .typing-indicator span {
+            width: 6px;
+            height: 6px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+            margin-left: 48px;
+        }
+
+        .qr-btn {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .qr-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .chat-input-area {
+            padding: 16px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: 24px;
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        .chat-input-area input:focus { border-color: var(--accent-color); }
+        
+        .chat-input-area button {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .chat-input-area button:hover { background: var(--accent-hover); }
+        .chat-input-area button:disabled { background: var(--border-color); color: var(--text-secondary); cursor: not-allowed; }
+
+        /* Right Panel - Canvas */
+        .canvas-container {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .canvas-header h3 { margin: 0; font-size: 1.1rem; color: var(--text-primary); }
+
+        .chart-box {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            height: 250px;
+            position: relative;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Mock Chart SVG */
+        .mock-chart { width: 100%; height: 100%; }
+        .chart-line {
+            fill: none;
+            stroke: var(--accent-color);
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.3));
+        }
+
+        .regime-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(245, 158, 11, 0.15);
+            color: #d97706;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0.3;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        [data-theme="dark"] .regime-badge { color: #fbbf24; }
+        .regime-badge.active { opacity: 1; }
+
+        .indicators-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .indicators-box h4 { margin: 0; font-size: 0.9rem; color: var(--text-secondary); }
+        
+        .chips-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .chip {
+            padding: 6px 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            transition: all 0.4s ease;
+        }
+
+        .chip.active {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: #10b981;
+            color: #059669;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.1);
+        }
+        [data-theme="dark"] .chip.active { color: #10b981; }
+
+        /* Confidence Meter */
+        .confidence-box {
+            margin-top: auto;
+            background: var(--bg-primary);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .conf-info h4 { margin: 0 0 5px 0; color: var(--text-primary); }
+        .conf-info p { margin: 0; font-size: 0.85rem; color: var(--text-secondary); }
+
+        .circular-progress {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: conic-gradient(var(--border-color) 100%, transparent 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 1.5s ease;
+        }
+
+        .circular-progress::before {
+            content: "";
+            position: absolute;
+            width: 66px;
+            height: 66px;
+            background: var(--bg-primary);
+            border-radius: 50%;
+        }
+
+        .progress-value {
+            position: relative;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        /* Multi-select chips for "Add more" */
+        .multi-select-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+            margin-left: 48px;
+            background: var(--bg-primary);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .multi-select-container .ms-label {
+            color: var(--text-primary); font-size: 0.9rem; margin-bottom: 5px;
+        }
+        .ms-chip {
+            padding: 6px 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            user-select: none;
+            transition: all 0.2s;
+        }
+        .ms-chip.selected {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
+        }
+        .confirm-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 8px;
+            align-self: flex-start;
+        }
+
+        /* Stock selection input */
+        .stock-selector {
+            margin-left: 48px;
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .stock-selector input {
+            background: var(--bg-primary);
+            border: 1px solid var(--accent-color);
+            color: var(--text-primary);
+            padding: 8px 12px;
+            border-radius: 6px;
+            outline: none;
+        }
+        .stock-selector button {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* Final Report Card */
+        .final-report-card {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        [data-theme="dark"] .final-report-card {
+            background: linear-gradient(145deg, rgba(30,41,59,0.9), rgba(15,23,42,0.9));
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .frc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .frc-title { font-family: 'Outfit', sans-serif; font-size: 1.2rem; color: var(--text-primary); margin:0;}
+        .frc-tag { background: rgba(16,185,129,0.15); color: #059669; padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 0.8rem;}
+        [data-theme="dark"] .frc-tag { color: #10b981; }
+        
+        .frc-body ul { margin: 0; padding-left: 20px; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 12px; }
+        .frc-body li { margin-bottom: 6px; }
+        .frc-footer { font-size: 0.75rem; color: var(--text-secondary); text-align: center; font-style: italic; }
+    </style>
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="logo">Invest<span>OPak</span></a>
+        </div>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
+            <li><a href="screener.html"><i class="fas fa-filter"></i> AI Screener</a></li>
+            <li><a href="screener-demo.html" class="active"><i class="fas fa-robot"></i> AI Screener (Demo)</a></li>
+            <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+            <li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
+            <li><a href="recommendations.html"><i class="fas fa-robot"></i> Recommendations</a></li>
+            <li><a href="disconfirmation.html"><i class="fas fa-shield-alt"></i> Disconfirmation</a></li>
+            <li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
+            <li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+        </div>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="top-nav">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search ticker or company...">
+            </div>
+            <div class="top-nav-actions">
+                <button id="theme-toggle" aria-label="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="notifications.html" class="nav-icon-btn"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+                <a href="profile.html" class="user-profile" style="text-decoration: none; color: inherit;">
+                    <div class="avatar">IB</div>
+                    <span>Immad Baber</span>
+                </a>
+            </div>
+        </header>
+
+        <main class="dashboard-content" style="padding-top: 80px;">
+            <div class="demo-wrapper">
+                
+                <!-- Left Panel -->
+                <div class="glass-panel chat-container">
+                    <div class="chat-header">
+                        <h2><i class="fas fa-robot" style="color: var(--accent-color);"></i> Interactive Screener</h2>
+                        <span class="demo-badge">Demo Mode</span>
+                    </div>
+                    <div class="chat-messages" id="chat">
+                        <!-- Messages injected via JS -->
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" id="chat-input" placeholder="Type a message or select an option...">
+                        <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+
+                <!-- Right Panel -->
+                <div class="glass-panel canvas-container">
+                    <div class="canvas-header">
+                        <h3><i class="fas fa-chart-line"></i> Live Analysis Canvas</h3>
+                    </div>
+                    
+                    <div class="chart-box">
+                        <div class="regime-badge" id="regime-badge">
+                            <i class="fas fa-arrows-alt-h"></i> Sideways Market
+                        </div>
+                        <canvas id="stockChart" style="width:100%; height:200px; margin-top: 20px;"></canvas>
+                    </div>
+
+                    <div class="indicators-box">
+                        <h4>Active Indicators</h4>
+                        <div class="chips-row">
+                            <div class="chip" id="chip-rsi">RSI</div>
+                            <div class="chip" id="chip-macd">MACD</div>
+                            <div class="chip" id="chip-bb">Bollinger Bands</div>
+                            <div class="chip" id="chip-adx">ADX</div>
+                            <div class="chip" id="chip-obv">OBV</div>
+                            <div class="chip" id="chip-atr">ATR</div>
+                        </div>
+                    </div>
+
+                    <div class="confidence-box">
+                        <div class="conf-info">
+                            <h4>AI Confidence Score</h4>
+                            <p>Based on current market regime</p>
+                        </div>
+                        <div class="circular-progress" id="conf-meter">
+                            <span class="progress-value" id="conf-val">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Include main js to enable theme toggle across pages -->
+    <script src="js/main.js"></script>
+    <script>
+        // State Machine & Logic
+        const chat = document.getElementById('chat');
+        let step = 0;
+        let selectedStock = "";
+
+        const stateMachine = [
+            // Step 0
+            {
+                aiMsg: "Hello! I'm your InvestOPak AI assistant. What's your primary investment goal today?",
+                options: [
+                    { label: "Long-term Growth", nextStep: 1 },
+                    { label: "Short-term Trading", nextStep: 1 },
+                    { label: "Just Exploring", nextStep: 1 }
+                ]
+            },
+            // Step 1
+            {
+                aiMsg: "Got it. How would you describe your risk tolerance?",
+                options: [
+                    { label: "Conservative", nextStep: 2 },
+                    { label: "Balanced", nextStep: 2 },
+                    { label: "Aggressive", nextStep: 2 }
+                ]
+            },
+            // Step 2 (Special: requires stock input)
+            {
+                aiMsg: "Which PSX stock would you like to analyze?",
+                isStockInput: true
+            },
+            // Step 3 (Agent Working State then Regime Detection)
+            {
+                isAgentWorking: true,
+                aiMsg: (stock) => `I've detected a Sideways market regime for **${stock}**. Based on this, I recommend RSI, MACD, and Bollinger Bands.`,
+                triggerRightPanel: 'activate-base-indicators',
+                options: [
+                    { label: "Continue with these", nextStep: 5 },
+                    { label: "Add more indicators", action: 'show-add-indicators' },
+                    { label: "Why these?", action: 'show-why' }
+                ]
+            },
+            // Step 4 (Dummy for explanation + ELI5)
+            {
+                aiMsg: "RSI and Bollinger Bands are great for identifying overbought/oversold levels in a sideways (range-bound) market, while MACD helps spot momentum shifts.",
+                options: [
+                    { label: "Simplify this (ELI5)", action: 'show-eli5' },
+                    { label: "Continue with these", nextStep: 5 },
+                    { label: "Add more indicators", action: 'show-add-indicators' }
+                ]
+            },
+            // Step 5 (Conflicting evidence)
+            {
+                aiMsg: "Most indicators suggest a positive outlook, but our Disconfirmation Agent found that ADX shows weakening trend strength. Want me to investigate further?",
+                triggerRightPanel: 'activate-adx',
+                options: [
+                    { label: "Yes, investigate", nextStep: 6 },
+                    { label: "No, skip", nextStep: 6 }
+                ]
+            },
+            // Step 6 (What-If Scenario)
+            {
+                aiMsg: "I also noticed high energy prices could impact margins. What if inflation rises next month?",
+                options: [
+                    { label: "Run 'High Inflation' Scenario", action: 'run-what-if' },
+                    { label: "Skip to Final Assessment", nextStep: 7 }
+                ]
+            },
+            // Step 7 (Final Resolution)
+            {
+                aiMsg: "Alright, here is your final AI assessment:",
+                triggerRightPanel: 'finalize',
+                showFinalCard: true,
+                options: []
+            }
+        ];
+
+        // Helpers
+        let isTyping = false;
+        let chartInstance = null;
+
+        function initChart() {
+            const ctx = document.getElementById('stockChart').getContext('2d');
+            
+            // Generate some realistic-looking jagged mock data
+            const labels = Array.from({length: 40}, (_, i) => i);
+            let val = 100;
+            const data = labels.map(i => {
+                val += (Math.random() - 0.5) * 5; // random walk
+                // force a slight sideways/upward trend
+                if (val < 90) val += 3;
+                if (val > 115) val -= 3;
+                return val;
+            });
+
+            // Gradient fill
+            const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+            gradient.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
+            gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Price',
+                        data: data,
+                        borderColor: '#3b82f6',
+                        backgroundColor: gradient,
+                        borderWidth: 2,
+                        fill: true,
+                        pointRadius: 0,
+                        pointHoverRadius: 4,
+                        tension: 0.1 // jagged realistic line
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, tooltip: { enabled: true } },
+                    scales: {
+                        x: { display: false },
+                        y: { display: true, border: { display: false }, grid: { color: 'rgba(0,0,0,0.05)' } }
+                    }
+                }
+            });
+        }
+
+        // Initialize the chart on load
+        initChart();
+
+        function scrollToBottom() {
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        async function typeText(element, text, speed = 15) {
+            element.innerHTML = '';
+            if(text.includes('<') || text.includes('**') || text.includes('&')) {
+                let htmlText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                element.innerHTML = htmlText;
+            } else {
+                for (let i = 0; i < text.length; i++) {
+                    element.innerHTML += text.charAt(i);
+                    await new Promise(r => setTimeout(r, speed));
+                    scrollToBottom();
+                }
+            }
+        }
+
+        async function showTypingIndicator() {
+            const wrap = document.createElement('div');
+            wrap.className = 'message ai';
+            wrap.id = 'typing-indicator-wrap';
+            wrap.innerHTML = `
+                <div class="avatar"><i class="fas fa-robot"></i></div>
+                <div class="typing-indicator">
+                    <span></span><span></span><span></span>
+                </div>
+            `;
+            chat.appendChild(wrap);
+            scrollToBottom();
+            return new Promise(r => setTimeout(r, 800));
+        }
+
+        function removeTypingIndicator() {
+            const el = document.getElementById('typing-indicator-wrap');
+            if(el) el.remove();
+        }
+
+        async function showAgentWorking() {
+            const wrap = document.createElement('div');
+            wrap.className = 'message ai';
+            wrap.style.width = '100%';
+            wrap.innerHTML = `
+                <div class="avatar"><i class="fas fa-network-wired"></i></div>
+                <div class="msg-bubble" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59,130,246,0.3); font-size: 0.85rem;">
+                    <div id="ag-1" style="opacity: 0.5; margin-bottom: 4px;"><i class="fas fa-spinner fa-spin"></i> Data Agent: Fetching historicals...</div>
+                    <div id="ag-2" style="opacity: 0.5; margin-bottom: 4px; display: none;"><i class="fas fa-spinner fa-spin"></i> Market Context Agent: Detecting regime...</div>
+                    <div id="ag-3" style="opacity: 0.5; display: none;"><i class="fas fa-spinner fa-spin"></i> Technical Agent: Optimizing GA parameters...</div>
+                </div>
+            `;
+            chat.appendChild(wrap);
+            scrollToBottom();
+            
+            await new Promise(r => setTimeout(r, 1000));
+            document.getElementById('ag-1').innerHTML = '<i class="fas fa-check-circle" style="color:#10b981;"></i> Data Agent: Historicals loaded.';
+            document.getElementById('ag-1').style.opacity = '1';
+            document.getElementById('ag-2').style.display = 'block';
+            scrollToBottom();
+            
+            await new Promise(r => setTimeout(r, 1200));
+            document.getElementById('ag-2').innerHTML = '<i class="fas fa-check-circle" style="color:#10b981;"></i> Market Context Agent: Regime detected.';
+            document.getElementById('ag-2').style.opacity = '1';
+            document.getElementById('ag-3').style.display = 'block';
+            scrollToBottom();
+            
+            await new Promise(r => setTimeout(r, 1500));
+            document.getElementById('ag-3').innerHTML = '<i class="fas fa-check-circle" style="color:#10b981;"></i> Technical Agent: Parameters optimized.';
+            document.getElementById('ag-3').style.opacity = '1';
+            scrollToBottom();
+            await new Promise(r => setTimeout(r, 600));
+        }
+
+        async function appendAIMessage(textFnOrString, stateObj) {
+            if (isTyping) return; // Prevent concurrent messages
+            isTyping = true;
+            
+            if (stateObj?.isAgentWorking) {
+                await showAgentWorking();
+            } else {
+                await showTypingIndicator();
+            }
+            removeTypingIndicator();
+
+            const text = typeof textFnOrString === 'function' ? textFnOrString(selectedStock) : textFnOrString;
+            
+            const wrap = document.createElement('div');
+            wrap.className = 'message ai';
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.innerHTML = '<i class="fas fa-robot"></i>';
+            wrap.appendChild(avatar);
+
+            const bubble = document.createElement('div');
+            bubble.className = 'msg-bubble';
+            wrap.appendChild(bubble);
+            chat.appendChild(wrap);
+
+            await typeText(bubble, text);
+
+            if (stateObj?.triggerRightPanel) {
+                handleRightPanelTrigger(stateObj.triggerRightPanel);
+            }
+
+            if (stateObj?.showFinalCard) {
+                appendFinalCard();
+            } else if (stateObj?.isStockInput) {
+                appendStockInput();
+            } else if (stateObj?.options?.length > 0) {
+                appendOptions(stateObj.options, stateObj);
+            }
+            
+            scrollToBottom();
+            isTyping = false;
+        }
+
+        function appendUserMessage(text) {
+            const wrap = document.createElement('div');
+            wrap.className = 'message user';
+            wrap.innerHTML = `
+                <div class="avatar"><i class="fas fa-user"></i></div>
+                <div class="msg-bubble">${text}</div>
+            `;
+            chat.appendChild(wrap);
+            scrollToBottom();
+        }
+
+        function appendOptions(options, stateObj) {
+            const container = document.createElement('div');
+            container.className = 'quick-replies';
+            
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'qr-btn';
+                btn.innerText = opt.label;
+                btn.onclick = () => {
+                    container.style.display = 'none';
+                    appendUserMessage(opt.label);
+                    
+                    if (opt.nextStep !== undefined) {
+                        step = opt.nextStep;
+                        setTimeout(() => processStep(), 300);
+                    } else if (opt.action === 'show-why') {
+                        setTimeout(() => appendAIMessage(stateMachine[4].aiMsg, stateMachine[4]), 300);
+                    } else if (opt.action === 'show-eli5') {
+                        setTimeout(() => appendAIMessage("Basically, RSI acts like a stretched rubber band—if it's pulled too far down, it might snap back up. Bollinger Bands show the 'walls' of the market, and MACD tells us if the trend is accelerating.", { options: [ { label: "Got it, continue", nextStep: 5 }, { label: "Add more indicators", action: 'show-add-indicators' } ] }), 300);
+                    } else if (opt.action === 'show-add-indicators') {
+                        appendMultiSelect();
+                    } else if (opt.action === 'run-what-if') {
+                        setTimeout(() => appendAIMessage("Our RAG Agent found a similar scenario in 2022. High inflation typically squeezes cement margins. Adjusting fundamentals weight by -15%.", { options: [ { label: "Proceed to Final Assessment", nextStep: 7 } ] }), 400);
+                    }
+                };
+                container.appendChild(btn);
+            });
+            chat.appendChild(container);
+            scrollToBottom();
+        }
+
+        function appendStockInput() {
+            const container = document.createElement('div');
+            container.className = 'stock-selector';
+            container.innerHTML = `
+                <input type="text" id="stock-inp" placeholder="e.g. OGDC, LUCK..." value="LUCK">
+                <button id="stock-btn">Analyze</button>
+            `;
+            chat.appendChild(container);
+            scrollToBottom();
+
+            document.getElementById('stock-btn').onclick = () => {
+                const val = document.getElementById('stock-inp').value || 'LUCK';
+                selectedStock = val.toUpperCase();
+                container.style.display = 'none';
+                appendUserMessage(`Analyze ${selectedStock}`);
+                step = 3;
+                setTimeout(() => processStep(), 300);
+            };
+        }
+
+        function appendMultiSelect() {
+            const container = document.createElement('div');
+            container.className = 'multi-select-container';
+            container.innerHTML = `
+                <div class="ms-label">Select indicators to add:</div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <div class="ms-chip" onclick="this.classList.toggle('selected')">ADX</div>
+                    <div class="ms-chip" onclick="this.classList.toggle('selected')">ATR</div>
+                    <div class="ms-chip" onclick="this.classList.toggle('selected')">OBV</div>
+                </div>
+                <button class="confirm-btn">Confirm</button>
+            `;
+            chat.appendChild(container);
+            scrollToBottom();
+
+            container.querySelector('.confirm-btn').onclick = () => {
+                const selected = Array.from(container.querySelectorAll('.ms-chip.selected')).map(c => c.innerText);
+                container.style.display = 'none';
+                
+                if (selected.length > 0) {
+                    appendUserMessage(`Add ${selected.join(', ')}`);
+                    selected.forEach(ind => {
+                        const chip = document.getElementById('chip-' + ind.toLowerCase());
+                        if(chip) chip.classList.add('active');
+                    });
+                } else {
+                    appendUserMessage("Don't add any");
+                }
+                step = 5;
+                setTimeout(() => processStep(), 300);
+            };
+        }
+
+        function appendFinalCard() {
+            const wrap = document.createElement('div');
+            wrap.className = 'message ai';
+            wrap.style.width = '100%';
+            wrap.innerHTML = `
+                <div class="avatar" style="visibility: hidden;"></div>
+                <div class="final-report-card" style="width: 100%; max-width: 400px; margin-left: 0;">
+                    <div class="frc-header">
+                        <h4 class="frc-title">${selectedStock} Analysis</h4>
+                        <span class="frc-tag">Bullish Outlook</span>
+                    </div>
+                    <div class="frc-body">
+                        <ul>
+                            <li>RSI indicates stock is oversold, potential bounce.</li>
+                            <li>MACD crossing signal line upwards.</li>
+                            <li>Disconfirmation: ADX shows weak trend.</li>
+                            <li>What-If: Margins squeezed if inflation rises.</li>
+                        </ul>
+                    </div>
+                    <div class="frc-footer">
+                        Decision support only, not financial advice.
+                        <div style="margin-top: 10px;">
+                            <button onclick="alert('Exporting Investment Memo as PDF...')" style="background: var(--accent-color); color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; width: 100%;"><i class="fas fa-file-pdf"></i> Export Investment Memo (PDF)</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            chat.appendChild(wrap);
+            scrollToBottom();
+        }
+
+        function handleRightPanelTrigger(trigger) {
+            if (trigger === 'activate-base-indicators') {
+                document.getElementById('regime-badge').classList.add('active');
+                setTimeout(() => document.getElementById('chip-rsi').classList.add('active'), 200);
+                setTimeout(() => document.getElementById('chip-macd').classList.add('active'), 600);
+                setTimeout(() => document.getElementById('chip-bb').classList.add('active'), 1000);
+            } else if (trigger === 'activate-adx') {
+                document.getElementById('chip-adx').classList.add('active');
+                // modify chart line color slightly to show "weakening"
+                if(chartInstance) {
+                    chartInstance.data.datasets[0].borderColor = '#f59e0b';
+                    chartInstance.update();
+                }
+            } else if (trigger === 'finalize') {
+                const meter = document.getElementById('conf-meter');
+                const val = document.getElementById('conf-val');
+                let conf = 0;
+                const target = 82; 
+                const borderColor = getComputedStyle(document.body).getPropertyValue('--border-color').trim() || '#e2e8f0';
+                
+                meter.style.background = `conic-gradient(#10b981 ${target}%, ${borderColor} 0)`;
+                val.style.color = '#10b981';
+                
+                const interval = setInterval(() => {
+                    conf += 2;
+                    if(conf >= target) {
+                        conf = target;
+                        clearInterval(interval);
+                    }
+                    val.innerText = conf + '%';
+                }, 30);
+            }
+        }
+
+        function processStep() {
+            if (step >= stateMachine.length) return;
+            const s = stateMachine[step];
+            appendAIMessage(s.aiMsg, s);
+        }
+
+        // Handle manual typing
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+        
+        function handleSend() {
+            if (isTyping) return; // don't accept input while AI is typing
+            
+            const text = chatInput.value.trim();
+            if(!text) return;
+            
+            chatInput.value = '';
+            // Hide any active quick replies or stock inputs
+            const qrs = document.querySelectorAll('.quick-replies, .stock-selector, .multi-select-container');
+            qrs.forEach(el => el.style.display = 'none');
+            
+            appendUserMessage(text);
+            
+            // If they typed something manually, just advance to the next logical step in the demo
+            if (step === 2) {
+                // If it was the stock selection step, treat their text as the stock
+                selectedStock = text.toUpperCase();
+                step = 3;
+            } else {
+                // Otherwise just move to next step or a specific step
+                // For a robust demo, if they type, we just push them forward
+                const currentState = stateMachine[step];
+                if (currentState && currentState.options && currentState.options.length > 0) {
+                    step = currentState.options[0].nextStep !== undefined ? currentState.options[0].nextStep : step + 1;
+                } else {
+                    step++;
+                }
+            }
+            
+            setTimeout(() => processStep(), 600);
+        }
+
+        sendBtn.addEventListener('click', handleSend);
+        chatInput.addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') {
+                e.preventDefault();
+                handleSend();
+            }
+        });
+
+        // Start Conversation
+        setTimeout(() => {
+            processStep();
+        }, 500);
+    </script>
+</body>
+</html>
