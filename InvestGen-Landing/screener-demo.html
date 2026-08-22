@@ -461,8 +461,6 @@
             <li><a href="screener-demo.html" class="active"><i class="fas fa-robot"></i> AI Screener</a></li>
             <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
             <li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
-            <li><a href="recommendations.html"><i class="fas fa-robot"></i> Recommendations</a></li>
-            <li><a href="disconfirmation.html"><i class="fas fa-shield-alt"></i> Disconfirmation</a></li>
             <li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
             <li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
         </ul>
@@ -599,13 +597,14 @@
                     { label: "Add more indicators", action: 'show-add-indicators' }
                 ]
             },
-            // Step 5 (Conflicting evidence)
+            // Step 5 (Conflicting evidence / Disconfirmation)
             {
-                aiMsg: "Most indicators suggest a positive outlook, but our Disconfirmation Agent found that ADX shows weakening trend strength. Want me to investigate further?",
-                triggerRightPanel: 'activate-adx',
+                aiMsg: "Wait, I am running a mandatory Disconfirmation check to safeguard this analysis...",
+                triggerRightPanel: 'disconfirmation-warning',
+                showDisconfirmationCard: true,
                 options: [
-                    { label: "Yes, investigate", nextStep: 6 },
-                    { label: "No, skip", nextStep: 6 }
+                    { label: "Override (Keep Bullish)", nextStep: 6 },
+                    { label: "Accept Risk (Adjust Analysis)", nextStep: 6 }
                 ]
             },
             // Step 6 (What-If Scenario)
@@ -724,8 +723,8 @@
             wrap.innerHTML = `
                 <div class="avatar"><i class="fas fa-network-wired"></i></div>
                 <div class="msg-bubble" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59,130,246,0.3); font-size: 0.85rem;">
-                    <div id="ag-1" style="opacity: 0.5; margin-bottom: 4px;"><i class="fas fa-spinner fa-spin"></i> Data Agent: Fetching historicals...</div>
-                    <div id="ag-2" style="opacity: 0.5; margin-bottom: 4px; display: none;"><i class="fas fa-spinner fa-spin"></i> Market Context Agent: Detecting regime...</div>
+                    <div id="ag-1" style="opacity: 0.5; margin-bottom: 4px;"><i class="fas fa-spinner fa-spin"></i> Data Agent: Fetching historicals & financials...</div>
+                    <div id="ag-2" style="opacity: 0.5; margin-bottom: 4px; display: none;"><i class="fas fa-spinner fa-spin"></i> Fundamental Agent: Analyzing P/E, EPS & Debt...</div>
                     <div id="ag-3" style="opacity: 0.5; display: none;"><i class="fas fa-spinner fa-spin"></i> Technical Agent: Optimizing GA parameters...</div>
                 </div>
             `;
@@ -733,13 +732,13 @@
             scrollToBottom();
             
             await new Promise(r => setTimeout(r, 1000));
-            document.getElementById('ag-1').innerHTML = '<i class="fas fa-check-circle" style="color:#10b981;"></i> Data Agent: Historicals loaded.';
+            document.getElementById('ag-1').innerHTML = '<i class="fas fa-check-circle" style="color:#10b981;"></i> Data Agent: Financials & price data loaded.';
             document.getElementById('ag-1').style.opacity = '1';
             document.getElementById('ag-2').style.display = 'block';
             scrollToBottom();
             
             await new Promise(r => setTimeout(r, 1200));
-            document.getElementById('ag-2').innerHTML = '<i class="fas fa-check-circle" style="color:#10b981;"></i> Market Context Agent: Regime detected.';
+            document.getElementById('ag-2').innerHTML = '<i class="fas fa-check-circle" style="color:#10b981;"></i> Fundamental Agent: Valuations look solid.';
             document.getElementById('ag-2').style.opacity = '1';
             document.getElementById('ag-3').style.display = 'block';
             scrollToBottom();
@@ -785,6 +784,11 @@
 
             if (stateObj?.showFinalCard) {
                 appendFinalCard();
+            } else if (stateObj?.showDisconfirmationCard) {
+                appendDisconfirmationCard();
+                if (stateObj?.options?.length > 0) {
+                    appendOptions(stateObj.options, stateObj);
+                }
             } else if (stateObj?.isStockInput) {
                 appendStockInput();
             } else if (stateObj?.options?.length > 0) {
@@ -903,10 +907,10 @@
                     </div>
                     <div class="frc-body">
                         <ul>
-                            <li>RSI indicates stock is oversold, potential bounce.</li>
-                            <li>MACD crossing signal line upwards.</li>
-                            <li>Disconfirmation: ADX shows weak trend.</li>
-                            <li>What-If: Margins squeezed if inflation rises.</li>
+                            <li><strong>Fundamental:</strong> Strong EPS growth, P/E ratio is undervalued compared to sector average.</li>
+                            <li><strong>Technical:</strong> RSI indicates stock is oversold, potential bounce. MACD crossing signal line upwards.</li>
+                            <li><strong>Disconfirmation:</strong> Historical analog suggests caution.</li>
+                            <li><strong>What-If:</strong> Margins squeezed if inflation rises.</li>
                         </ul>
                     </div>
                     <div class="frc-footer">
@@ -921,15 +925,48 @@
             scrollToBottom();
         }
 
+        function appendDisconfirmationCard() {
+            const wrap = document.createElement('div');
+            wrap.className = 'message ai';
+            wrap.style.width = '100%';
+            wrap.innerHTML = `
+                <div class="avatar"><i class="fas fa-shield-alt" style="color:#ef4444;"></i></div>
+                <div style="background: var(--bg-main); border: 1px solid #ef4444; border-radius: 12px; padding: 1rem; width: 100%; max-width: 450px;">
+                    <h4 style="color:#ef4444; margin:0 0 10px 0;"><i class="fas fa-exclamation-triangle"></i> Disconfirmation Alert</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;">Found a historical analog where this exact setup failed.</p>
+                    
+                    <div style="display: flex; gap: 10px; font-size: 0.8rem; margin-bottom: 12px;">
+                        <div style="flex:1; background: rgba(16,185,129,0.1); padding: 8px; border-radius: 6px; border: 1px solid rgba(16,185,129,0.2);">
+                            <div style="color: #10b981; font-weight: bold; margin-bottom:4px;">Current Setup</div>
+                            <div>RSI: 68</div>
+                            <div>MACD: Bullish</div>
+                        </div>
+                        <div style="flex:1; background: rgba(239,68,68,0.1); padding: 8px; border-radius: 6px; border: 1px solid rgba(239,68,68,0.2);">
+                            <div style="color: #ef4444; font-weight: bold; margin-bottom:4px;">March 2024 (94% Match)</div>
+                            <div>RSI: 69</div>
+                            <div>Outcome: -12% Drop</div>
+                        </div>
+                    </div>
+
+                    <div style="background: #0a0a0f; color: #10b981; font-family: monospace; font-size: 0.75rem; padding: 8px; border-radius: 6px; overflow: hidden; height: 60px;">
+                        <div>> Querying vector DB... 12 matches</div>
+                        <div style="color: #f59e0b;">> Top match: Bearish reversal</div>
+                        <div style="color: #ef4444;">> Price action contradicts current setup!</div>
+                    </div>
+                </div>
+            `;
+            chat.appendChild(wrap);
+            scrollToBottom();
+        }
+
         function handleRightPanelTrigger(trigger) {
             if (trigger === 'activate-base-indicators') {
                 document.getElementById('regime-badge').classList.add('active');
                 setTimeout(() => document.getElementById('chip-rsi').classList.add('active'), 200);
                 setTimeout(() => document.getElementById('chip-macd').classList.add('active'), 600);
                 setTimeout(() => document.getElementById('chip-bb').classList.add('active'), 1000);
-            } else if (trigger === 'activate-adx') {
-                document.getElementById('chip-adx').classList.add('active');
-                // modify chart line color slightly to show "weakening"
+            } else if (trigger === 'disconfirmation-warning') {
+                // modify chart line color slightly to show "warning"
                 if(chartInstance) {
                     chartInstance.data.datasets[0].borderColor = '#f59e0b';
                     chartInstance.update();
