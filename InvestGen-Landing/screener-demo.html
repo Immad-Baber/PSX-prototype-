@@ -931,27 +931,35 @@
             wrap.style.width = '100%';
             wrap.innerHTML = `
                 <div class="avatar"><i class="fas fa-shield-alt" style="color:#ef4444;"></i></div>
-                <div style="background: var(--bg-main); border: 1px solid #ef4444; border-radius: 12px; padding: 1rem; width: 100%; max-width: 450px;">
-                    <h4 style="color:#ef4444; margin:0 0 10px 0;"><i class="fas fa-exclamation-triangle"></i> Disconfirmation Alert</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;">Found a historical analog where this exact setup failed.</p>
+                <div style="background: #fff; border-left: 4px solid #ef4444; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border-radius: 4px; padding: 1.5rem; width: 100%; max-width: 450px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <i class="fas fa-exclamation-circle" style="color:#ef4444; font-size: 1.2rem;"></i>
+                        <h4 style="color:var(--text-main); margin:0; font-size: 1.1rem;">Historical Contradiction Detected</h4>
+                    </div>
                     
-                    <div style="display: flex; gap: 10px; font-size: 0.8rem; margin-bottom: 12px;">
-                        <div style="flex:1; background: rgba(16,185,129,0.1); padding: 8px; border-radius: 6px; border: 1px solid rgba(16,185,129,0.2);">
-                            <div style="color: #10b981; font-weight: bold; margin-bottom:4px;">Current Setup</div>
-                            <div>RSI: 68</div>
-                            <div>MACD: Bullish</div>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5;">
+                        The system has identified a <strong>94% vector match</strong> with a historical market setup (March 2024) where this exact technical structure resulted in a bearish reversal.
+                    </p>
+                    
+                    <div style="border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; margin-bottom: 12px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; background: var(--bg-secondary); padding: 8px 12px; font-weight: 600; font-size: 0.8rem; color: var(--text-secondary); border-bottom: 1px solid var(--border-color);">
+                            <div>Current Setup (OGDC)</div>
+                            <div>Historical Match (Mar '24)</div>
                         </div>
-                        <div style="flex:1; background: rgba(239,68,68,0.1); padding: 8px; border-radius: 6px; border: 1px solid rgba(239,68,68,0.2);">
-                            <div style="color: #ef4444; font-weight: bold; margin-bottom:4px;">March 2024 (94% Match)</div>
-                            <div>RSI: 69</div>
-                            <div>Outcome: -12% Drop</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; padding: 12px; font-size: 0.85rem; gap: 10px;">
+                            <div>
+                                <div style="color: var(--text-main);"><i class="fas fa-check" style="color: #10b981; margin-right: 4px;"></i> RSI: 68</div>
+                                <div style="color: var(--text-main); margin-top: 4px;"><i class="fas fa-check" style="color: #10b981; margin-right: 4px;"></i> MACD: Bullish Cross</div>
+                            </div>
+                            <div style="border-left: 1px solid var(--border-color); padding-left: 10px;">
+                                <div style="color: var(--text-secondary);">RSI: 69</div>
+                                <div style="color: var(--text-secondary); margin-top: 4px;">MACD: Bullish Cross</div>
+                                <div style="color: #ef4444; font-weight: 600; margin-top: 8px;"><i class="fas fa-arrow-down"></i> Actual Outcome: -12%</div>
+                            </div>
                         </div>
                     </div>
-
-                    <div style="background: #0a0a0f; color: #10b981; font-family: monospace; font-size: 0.75rem; padding: 8px; border-radius: 6px; overflow: hidden; height: 60px;">
-                        <div>> Querying vector DB... 12 matches</div>
-                        <div style="color: #f59e0b;">> Top match: Bearish reversal</div>
-                        <div style="color: #ef4444;">> Price action contradicts current setup!</div>
+                    <div style="font-size: 0.8rem; color: #f59e0b; font-weight: 500;">
+                        <i class="fas fa-info-circle"></i> Recommendation: Downgrade confidence score.
                     </div>
                 </div>
             `;
