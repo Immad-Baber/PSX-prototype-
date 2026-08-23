@@ -68,6 +68,21 @@
             font-size: 1.25rem;
             font-weight: 700;
             font-family: 'Outfit', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .watchlist-star {
+            color: #d1d5db; /* gray */
+            cursor: pointer;
+            transition: color 0.2s;
+            font-size: 1rem;
+        }
+        .watchlist-star:hover {
+            color: #fbbf24; /* yellow hover */
+        }
+        .watchlist-star.active {
+            color: #f59e0b; /* active gold */
         }
         .stock-name {
             color: var(--text-secondary);
@@ -208,7 +223,10 @@
                     card.innerHTML = `
                         <div class="stock-header">
                             <div>
-                                <div class="stock-symbol">${stock.ticker}</div>
+                                <div class="stock-symbol">
+                                    ${stock.ticker}
+                                    <i class="fas fa-star watchlist-star" onclick="toggleWatchlist(event, this)"></i>
+                                </div>
                                 <div class="stock-name" title="${stock.name}">${stock.name}</div>
                             </div>
                             <span class="badge ${changeClass}-badge" style="font-size: 0.75rem; padding: 0.2rem 0.5rem;">${stock.sector || 'Equities'}</span>
@@ -221,6 +239,19 @@
                     grid.appendChild(card);
                 });
             }
+
+            // Expose toggleWatchlist globally so the inline onclick can call it
+            window.toggleWatchlist = function(event, element) {
+                event.stopPropagation(); // prevent clicking the card from redirecting to stock-report
+                element.classList.toggle('active');
+                
+                // Show a quick toast or alert just to show functionality in prototype
+                if (element.classList.contains('active')) {
+                    console.log("Added to watchlist");
+                } else {
+                    console.log("Removed from watchlist");
+                }
+            };
 
             searchInput.addEventListener('input', (e) => {
                 const term = e.target.value.toLowerCase();

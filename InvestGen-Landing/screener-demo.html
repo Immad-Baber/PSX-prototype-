@@ -521,12 +521,12 @@
                     <div class="indicators-box">
                         <h4>Active Indicators</h4>
                         <div class="chips-row">
-                            <div class="chip" id="chip-rsi">RSI</div>
-                            <div class="chip" id="chip-macd">MACD</div>
-                            <div class="chip" id="chip-bb">Bollinger Bands</div>
-                            <div class="chip" id="chip-adx">ADX</div>
-                            <div class="chip" id="chip-obv">OBV</div>
-                            <div class="chip" id="chip-atr">ATR</div>
+                            <div class="chip" id="chip-rsi" onclick="toggleIndicator(this)">RSI</div>
+                            <div class="chip" id="chip-macd" onclick="toggleIndicator(this)">MACD</div>
+                            <div class="chip" id="chip-bb" onclick="toggleIndicator(this)">Bollinger Bands</div>
+                            <div class="chip" id="chip-adx" onclick="toggleIndicator(this)">ADX</div>
+                            <div class="chip" id="chip-obv" onclick="toggleIndicator(this)">OBV</div>
+                            <div class="chip" id="chip-atr" onclick="toggleIndicator(this)">ATR</div>
                         </div>
                     </div>
 
@@ -677,6 +677,55 @@
 
         // Initialize the chart on load
         initChart();
+
+        // Indicator Toggle Logic
+        function toggleIndicator(el) {
+            el.classList.toggle('active');
+            updateChartIndicators();
+        }
+
+        function updateChartIndicators() {
+            if (!chartInstance) return;
+            
+            // Keep only the base price dataset
+            const baseDataset = chartInstance.data.datasets[0];
+            chartInstance.data.datasets = [baseDataset];
+            
+            const labels = chartInstance.data.labels;
+            const priceData = baseDataset.data;
+            
+            // Add Bollinger Bands if active
+            if (document.getElementById('chip-bb').classList.contains('active')) {
+                const upperBand = priceData.map(v => v + (Math.random() * 2 + 5));
+                const lowerBand = priceData.map(v => v - (Math.random() * 2 + 5));
+                
+                chartInstance.data.datasets.push({
+                    label: 'BB Upper', data: upperBand,
+                    borderColor: 'rgba(156, 163, 175, 0.5)', borderDash: [5, 5],
+                    borderWidth: 1, fill: false, pointRadius: 0, tension: 0.1
+                });
+                chartInstance.data.datasets.push({
+                    label: 'BB Lower', data: lowerBand,
+                    borderColor: 'rgba(156, 163, 175, 0.5)', borderDash: [5, 5],
+                    borderWidth: 1, fill: false, pointRadius: 0, tension: 0.1
+                });
+            }
+            
+            // Add SMA (pretending it's MACD/RSI overlay for visual effect)
+            if (document.getElementById('chip-macd').classList.contains('active') || document.getElementById('chip-rsi').classList.contains('active')) {
+                const sma = priceData.map((v, i) => {
+                    if (i === 0) return v;
+                    return (v + priceData[i-1]) / 2; // rough smooth
+                });
+                chartInstance.data.datasets.push({
+                    label: 'Trend Line', data: sma,
+                    borderColor: '#f59e0b', borderWidth: 2,
+                    fill: false, pointRadius: 0, tension: 0.4
+                });
+            }
+            
+            chartInstance.update();
+        }
 
         function scrollToBottom() {
             chat.scrollTop = chat.scrollHeight;
@@ -884,7 +933,9 @@
                     appendUserMessage(`Add ${selected.join(', ')}`);
                     selected.forEach(ind => {
                         const chip = document.getElementById('chip-' + ind.toLowerCase());
-                        if(chip) chip.classList.add('active');
+                        if(chip && !chip.classList.contains('active')) {
+                            toggleIndicator(chip);
+                        }
                     });
                 } else {
                     appendUserMessage("Don't add any");
@@ -970,9 +1021,18 @@
         function handleRightPanelTrigger(trigger) {
             if (trigger === 'activate-base-indicators') {
                 document.getElementById('regime-badge').classList.add('active');
-                setTimeout(() => document.getElementById('chip-rsi').classList.add('active'), 200);
-                setTimeout(() => document.getElementById('chip-macd').classList.add('active'), 600);
-                setTimeout(() => document.getElementById('chip-bb').classList.add('active'), 1000);
+                setTimeout(() => {
+                    const rsi = document.getElementById('chip-rsi');
+                    if (!rsi.classList.contains('active')) toggleIndicator(rsi);
+                }, 200);
+                setTimeout(() => {
+                    const macd = document.getElementById('chip-macd');
+                    if (!macd.classList.contains('active')) toggleIndicator(macd);
+                }, 600);
+                setTimeout(() => {
+                    const bb = document.getElementById('chip-bb');
+                    if (!bb.classList.contains('active')) toggleIndicator(bb);
+                }, 1000);
             } else if (trigger === 'disconfirmation-warning') {
                 // modify chart line color slightly to show "warning"
                 if(chartInstance) {
