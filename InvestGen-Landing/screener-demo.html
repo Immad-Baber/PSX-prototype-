@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+
+<html data-theme="light" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InvestOPak | AI Screener Demo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="css/style.css">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InvestOPak | AI Screener Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+<link href="css/style.css?v=3" rel="stylesheet"/>
+<style>
         /* Specific Styles for AI Screener Demo adapting to Themes */
         .demo-wrapper {
             display: flex;
@@ -298,6 +299,8 @@
             border-radius: 8px;
             font-size: 0.85rem;
             transition: all 0.4s ease;
+            cursor: help;
+            position: relative;
         }
 
         .chip.active {
@@ -305,6 +308,45 @@
             border-color: #10b981;
             color: #059669;
             box-shadow: 0 0 12px rgba(16, 185, 129, 0.1);
+        }
+
+        /* Smooth Custom Tooltip - positioned BELOW chip for readability */
+        .chip .tooltip-text {
+            visibility: hidden;
+            width: 240px;
+            background-color: #1e293b;
+            color: #f1f5f9;
+            text-align: left;
+            border-radius: 8px;
+            padding: 10px 14px;
+            position: absolute;
+            z-index: 9999;
+            top: calc(100% + 8px); /* Position BELOW the chip */
+            left: 50%;
+            transform: translateX(-50%) translateY(-4px);
+            opacity: 0;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            font-size: 0.78rem;
+            line-height: 1.5;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+            pointer-events: none;
+        }
+        
+        .chip .tooltip-text::before {
+            content: "";
+            position: absolute;
+            bottom: 100%; /* Arrow pointing UP */
+            left: 50%;
+            margin-left: -6px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: transparent transparent #1e293b transparent;
+        }
+
+        .chip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
         [data-theme="dark"] .chip.active { color: #10b981; }
 
@@ -450,104 +492,95 @@
     </style>
 </head>
 <body class="dashboard-body">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <a href="index.html" class="logo">Invest<span>OPak</span></a>
-        </div>
-        <ul class="sidebar-nav">
-            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
-            <li><a href="screener-demo.html" class="active"><i class="fas fa-robot"></i> AI Screener</a></li>
-            <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
-            <li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
-            <li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
-            <li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
-        </ul>
-        <div class="sidebar-footer">
-            <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
-        </div>
-    </aside>
-
-    <div class="main-wrapper">
-        <header class="top-nav">
-            <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search ticker or company...">
-            </div>
-            <div class="top-nav-actions">
-                <button id="theme-toggle" aria-label="Toggle Theme">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <a href="notifications.html" class="nav-icon-btn"><i class="fas fa-bell"></i><span class="badge">2</span></a>
-                <a href="profile.html" class="user-profile" style="text-decoration: none; color: inherit;">
-                    <div class="avatar">IB</div>
-                    <span>Immad Baber</span>
-                </a>
-            </div>
-        </header>
-
-        <main class="dashboard-content" style="padding-top: 80px;">
-            <div class="demo-wrapper">
-                
-                <!-- Left Panel -->
-                <div class="glass-panel chat-container">
-                    <div class="chat-header">
-                        <h2><i class="fas fa-robot" style="color: var(--accent-color);"></i> Interactive Screener</h2>
-                        <span class="demo-badge">Demo Mode</span>
-                    </div>
-                    <div class="chat-messages" id="chat">
-                        <!-- Messages injected via JS -->
-                    </div>
-                    <div class="chat-input-area">
-                        <input type="text" id="chat-input" placeholder="Type a message or select an option...">
-                        <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
-                    </div>
-                </div>
-
-                <!-- Right Panel -->
-                <div class="glass-panel canvas-container">
-                    <div class="canvas-header">
-                        <h3><i class="fas fa-chart-line"></i> Live Analysis Canvas</h3>
-                    </div>
-                    
-                    <div class="chart-box">
-                        <div class="regime-badge" id="regime-badge">
-                            <i class="fas fa-arrows-alt-h"></i> Sideways Market
+<!-- Sidebar -->
+<aside class="sidebar">
+<div class="sidebar-header">
+<a class="logo" href="index.html">Invest<span>OPak</span></a>
+</div>
+<ul class="sidebar-nav">
+<li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+<li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
+<li><a class="active" href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener</a></li>
+<li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+<li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
+<li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
+<li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
+</ul>
+<div class="sidebar-footer">
+<a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+</div>
+</aside>
+<div class="main-wrapper">
+<header class="top-nav">
+<div class="search-bar">
+<i class="fas fa-search"></i>
+<input placeholder="Search ticker or company..." type="text"/>
+</div>
+<div class="top-nav-actions">
+<button aria-label="Toggle Theme" id="theme-toggle">
+<i class="fas fa-moon"></i>
+</button>
+<a class="nav-icon-btn" href="notifications.html"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+<a class="user-profile" href="profile.html" style="text-decoration: none; color: inherit;">
+<div class="avatar">IB</div>
+<span>Immad Baber</span>
+</a>
+</div>
+</header>
+<main class="dashboard-content" style="padding-top: 80px;">
+<div class="demo-wrapper">
+<!-- Left Panel -->
+<div class="glass-panel chat-container">
+<div class="chat-header">
+<h2><i class="fas fa-robot" style="color: var(--accent-color);"></i> Interactive Screener</h2>
+<span class="demo-badge">Demo Mode</span>
+</div>
+<div class="chat-messages" id="chat">
+<!-- Messages injected via JS -->
+</div>
+<div class="chat-input-area">
+<input id="chat-input" placeholder="Type a message or select an option..." type="text"/>
+<button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+</div>
+</div>
+<!-- Right Panel -->
+<div class="glass-panel canvas-container">
+<div class="canvas-header">
+<h3><i class="fas fa-chart-line"></i> Live Analysis Canvas</h3>
+</div>
+<div class="chart-box">
+<div class="regime-badge" id="regime-badge">
+<i class="fas fa-arrows-alt-h"></i> Sideways Market
                         </div>
-                        <canvas id="stockChart" style="width:100%; height:200px; margin-top: 20px;"></canvas>
-                    </div>
-
-                    <div class="indicators-box">
-                        <h4>Active Indicators</h4>
-                        <div class="chips-row">
-                            <div class="chip" id="chip-rsi" onclick="toggleIndicator(this)">RSI</div>
-                            <div class="chip" id="chip-macd" onclick="toggleIndicator(this)">MACD</div>
-                            <div class="chip" id="chip-bb" onclick="toggleIndicator(this)">Bollinger Bands</div>
-                            <div class="chip" id="chip-adx" onclick="toggleIndicator(this)">ADX</div>
-                            <div class="chip" id="chip-obv" onclick="toggleIndicator(this)">OBV</div>
-                            <div class="chip" id="chip-atr" onclick="toggleIndicator(this)">ATR</div>
-                        </div>
-                    </div>
-
-                    <div class="confidence-box">
-                        <div class="conf-info">
-                            <h4>AI Confidence Score</h4>
-                            <p>Based on current market regime</p>
-                        </div>
-                        <div class="circular-progress" id="conf-meter">
-                            <span class="progress-value" id="conf-val">0%</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </main>
-    </div>
-
-    <!-- Include main js to enable theme toggle across pages -->
-    <script src="js/main.js"></script>
-    <script>
+<div id="stockChartContainer" style="width:100%; height:250px;"></div>
+</div>
+<div class="indicators-box">
+<h4>Active <span class="has-tip">Indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span></h4>
+<div class="chips-row">
+<div class="chip" id="chip-rsi" onclick="toggleIndicator(this)">RSI<span class="tooltip-text">Relative Strength Index: Measures <span class="has-tip">momentum<span class="tip-box">The strength or speed of a price trend.</span></span> to spot overbought or oversold conditions.</span></div>
+<div class="chip" id="chip-macd" onclick="toggleIndicator(this)">MACD<span class="tooltip-text">MACD: Compares two moving averages to show trend direction and strength.</span></div>
+<div class="chip" id="chip-bb" onclick="toggleIndicator(this)">Bollinger Bands<span class="tooltip-text">Bollinger Bands: Shows <span class="has-tip">volatility<span class="tip-box">The rate at which the price of a stock increases or decreases.</span></span>. Price hitting upper band may drop, hitting lower band may rise.</span></div>
+<div class="chip" id="chip-adx" onclick="toggleIndicator(this)">ADX<span class="tooltip-text">Average Directional Index: Measures the strength of a trend, regardless of direction.</span></div>
+<div class="chip" id="chip-obv" onclick="toggleIndicator(this)">OBV<span class="tooltip-text">On-Balance Volume: Uses trading volume to confirm price trends and spot buying/selling pressure.</span></div>
+<div class="chip" id="chip-atr" onclick="toggleIndicator(this)">ATR<span class="tooltip-text">Average True Range: Measures pure <span class="has-tip">volatility<span class="tip-box">The rate at which the price of a stock increases or decreases.</span></span> to help set safe stop-loss levels.</span></div>
+</div>
+</div>
+<div class="confidence-box">
+<div class="conf-info">
+<h4>AI Confidence Score</h4>
+<p>Based on current market regime</p>
+</div>
+<div class="circular-progress" id="conf-meter">
+<span class="progress-value" id="conf-val">0%</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Include main js to enable theme toggle across pages -->
+<script src="js/main.js"></script>
+<script>
         // State Machine & Logic
         const chat = document.getElementById('chat');
         let step = 0;
@@ -627,104 +660,163 @@
         // Helpers
         let isTyping = false;
         let chartInstance = null;
+        let candleSeries = null;
+        let indicatorSeries = {};
 
         function initChart() {
-            const ctx = document.getElementById('stockChart').getContext('2d');
-            
-            // Generate some realistic-looking jagged mock data
-            const labels = Array.from({length: 40}, (_, i) => i);
-            let val = 100;
-            const data = labels.map(i => {
-                val += (Math.random() - 0.5) * 5; // random walk
-                // force a slight sideways/upward trend
-                if (val < 90) val += 3;
-                if (val > 115) val -= 3;
-                return val;
-            });
+            const container = document.getElementById('stockChartContainer');
+            if (!container) return;
 
-            // Gradient fill
-            const gradient = ctx.createLinearGradient(0, 0, 0, 200);
-            gradient.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
-            gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+            // Critical: set display block so clientWidth/Height are non-zero
+            container.style.display = 'block';
+            container.innerHTML = '';
 
-            chartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Price',
-                        data: data,
-                        borderColor: '#3b82f6',
-                        backgroundColor: gradient,
-                        borderWidth: 2,
-                        fill: true,
-                        pointRadius: 0,
-                        pointHoverRadius: 4,
-                        tension: 0.1 // jagged realistic line
-                    }]
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const textColor = isDark ? '#d1d5db' : '#64748b';
+
+            chartInstance = LightweightCharts.createChart(container, {
+                width: container.clientWidth,
+                height: container.clientHeight || 250,
+                layout: {
+                    background: { type: 'solid', color: 'transparent' },
+                    textColor: textColor,
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false }, tooltip: { enabled: true } },
-                    scales: {
-                        x: { display: false },
-                        y: { display: true, border: { display: false }, grid: { color: 'rgba(0,0,0,0.05)' } }
-                    }
-                }
+                grid: {
+                    vertLines: { color: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
+                    horzLines: { color: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
+                },
+                rightPriceScale: { borderVisible: false },
+                timeScale: { borderVisible: false },
             });
+
+            candleSeries = chartInstance.addSeries(LightweightCharts.CandlestickSeries, {
+                upColor: '#10b981', downColor: '#ef4444',
+                borderVisible: false, wickUpColor: '#10b981', wickDownColor: '#ef4444'
+            });
+
+            // Default: market-level data (KSE-100 range ~70k)
+            const data = generateCandles(60, 70000, 500, 800);
+            candleSeries.setData(data);
+            setTimeout(() => chartInstance.timeScale().fitContent(), 100);
         }
 
-        // Initialize the chart on load
-        initChart();
+        function generateCandles(count, startPrice, fluctSmall, fluctBig) {
+            const data = [];
+            let time = new Date('2023-01-01').getTime();
+            let price = startPrice;
+            for (let i = 0; i < count; i++) {
+                time += 86400000;
+                const open = price + (Math.random() - 0.5) * fluctSmall;
+                const close = open + (Math.random() - 0.5) * fluctBig;
+                const high = Math.max(open, close) + Math.random() * (fluctSmall / 2);
+                const low = Math.min(open, close) - Math.random() * (fluctSmall / 2);
+                data.push({ time: Math.floor(time / 1000), open, high, low, close });
+                price = close;
+            }
+            return data;
+        }
 
+        // Initialize the chart on window load so container has proper dimensions
+        window.addEventListener('load', () => {
+            initChart();
+        });
+        
+        // Switch chart to specific stock (stock-level prices ~100-300 range)
+        function updateChartToStock(stock) {
+            if (!candleSeries || !chartInstance) return;
+            const data = generateCandles(60, 185, 4, 8);
+            candleSeries.setData(data);
+            setTimeout(() => chartInstance.timeScale().fitContent(), 100);
+        }
+        
         // Indicator Toggle Logic
         function toggleIndicator(el) {
             el.classList.toggle('active');
             updateChartIndicators();
         }
 
+        function calcEMA(data, period, keyFn) {
+            const k = 2 / (period + 1);
+            let ema = keyFn(data[0]);
+            return data.map((d, i) => {
+                if (i === 0) { ema = keyFn(d); }
+                else { ema = keyFn(d) * k + ema * (1 - k); }
+                return { time: d.time, value: parseFloat(ema.toFixed(4)) };
+            });
+        }
+
+        function calcSMA(data, period, keyFn) {
+            return data.map((d, i) => {
+                const slice = data.slice(Math.max(0, i - period + 1), i + 1);
+                const avg = slice.reduce((s, x) => s + keyFn(x), 0) / slice.length;
+                return { time: d.time, value: parseFloat(avg.toFixed(4)) };
+            });
+        }
+
+        const INDICATOR_CONFIG = {
+            rsi:  { label: 'RSI (EMA-14)',    color: '#f59e0b', lineWidth: 2, calc: (d) => calcEMA(d, 14, x => x.close) },
+            macd: { label: 'MACD (EMA-26)',   color: '#8b5cf6', lineWidth: 2, calc: (d) => calcEMA(d, 26, x => x.close) },
+            bb:   { label: 'BB Upper',        color: 'rgba(100,180,255,0.7)', lineWidth: 1,
+                    calc: (d) => calcSMA(d, 20, x => x.close).map((v, i) => {
+                        const slice = d.slice(Math.max(0, i - 19), i + 1);
+                        const mean = v.value;
+                        const std = Math.sqrt(slice.reduce((s, x) => s + Math.pow(x.close - mean, 2), 0) / slice.length);
+                        return { time: v.time, value: parseFloat((mean + 2 * std).toFixed(4)) };
+                    }),
+                    calc2: (d) => calcSMA(d, 20, x => x.close).map((v, i) => {
+                        const slice = d.slice(Math.max(0, i - 19), i + 1);
+                        const mean = v.value;
+                        const std = Math.sqrt(slice.reduce((s, x) => s + Math.pow(x.close - mean, 2), 0) / slice.length);
+                        return { time: v.time, value: parseFloat((mean - 2 * std).toFixed(4)) };
+                    }),
+                    color2: 'rgba(100,180,255,0.7)'
+                  },
+            adx:  { label: 'ADX (SMA-14)',    color: '#eab308', lineWidth: 1, calc: (d) => calcSMA(d, 14, x => (x.high + x.low) / 2) },
+            obv:  { label: 'OBV (EMA-9)',     color: '#14b8a6', lineWidth: 2, calc: (d) => calcEMA(d, 9, x => x.close) },
+            atr:  { label: 'ATR Upper',       color: '#f43f5e', lineWidth: 1,
+                    calc: (d) => calcSMA(d, 14, x => x.close).map(v => ({ time: v.time, value: parseFloat((v.value + 3).toFixed(4)) })) },
+        };
+
         function updateChartIndicators() {
-            if (!chartInstance) return;
-            
-            // Keep only the base price dataset
-            const baseDataset = chartInstance.data.datasets[0];
-            chartInstance.data.datasets = [baseDataset];
-            
-            const labels = chartInstance.data.labels;
-            const priceData = baseDataset.data;
-            
-            // Add Bollinger Bands if active
-            if (document.getElementById('chip-bb').classList.contains('active')) {
-                const upperBand = priceData.map(v => v + (Math.random() * 2 + 5));
-                const lowerBand = priceData.map(v => v - (Math.random() * 2 + 5));
-                
-                chartInstance.data.datasets.push({
-                    label: 'BB Upper', data: upperBand,
-                    borderColor: 'rgba(156, 163, 175, 0.5)', borderDash: [5, 5],
-                    borderWidth: 1, fill: false, pointRadius: 0, tension: 0.1
-                });
-                chartInstance.data.datasets.push({
-                    label: 'BB Lower', data: lowerBand,
-                    borderColor: 'rgba(156, 163, 175, 0.5)', borderDash: [5, 5],
-                    borderWidth: 1, fill: false, pointRadius: 0, tension: 0.1
-                });
-            }
-            
-            // Add SMA (pretending it's MACD/RSI overlay for visual effect)
-            if (document.getElementById('chip-macd').classList.contains('active') || document.getElementById('chip-rsi').classList.contains('active')) {
-                const sma = priceData.map((v, i) => {
-                    if (i === 0) return v;
-                    return (v + priceData[i-1]) / 2; // rough smooth
-                });
-                chartInstance.data.datasets.push({
-                    label: 'Trend Line', data: sma,
-                    borderColor: '#f59e0b', borderWidth: 2,
-                    fill: false, pointRadius: 0, tension: 0.4
-                });
-            }
-            
-            chartInstance.update();
+            if (!chartInstance || !candleSeries) return;
+            const rawData = candleSeries.data();
+            if (!rawData || rawData.length === 0) return;
+
+            Object.keys(INDICATOR_CONFIG).forEach(id => {
+                const chip = document.getElementById('chip-' + id);
+                const cfg = INDICATOR_CONFIG[id];
+                const isActive = chip && chip.classList.contains('active');
+
+                if (isActive) {
+                    // Add primary series if not exists
+                    if (!indicatorSeries[id]) {
+                        indicatorSeries[id] = chartInstance.addSeries(LightweightCharts.LineSeries, {
+                            color: cfg.color, lineWidth: cfg.lineWidth,
+                            priceLineVisible: false, lastValueVisible: false,
+                        });
+                        indicatorSeries[id].setData(cfg.calc(rawData));
+                    }
+                    // Add secondary series (e.g. BB lower band)
+                    if (cfg.calc2 && !indicatorSeries[id + '_2']) {
+                        indicatorSeries[id + '_2'] = chartInstance.addSeries(LightweightCharts.LineSeries, {
+                            color: cfg.color2, lineWidth: cfg.lineWidth,
+                            priceLineVisible: false, lastValueVisible: false,
+                        });
+                        indicatorSeries[id + '_2'].setData(cfg.calc2(rawData));
+                    }
+                } else {
+                    // Remove primary series
+                    if (indicatorSeries[id]) {
+                        chartInstance.removeSeries(indicatorSeries[id]);
+                        delete indicatorSeries[id];
+                    }
+                    // Remove secondary series
+                    if (indicatorSeries[id + '_2']) {
+                        chartInstance.removeSeries(indicatorSeries[id + '_2']);
+                        delete indicatorSeries[id + '_2'];
+                    }
+                }
+            });
         }
 
         function scrollToBottom() {
@@ -877,7 +969,7 @@
                     } else if (opt.action === 'show-why') {
                         setTimeout(() => appendAIMessage(stateMachine[4].aiMsg, stateMachine[4]), 300);
                     } else if (opt.action === 'show-eli5') {
-                        setTimeout(() => appendAIMessage("Basically, RSI acts like a stretched rubber band—if it's pulled too far down, it might snap back up. Bollinger Bands show the 'walls' of the market, and MACD tells us if the trend is accelerating.", { options: [ { label: "Got it, continue", nextStep: 5 }, { label: "Add more indicators", action: 'show-add-indicators' } ] }), 300);
+                        setTimeout(() => appendAIMessage("Basically, RSI acts like a stretched rubber band, if it's pulled too far down, it might snap back up. Bollinger Bands show the 'walls' of the market, and MACD tells us if the trend is accelerating.", { options: [ { label: "Got it, continue", nextStep: 5 }, { label: "Add more indicators", action: 'show-add-indicators' } ] }), 300);
                     } else if (opt.action === 'show-add-indicators') {
                         appendMultiSelect();
                     } else if (opt.action === 'run-what-if') {
@@ -904,6 +996,10 @@
                 const val = document.getElementById('stock-inp').value || 'LUCK';
                 selectedStock = val.toUpperCase();
                 container.style.display = 'none';
+                
+                // Change chart data to simulate the specific stock
+                updateChartToStock(selectedStock);
+                
                 appendUserMessage(`Analyze ${selectedStock}`);
                 step = 3;
                 setTimeout(() => processStep(), 300);
@@ -967,7 +1063,7 @@
                     <div class="frc-footer">
                         Decision support only, not financial advice.
                         <div style="margin-top: 10px;">
-                            <button onclick="alert('Exporting Investment Memo as PDF...')" style="background: var(--accent-color); color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; width: 100%;"><i class="fas fa-file-pdf"></i> Export Investment Memo (PDF)</button>
+                            <button onclick="window.location.href='stock-report.html?ticker=' + selectedStock" style="background: var(--accent-color); color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; width: 100%;"><i class="fas fa-external-link-alt"></i> View Full Stock Report</button>
                         </div>
                     </div>
                 </div>
@@ -1034,11 +1130,7 @@
                     if (!bb.classList.contains('active')) toggleIndicator(bb);
                 }, 1000);
             } else if (trigger === 'disconfirmation-warning') {
-                // modify chart line color slightly to show "warning"
-                if(chartInstance) {
-                    chartInstance.data.datasets[0].borderColor = '#f59e0b';
-                    chartInstance.update();
-                }
+                // Not altering chart for disconfirmation visually, just show warning in chat
             } else if (trigger === 'finalize') {
                 const meter = document.getElementById('conf-meter');
                 const val = document.getElementById('conf-val');
@@ -1088,6 +1180,10 @@
                 // If it was the stock selection step, treat their text as the stock
                 selectedStock = text.toUpperCase();
                 step = 3;
+                
+                // Change chart data to simulate the specific stock
+                updateChartToStock(selectedStock);
+
             } else {
                 // Otherwise just move to next step or a specific step
                 // For a robust demo, if they type, we just push them forward

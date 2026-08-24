@@ -98,12 +98,20 @@ main {
   font-family: 'Outfit', sans-serif;
   font-size: 1.5rem;
   font-weight: 800;
-  color: var(--text-primary);
   letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #1e4d8c 40%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
 }
 
 .logo span {
-  color: var(--accent-color);
+  background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .nav-links {
@@ -555,6 +563,7 @@ footer {
   margin-bottom: 2rem;
 }
 
+
 .welcome-header h1 {
   font-size: 2rem;
   margin-bottom: 0.2rem;
@@ -571,16 +580,17 @@ footer {
 
 /* Brief Box */
 .dashboard-brief {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
+  border: 1px solid rgba(37, 99, 235, 0.2);
   border-radius: 12px;
   display: flex;
   align-items: center;
   padding: 1.5rem 2rem;
   margin-bottom: 2rem;
-  box-shadow: var(--card-shadow);
+  box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.15);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(8px);
 }
 
 .brief-accent {
@@ -628,6 +638,12 @@ footer {
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: var(--card-shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.metric-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px -10px rgba(37, 99, 235, 0.2);
+  border-color: rgba(37, 99, 235, 0.4);
 }
 
 .metric-label {
@@ -727,19 +743,17 @@ footer {
   border-collapse: collapse;
 }
 
-.data-table th {
+.data-table th, .data-table td {
+  padding: 1rem 1.5rem;
   text-align: left;
-  padding-bottom: 1rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
   border-bottom: 1px solid var(--border-color);
 }
-
-.data-table td {
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--border-color);
-  font-size: 0.95rem;
+.data-table tbody tr {
+  transition: all 0.2s ease;
+}
+.data-table tbody tr:hover {
+  background-color: rgba(37, 99, 235, 0.03);
+  transform: translateX(4px);
 }
 
 .data-table tr:last-child td {
@@ -752,8 +766,80 @@ footer {
   font-size: 0.75rem;
   font-weight: 700;
 }
-
 .bullish-badge { background-color: rgba(16, 185, 129, 0.1); color: #10b981; }
+
 .bearish-badge { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; }
 .sideways-badge { background-color: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+
+
+/* Global Tooltip Styles */
+.has-tip {
+    position: relative;
+    cursor: help;
+    border-bottom: 1px dashed var(--text-secondary);
+    display: inline-block;
+}
+.has-tip .tip-box {
+    visibility: hidden;
+    opacity: 0;
+    width: 260px;
+    background: #1e293b;
+    color: #f1f5f9;
+    text-align: left;
+    border-radius: 8px;
+    padding: 10px 14px;
+    position: absolute;
+    z-index: 9999;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    font-weight: 400;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    pointer-events: none;
+    white-space: normal;
+}
+.has-tip .tip-box::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #1e293b;
+}
+.has-tip:hover .tip-box {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+/* Shift tooltip left for edge cases */
+.has-tip.edge-left .tip-box {
+    left: 0;
+    transform: translateY(6px);
+}
+.has-tip.edge-left .tip-box::after {
+    left: 20px;
+    transform: none;
+}
+.has-tip.edge-left:hover .tip-box {
+    transform: translateY(0);
+}
+
+/* Render tooltip below the text for elements near the top of the screen */
+.has-tip.edge-top .tip-box {
+    bottom: auto;
+    top: calc(100% + 10px);
+    transform: translateX(-50%) translateY(-6px);
+}
+.has-tip.edge-top .tip-box::after {
+    top: auto;
+    bottom: 100%;
+    border-color: transparent transparent #1e293b transparent;
+}
+.has-tip.edge-top:hover .tip-box {
+    transform: translateX(-50%) translateY(0);
+}
 

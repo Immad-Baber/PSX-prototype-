@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+
+<html data-theme="light" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InvestOPak | Calibration Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InvestOPak | Calibration Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="css/style.css?v=3" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
         .premium-card {
             background: var(--glass-bg);
             border: 1px solid var(--border-color);
@@ -21,33 +22,41 @@
 
         .metrics-bar {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
             margin-bottom: 2.5rem;
+            align-items: stretch;
         }
 
         .metric-box {
             background: var(--bg-main);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.2rem 1rem;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .metric-title {
-            font-size: 0.85rem;
+            font-size: 0.72rem;
             color: var(--text-secondary);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 0.5rem;
+            min-height: 2.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .metric-value {
             font-family: 'Outfit', sans-serif;
-            font-size: 3rem;
+            font-size: 2.2rem;
             font-weight: 800;
-            margin: 0.5rem 0;
+            margin: 0.3rem 0;
             color: var(--text-main);
         }
 
@@ -104,6 +113,7 @@
             width: 100%;
             border-collapse: collapse;
             text-align: left;
+            overflow: visible;
         }
 
         .recent-table th {
@@ -113,6 +123,8 @@
             font-weight: 600;
             font-size: 0.85rem;
             text-transform: uppercase;
+            position: relative;
+            overflow: visible;
         }
 
         .recent-table td {
@@ -132,123 +144,147 @@
         .badge-correct { background: rgba(16, 185, 129, 0.15); color: #10b981; }
         .badge-wrong { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
         .badge-pending { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+
+        /* Global Tooltip Styles */
+        .has-tip {
+            position: relative;
+            cursor: help;
+            border-bottom: 1px dashed var(--text-secondary);
+            display: inline-block;
+        }
+        .has-tip .tip-box {
+            visibility: hidden;
+            opacity: 0;
+            width: 260px;
+            background: #1e293b;
+            color: #f1f5f9;
+            text-align: left;
+            border-radius: 8px;
+            padding: 10px 14px;
+            position: absolute;
+            z-index: 9999;
+            bottom: calc(100% + 10px);
+            left: 0;
+            transform: translateY(6px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            font-size: 0.78rem;
+            line-height: 1.5;
+            font-weight: 400;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            pointer-events: none;
+            white-space: normal;
+        }
+        .has-tip .tip-box::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 20px;
+            border: 6px solid transparent;
+            border-top-color: #1e293b;
+        }
+        .has-tip:hover .tip-box {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="dashboard-body">
-    <aside class="sidebar">
-        <div class="sidebar-header"><a href="index.html" class="logo">Invest<span>OPak</span></a></div>
-        <ul class="sidebar-nav">
-            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
-            <li><a href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener</a></li>
-            <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
-            <li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
-            <li><a href="calibration.html" class="active"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
-            <li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
-        </ul>
-        <div class="sidebar-footer"><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></div>
-    </aside>
-
-    <div class="main-wrapper">
-        <header class="top-nav">
-            <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search ticker or company..."></div>
-            <div class="top-nav-actions">
-                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
-                <a href="notifications.html" class="nav-icon-btn"><i class="fas fa-bell"></i><span class="badge">2</span></a>
-                <a href="profile.html" class="user-profile" style="text-decoration: none; color: inherit;"><div class="avatar">IB</div><span>Immad Baber</span></a>
-            </div>
-        </header>
-
-        <main class="dashboard-content">
-            <div class="welcome-header">
-                <h1>Model Calibration (System Accuracy)</h1>
-                <p class="market-status">Tracking our system's real-world hit rate by comparing past predictions with actual market outcomes.</p>
-            </div>
-
-            <div class="premium-card">
-                
-                <div class="metrics-bar">
-                    <div class="metric-box">
-                        <div class="metric-title">Total Predictions Made</div>
-                        <div class="metric-value">100</div>
-                        <div style="font-size:0.85rem; color:var(--text-secondary);">Across all analyzed stocks</div>
-                    </div>
-                    <div class="metric-box">
-                        <div class="metric-title">Successful Outcomes</div>
-                        <div class="metric-value">74</div>
-                        <div style="font-size:0.85rem; color:var(--text-secondary);">Market moved as predicted</div>
-                    </div>
-                    <div class="metric-box highlight">
-                        <div class="metric-title">System Confidence (Accuracy)</div>
-                        <div class="metric-value">74%</div>
-                        <div style="font-size:0.85rem; color:var(--text-secondary);">Overall model hit rate</div>
-                    </div>
-                </div>
-
-                <h3 style="margin-bottom: 1.5rem; color: var(--text-main);">How The Calibration Loop Works</h3>
-                
-                <div class="loop-diagram">
-                    <div class="loop-step">
-                        <div class="loop-icon"><i class="fas fa-robot"></i></div>
-                        <div class="loop-title">Step 1: Prediction</div>
-                        <div class="loop-desc">System predicts a stock (e.g., LUCK) will trend UP based on today's indicators.</div>
-                    </div>
-                    <div class="loop-arrow"><i class="fas fa-chevron-right"></i></div>
-                    <div class="loop-step">
-                        <div class="loop-icon"><i class="fas fa-calendar-day"></i></div>
-                        <div class="loop-title">Step 2: Reality Check</div>
-                        <div class="loop-desc">System waits and pulls the actual live market data the next day.</div>
-                    </div>
-                    <div class="loop-arrow"><i class="fas fa-chevron-right"></i></div>
-                    <div class="loop-step">
-                        <div class="loop-icon"><i class="fas fa-sync-alt"></i></div>
-                        <div class="loop-title">Step 3: Update System</div>
-                        <div class="loop-desc">If LUCK went up, it logs a "Success" and updates the overall System Accuracy to 100%.</div>
-                    </div>
-                </div>
-
-                <h3 style="margin-bottom: 1.5rem; color: var(--text-main);">Recent Prediction Logs</h3>
-                <div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden;">
-                    <table class="recent-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Ticker</th>
-                                <th>System Prediction</th>
-                                <th>Actual Market Outcome</th>
-                                <th>Calibration Update</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Oct 12, 2023</td>
-                                <td><strong>LUCK</strong></td>
-                                <td><i class="fas fa-arrow-up" style="color:#10b981;"></i> Bullish</td>
-                                <td>Stock went UP (+2.1%)</td>
-                                <td><span class="status-badge badge-correct">Success (74%)</span></td>
-                            </tr>
-                            <tr>
-                                <td>Oct 11, 2023</td>
-                                <td><strong>MEBL</strong></td>
-                                <td><i class="fas fa-arrow-down" style="color:#ef4444;"></i> Bearish</td>
-                                <td>Stock went UP (+0.8%)</td>
-                                <td><span class="status-badge badge-wrong">Failed (73%)</span></td>
-                            </tr>
-                            <tr>
-                                <td>Oct 11, 2023</td>
-                                <td><strong>OGDC</strong></td>
-                                <td><i class="fas fa-arrow-up" style="color:#10b981;"></i> Bullish</td>
-                                <td>Stock went UP (+1.5%)</td>
-                                <td><span class="status-badge badge-correct">Success (74%)</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-        </main>
-    </div>
-
-    <script src="js/main.js"></script>
+<aside class="sidebar">
+<div class="sidebar-header"><a class="logo" href="index.html">Invest<span>OPak</span></a></div>
+<ul class="sidebar-nav">
+<li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+<li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
+<li><a href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener</a></li>
+<li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+<li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
+<li><a class="active" href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
+<li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
+</ul>
+<div class="sidebar-footer"><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></div>
+</aside>
+<div class="main-wrapper">
+<header class="top-nav">
+<div class="search-bar"><i class="fas fa-search"></i><input placeholder="Search ticker or company..." type="text"/></div>
+<div class="top-nav-actions">
+<button id="theme-toggle"><i class="fas fa-moon"></i></button>
+<a class="nav-icon-btn" href="notifications.html"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+<a class="user-profile" href="profile.html" style="text-decoration: none; color: inherit;"><div class="avatar">IB</div><span>Immad Baber</span></a>
+</div>
+</header>
+<main class="dashboard-content">
+<div class="welcome-header">
+<h1>Model <span class="has-tip edge-top">Calibration<span class="tip-box">The process of adjusting AI parameters to match real-world historical data.</span></span> (System Accuracy)</h1>
+<p class="market-status">Tracking our system's real-world hit rate by comparing past predictions with actual market outcomes.</p>
+</div>
+<div class="premium-card">
+<div class="metrics-bar">
+<div class="metric-box">
+<div class="metric-title">Total Predictions Made</div>
+<div class="metric-value">100</div>
+<div style="font-size:0.85rem; color:var(--text-secondary);">Across all analyzed stocks</div>
+</div>
+<div class="metric-box">
+<div class="metric-title">Successful Outcomes</div>
+<div class="metric-value">74</div>
+<div style="font-size:0.85rem; color:var(--text-secondary);">Market moved as predicted</div>
+</div>
+<div class="metric-box highlight">
+<div class="metric-title"><span class="has-tip">System Confidence (Accuracy)<span class="tip-box">The percentage of times the AI's prediction matched the actual market direction. 74% means 74 out of 100 predictions were correct.</span></span></div>
+<div class="metric-value">74%</div>
+<div style="font-size:0.85rem; color:var(--text-secondary);">Overall model hit rate</div>
+</div>
+<div class="metric-box">
+<div class="metric-title"><span class="has-tip">Brier Score<span class="tip-box">Measures how accurate the AI's confidence levels are. A score of 0 is perfect, 1 is worst. Lower is better. Our score of 0.142 is considered strong.</span></span></div>
+<div class="metric-value" style="font-size:2.2rem;">0.142</div>
+<div style="font-size:0.8rem; color:#10b981; margin-top:4px;"><i class="fas fa-arrow-down"></i> 0.02 from last month</div>
+</div>
+<div class="metric-box">
+<div class="metric-title"><span class="has-tip">Expected Calibration Error (ECE)<span class="tip-box">Shows the gap between how confident our AI says it is vs how often it is actually correct. 5.8% ECE is excellent, meaning our confidence scores are trustworthy.</span></span></div>
+<div class="metric-value" style="font-size:2.2rem;">5.8%</div>
+<div style="font-size:0.8rem; color:#10b981; margin-top:4px;"><i class="fas fa-check-circle"></i> Highly Calibrated</div>
+</div>
+</div>
+<h3 style="margin-bottom: 1.5rem; color: var(--text-main);">Recent Prediction Logs</h3>
+<div style="background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; overflow: visible;">
+<table class="recent-table">
+<thead>
+<tr>
+<th>Date</th>
+<th>Ticker</th>
+<th><span class="has-tip">System Prediction<span class="tip-box">The direction our AI predicted the stock would move (Bullish = UP, Bearish = DOWN).</span></span></th>
+<th>Actual Market Outcome</th>
+<th><span class="has-tip">Calibration Update<span class="tip-box">After seeing the real result, the system updates its accuracy score. Success raises it, failure lowers it.</span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Oct 12, 2023</td>
+<td><strong>LUCK</strong></td>
+<td><i class="fas fa-arrow-up" style="color:#10b981;"></i> <span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span></td>
+<td>Stock went UP (+2.1%)</td>
+<td><span class="status-badge badge-correct">Success (74%)</span></td>
+</tr>
+<tr>
+<td>Oct 11, 2023</td>
+<td><strong>MEBL</strong></td>
+<td><i class="fas fa-arrow-down" style="color:#ef4444;"></i> <span class="has-tip">Bearish<span class="tip-box">A market state where prices are expected to fall.</span></span></td>
+<td>Stock went UP (+0.8%)</td>
+<td><span class="status-badge badge-wrong">Failed (73%)</span></td>
+</tr>
+<tr>
+<td>Oct 11, 2023</td>
+<td><strong>OGDC</strong></td>
+<td><i class="fas fa-arrow-up" style="color:#10b981;"></i> <span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span></td>
+<td>Stock went UP (+1.5%)</td>
+<td><span class="status-badge badge-correct">Success (74%)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+<script src="js/main.js"></script>
 </body>
 </html>

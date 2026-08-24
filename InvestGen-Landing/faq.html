@@ -1,97 +1,223 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+
+<html data-theme="light" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InvestOPak | FAQ</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InvestOPak | Frequently Asked Questions</title>
+<meta content="Answers to the most common questions about InvestOPak, the AI-guided investment analysis system for PSX stocks." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="css/style.css?v=3" rel="stylesheet"/>
+<style>
+        .faq-wrapper { max-width: 820px; margin: 0 auto; padding: 3rem 1.5rem; }
+        .faq-page-title { font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 0.5rem; }
+        .faq-page-sub { text-align: center; color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 1rem; }
+        .faq-category-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-color);
+            margin: 2.5rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .faq-category-label::after { content: ''; flex: 1; height: 1px; background: var(--border-color); }
+        .faq-item {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .faq-item:hover { border-color: var(--accent-color); box-shadow: 0 2px 12px rgba(59,130,246,0.07); }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.1rem 1.4rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.97rem;
+            gap: 1rem;
+        }
+        .faq-question i { color: var(--accent-color); font-size: 0.85rem; transition: transform 0.25s; flex-shrink: 0; }
+        .faq-item.open .faq-question i { transform: rotate(45deg); }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.25s ease;
+            padding: 0 1.4rem;
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .faq-item.open .faq-answer { max-height: 400px; padding: 0 1.4rem 1.2rem; }
+        .faq-answer strong { color: var(--text-main); }
+        .faq-answer a { color: var(--accent-color); }
+        [data-theme="dark"] .faq-question { color: #f1f5f9; }
+        [data-theme="dark"] .faq-answer strong { color: #f1f5f9; }
+    </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container nav-container">
-            <a href="index.html" class="logo">Invest<span>OPak</span></a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="how-it-works.html">How We Work</a></li>
-                <li><a href="faq.html" style="color: var(--accent-color);">FAQ</a></li>
-                <li><a href="glossary.html">Glossary</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-            </ul>
-            <div class="nav-actions">
-                <button id="theme-toggle" aria-label="Toggle Theme">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <a href="login.html" class="btn btn-secondary">Login</a>
-                <a href="signup.html" class="btn btn-primary">Sign Up</a>
-            </div>
-        </div>
-    </nav>
-
-    <main>
-        <section class="section container" style="max-width: 800px;">
-            <h1 class="section-title">Frequently Asked Questions</h1>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    What makes InvestOPak different from competitors?
-                    <i class="fas fa-plus"></i>
-                </div>
-                <div class="faq-answer">
-                    Unlike standard platforms that rely on fixed technical indicators, InvestOPak uses an adaptive multi-agent system. It identifies the current market regime and dynamically adjusts which indicators are most relevant. Furthermore, we provide calibrated confidence scores backed by walk-forward testing, rather than black-box guarantees.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    Does InvestOPak execute trades automatically?
-                    <i class="fas fa-plus"></i>
-                </div>
-                <div class="faq-answer">
-                    No. InvestOPak is a decision-support and investment intelligence system. Real-money trade execution or brokerage integration is out of scope. We provide the insights, and you execute the trades with your preferred broker.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    What is a Disconfirmation Agent?
-                    <i class="fas fa-plus"></i>
-                </div>
-                <div class="faq-answer">
-                    It is a specialized AI agent within our system designed to find historical situations that looked exactly like the current market but resulted in an opposing outcome. By presenting counter-evidence, we protect investors from overconfidence.
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    Does InvestOPak support markets other than PSX?
-                    <i class="fas fa-plus"></i>
-                </div>
-                <div class="faq-answer">
-                    Currently, our system is entirely optimized and calibrated for the Pakistan Stock Exchange (PSX). Multi-market support is not available at this time.
-                </div>
-            </div>
-
-        </section>
-    </main>
-
-    <footer>
-        <div class="container footer-content">
-            <div class="logo">Invest<span>OPak</span></div>
-            <div class="footer-links">
-                <a href="privacy.html">Privacy Policy</a>
-                <a href="terms.html">Terms of Service</a>
-                <a href="disclaimer.html">Disclaimer</a>
-            </div>
-            <div class="copyright">&copy; 2026 PSX Mentor Team. All rights reserved.</div>
-        </div>
-    </footer>
-
-    <script src="js/main.js"></script>
+<nav class="navbar">
+<div class="container nav-container">
+<a class="logo" href="index.html">Invest<span>OPak</span></a>
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="how-it-works.html">How We Work</a></li>
+<li><a href="faq.html" style="color: var(--accent-color);">FAQ</a></li>
+<li><a href="glossary.html">Glossary</a></li>
+<li><a href="contact.html">Contact Us</a></li>
+</ul>
+<div class="nav-actions">
+<button id="theme-toggle"><i class="fas fa-moon"></i></button>
+<a class="btn btn-secondary" href="login.html">Login</a>
+<a class="btn btn-primary" href="signup.html">Sign Up</a>
+</div>
+</div>
+</nav>
+<main>
+<div class="faq-wrapper">
+<h1 class="faq-page-title">Frequently Asked Questions</h1>
+<p class="faq-page-sub">Everything you need to know about InvestOPak, explained clearly.</p>
+<!-- GENERAL -->
+<div class="faq-category-label"><i class="fas fa-info-circle"></i> General</div>
+<div class="faq-item">
+<div class="faq-question">What is InvestOPak? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">InvestOPak is an <strong>AI-powered investment decision support system</strong> designed specifically for stocks listed on the Pakistan Stock Exchange (PSX). Rather than giving you a final answer, it acts as an interactive AI consultant that guides you through the analysis process step by step, asking questions, explaining its reasoning, and letting you make every important decision yourself.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">Who is InvestOPak built for? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">InvestOPak is designed for <strong>retail investors on the PSX</strong>, especially those who may not have deep financial knowledge. Instead of assuming you already know which <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> to use or what information is relevant, the AI guides you through the process, explains each step in plain language, and only asks you to make the final call.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">What makes InvestOPak different from other PSX platforms? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">Most existing tools, whether PSXFusion, AlphaGen, or PSXInvest, are one-way signal feeds. They give you an output and you consume it. InvestOPak is different in three key ways: <strong>(1)</strong> It has a real accept/reject/modify dialogue at every stage so you shape the analysis. <strong>(2)</strong> It uses HMM-based market regime detection and Genetic Algorithm optimization to select the right <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> for the current market condition, not fixed defaults. <strong>(3)</strong> It includes a Disconfirmation Agent that actively searches for evidence that contradicts the recommendation, and Brier Score / ECE calibrated confidence scores so you know how reliable the output is.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">Does InvestOPak support markets other than PSX? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">No. InvestOPak is <strong>built and calibrated exclusively for the Pakistan Stock Exchange (PSX)</strong>. Its HMM regime models, GA-optimized <span class="has-tip">indicator<span class="tip-box">A mathematical calculation based on price/volume used to predict future trends.</span></span> parameters, and historical retrieval database are all trained on PSX data. Multi-market support is outside the current project scope.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">Does InvestOPak support derivatives, currencies, or commodities? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">No. The system is scoped to <strong>PSX-listed equities (stocks)</strong> only. Derivatives, currencies, forex, and commodities are explicitly outside the project scope.</div>
+</div>
+<!-- AI SCREENER -->
+<div class="faq-category-label"><i class="fas fa-robot"></i> The AI Screener</div>
+<div class="faq-item">
+<div class="faq-question">What is the AI Screener? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">The AI Screener is the <strong>main user-facing feature of InvestOPak</strong>. It is a conversational interface that acts as your personal investment consultant. It asks about your goals and risk tolerance, recommends relevant analysis options, explains why each option is suggested, and lets you accept, reject, modify, or add to those suggestions at every stage of the analysis.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">What questions will the AI Screener ask me? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">At the start, the AI will ask about your <strong>investment objective</strong> (e.g., long-term growth vs short-term trading), your <strong>risk tolerance</strong> (conservative, balanced, or aggressive), and which PSX stock you want to analyze. Based on your responses, it then guides you through technical, <span class="has-tip">fundamental<span class="tip-box">The underlying financial health of a company (revenue, earnings, debt).</span></span>, and risk analysis, asking targeted follow-up questions at each stage.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">Can I change my mind or go back during the analysis? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">Yes. The AI Screener is designed to allow you to <strong>revisit and change previous choices</strong> throughout the session. You are never locked into a path. If you want to add an <span class="has-tip">indicator<span class="tip-box">A mathematical calculation based on price/volume used to predict future trends.</span></span> you previously skipped, or explore a risk factor you initially dismissed, you can do so at any point.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">Can I add or remove <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> from the AI's recommendation? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">Yes, that is a core feature. After the AI recommends a set of technical <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> based on the detected market regime, you can <strong>continue with them, remove any you do not want, add <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> the AI did not select, or ask the AI to explain why a particular <span class="has-tip">indicator<span class="tip-box">A mathematical calculation based on price/volume used to predict future trends.</span></span> was chosen</strong>. The final analysis runs using your chosen set.</div>
+</div>
+<!-- TECHNICAL ANALYSIS -->
+<div class="faq-category-label"><i class="fas fa-chart-bar"></i> Technical Analysis</div>
+<div class="faq-item">
+<div class="faq-question">Which technical <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> does InvestOPak support? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">InvestOPak supports: <strong>SMA, EMA, RSI, MACD, Bollinger Bands, ADX/DMI, OBV, Stochastic Oscillator, ATR, and Candlestick patterns</strong>. The system does not apply all of them uniformly. It uses market regime detection to identify which subset is appropriate for current conditions, then lets you customize the final selection.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">How does the system decide which <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> to recommend? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">The system uses a <strong>Hidden Markov Model (HMM)</strong> to classify the current market as <span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span>, <span class="has-tip">Bearish<span class="tip-box">A market state where prices are expected to fall.</span></span>, or Sideways. Different regimes favour different <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> (e.g., RSI and Bollinger Bands are ideal in Sideways markets; MACD and ADX are more useful in strongly trending markets). A <strong>Genetic Algorithm (GA)</strong> then optimizes the parameters of the selected <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> for the specific regime, rather than using the same fixed settings for every market condition.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">What is a Market Regime and why does it matter? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">A market regime is the <strong>overall state of the market</strong>: <span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span> (prices trending up), <span class="has-tip">Bearish<span class="tip-box">A market state where prices are expected to fall.</span></span> (prices trending down), or Sideways (prices trading in a flat range). It matters because the same <span class="has-tip">indicator<span class="tip-box">A mathematical calculation based on price/volume used to predict future trends.</span></span> can give completely different signals in different regimes. RSI, for example, works well in a Sideways market but gives misleading readings in a strong trend. InvestOPak detects the regime first so that only the most relevant <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> are recommended.</div>
+</div>
+<!-- AI AND INTELLIGENCE -->
+<div class="faq-category-label"><i class="fas fa-brain"></i> AI Technology</div>
+<div class="faq-item">
+<div class="faq-question">What is the Disconfirmation Agent? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">The Disconfirmation Agent is a <strong>mandatory safety layer</strong> built into InvestOPak. Instead of only looking for evidence that supports the recommendation, it actively searches historical data for cases where the exact same technical signals led to a loss. If it finds conflicting evidence, it surfaces this to you and asks whether you want to investigate further. This protects you from overconfident AI recommendations.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">What is RAG and how does InvestOPak use it? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">RAG stands for <strong>Retrieval-Augmented Generation</strong>. When the AI encounters a current stock setup, it searches a database of historical PSX market situations to find similar cases. If, for example, the current technical pattern for LUCK closely resembles a setup from 2021, the system retrieves that historical case and explains what happened next. You then decide whether to use that historical evidence in your analysis.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">How does the multi-agent architecture work? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">InvestOPak uses <strong>specialized agents</strong> for different tasks: a Data Agent (fetches PSX data), Technical Analysis Agent, <span class="has-tip">Fundamental<span class="tip-box">The underlying financial health of a company (revenue, earnings, debt).</span></span> Analysis Agent, Market Context Agent, Risk Agent, Disconfirmation Agent, and <span class="has-tip">Calibration<span class="tip-box">The process of adjusting AI parameters to match real-world historical data.</span></span> Agent. The AI Screener acts as the coordinator, routing your choices to the right agent at each stage and assembling the results into a coherent, interactive analysis flow.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">Can I request a What-If scenario analysis? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">Yes. The AI may offer, or you can request, a <strong>What-If scenario</strong> such as "What if inflation rises next month?" or "What if energy prices spike?". The system uses historical data for that specific scenario to adjust the weight of <span class="has-tip">fundamental<span class="tip-box">The underlying financial health of a company (revenue, earnings, debt).</span></span> factors and show you the potential impact on the stock's outlook before it actually happens.</div>
+</div>
+ CONFIDENCE AND <span class="has-tip">CALIBRATION<span class="tip-box">The process of adjusting AI parameters to match real-world historical data.</span></span> 
+<div class="faq-category-label"><i class="fas fa-tachometer-alt"></i> Confidence and <span class="has-tip">Calibration<span class="tip-box">The process of adjusting AI parameters to match real-world historical data.</span></span></div>
+<div class="faq-item">
+<div class="faq-question">What is the AI Confidence Score? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">The AI Confidence Score is a percentage that reflects <strong>how strongly aligned the technical signals, <span class="has-tip">fundamental<span class="tip-box">The underlying financial health of a company (revenue, earnings, debt).</span></span> data, and historical patterns are</strong> for a given recommendation. It is not a guarantee of profit. It is an indication of certainty under current market conditions. The <span class="has-tip">Calibration<span class="tip-box">The process of adjusting AI parameters to match real-world historical data.</span></span> page shows how reliable these scores have been historically.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">How does InvestOPak measure its own accuracy? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">InvestOPak runs a <strong><span class="has-tip">calibration<span class="tip-box">The process of adjusting AI parameters to match real-world historical data.</span></span> loop</strong>: after each prediction is made, the system waits for the actual market outcome, then compares what it predicted against what happened. It uses two formal metrics: <strong>Brier Score</strong> (measures accuracy of confidence levels, 0 is perfect) and <strong>Expected <span class="has-tip">Calibration<span class="tip-box">The process of adjusting AI parameters to match real-world historical data.</span></span> Error (ECE)</strong> (measures the gap between stated confidence and actual accuracy). These are visible on the <span class="has-tip">Calibration<span class="tip-box">The process of adjusting AI parameters to match real-world historical data.</span></span> page.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">Is the confidence score a guaranteed return? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">Absolutely not. The confidence score is an <strong>indication of analytical certainty, not a financial guarantee</strong>. Markets are inherently uncertain and past performance does not guarantee future results. InvestOPak provides decision support. You make the final investment decision.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">What is Walk-Forward Testing? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">Walk-Forward Testing is the method InvestOPak uses to validate its models honestly. Rather than training on all historical data and testing on the same data (which produces inflated results), <strong>the model is trained on old data, tested on the immediate next unseen period, then rolled forward</strong>. This closely simulates real-world conditions and prevents overfitting.</div>
+</div>
+<!-- SCOPE AND LIMITS -->
+<div class="faq-category-label"><i class="fas fa-shield-alt"></i> What InvestOPak Does Not Do</div>
+<div class="faq-item">
+<div class="faq-question">Does InvestOPak execute trades automatically? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">No. InvestOPak is purely a <strong>decision support system</strong>. It does not connect to any broker, execute trades, manage real money, or make any investment decision without your explicit input. The scope explicitly excludes brokerage integration and automated trade execution.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">Is InvestOPak a licensed financial advisor? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">No. InvestOPak is an <strong>academic final year project</strong> (BS Software Engineering) and a technology prototype. It is not a registered financial advisor, investment firm, or regulated financial service. All outputs are for informational and educational purposes only. Always consult a qualified financial professional before making investment decisions.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">Does InvestOPak have a mobile app? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">Not at this time. InvestOPak is a <strong>web-based dashboard</strong>. A mobile application is outside the current project scope.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">What is currently in the prototype versus the full system? <i class="fas fa-plus"></i></div>
+<div class="faq-answer">The current prototype is a <strong>working frontend demonstration</strong> (HTML/CSS/JS) showing the Dashboard, Market Overview, AI Screener conversational flow, Portfolio, All Stocks browser, <span class="has-tip">Calibration<span class="tip-box">The process of adjusting AI parameters to match real-world historical data.</span></span> page, and Watchlist. The prototype does not yet connect to a real backend, real PSX data pipeline, or the multi-agent architecture. All current data is static for demonstration purposes. The full system with HMM, GA, RAG, Disconfirmation Agent, and real-time PSX data is under active development.</div>
+</div>
+</div>
+</main>
+<footer>
+<div class="container footer-content">
+<div class="logo">Invest<span>OPak</span></div>
+<div class="footer-links">
+<a href="privacy.html">Privacy Policy</a>
+<a href="terms.html">Terms of Service</a>
+<a href="disclaimer.html">Disclaimer</a>
+</div>
+<div class="copyright">&copy; 2026 PSX Mentor Team. All rights reserved.</div>
+</div>
+</footer>
+<script src="js/main.js"></script>
+<script>
+        // FAQ accordion logic
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const item = q.parentElement;
+                const isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+    </script>
 </body>
 </html>

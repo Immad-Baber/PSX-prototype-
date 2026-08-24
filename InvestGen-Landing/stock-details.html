@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>InvestOPak | Stock Report</title>
+<title>InvestOPak | Stock Details</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <link href="css/style.css?v=3" rel="stylesheet"/>
@@ -112,89 +112,23 @@
 <p class="market-status" id="stock-price-header" style="font-size:1.6rem;font-weight:bold;margin:0.25rem 0 0;">Loading...</p>
 </div>
 <div style="display:flex;gap:0.75rem;">
-    <button class="btn btn-primary" onclick="alert('Exporting Report as PDF...')"><i class="fas fa-file-pdf"></i> Export PDF</button>
-    <button class="btn btn-secondary"><i class="fas fa-star"></i> Add to Watchlist</button>
+<button class="btn btn-secondary"><i class="fas fa-star"></i> Add to Watchlist</button>
 </div>
 </div>
 <!-- Company Details -->
 <div class="company-details" style="display: flex; gap: 2rem; background: var(--bg-primary); padding: 1rem 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); border: 1px solid var(--border-color); align-items: center; flex-wrap: wrap;">
-    <div><strong>Sector:</strong> <span id="comp-sector" style="color:var(--text-main);">Commercial Banks</span></div>
-    <div><strong>Industry:</strong> <span id="comp-industry" style="color:var(--text-main);">Banking</span></div>
-    <div><strong>CEO:</strong> <span id="comp-ceo" style="color:var(--text-main);">N/A</span></div>
-    <div><strong>52W Range:</strong> <span id="comp-range" style="color:var(--text-main);">Rs 102.50 - 188.00</span></div>
-    <div style="margin-left: auto;"><a href="#" style="color:var(--accent-color);text-decoration:none;font-weight:500;"><i class="fas fa-globe"></i> Investor Relations</a></div>
+<div><strong>Sector:</strong> <span id="comp-sector" style="color:var(--text-main);">Commercial Banks</span></div>
+<div><strong>Industry:</strong> <span id="comp-industry" style="color:var(--text-main);">Banking</span></div>
+<div><strong>CEO:</strong> <span id="comp-ceo" style="color:var(--text-main);">N/A</span></div>
+<div><strong>52W Range:</strong> <span id="comp-range" style="color:var(--text-main);">Rs 102.50 - 188.00</span></div>
+<div style="margin-left: auto;"><a href="#" style="color:var(--accent-color);text-decoration:none;font-weight:500;"><i class="fas fa-globe"></i> Investor Relations</a></div>
 </div>
 <!-- Report Toggle -->
-<div class="report-toggle">
-<button class="report-tab active" id="tab-simple" onclick="switchTab('simple')">
-<i class="fas fa-user"></i> Simple Report
-                </button>
-<button class="report-tab" id="tab-technical" onclick="switchTab('technical')">
-<i class="fas fa-chart-line"></i> Technical Report
-                </button>
-</div>
+
 <!-- SIMPLE PANEL -->
-<div class="report-panel active" id="panel-simple">
-<div class="simple-verdict">
-<div class="verdict-icon"><i class="fas fa-arrow-up" style="color:#10b981;"></i></div>
-<div class="verdict-text">
-<h2><span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span> Outlook</h2>
-<p>Based on current technical signals, market conditions, and historical patterns, {TICKER} shows a <strong>positive short-term outlook</strong>. The market is in a <span class="has-tip">Trending Bullish regime<span class="tip-box">A market state where prices are steadily rising. Buying stocks that are already going up works best in this environment.</span></span>, which favours <span class="has-tip edge-left">momentum strategies<span class="tip-box">Trading strategies that buy stocks showing upward strength, expecting the trend to continue.</span></span>.</p>
-<span class="confidence-pill"><i class="fas fa-circle-check"></i> 92% AI Confidence Score</span>
-</div>
-</div>
-<div class="simple-section">
-<h4><i class="fas fa-lightbulb" style="color:#f59e0b;"></i> What this means in plain language</h4>
-<p>The AI analyzed {TICKER} using the most relevant <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> for the current market environment. In simple terms: <strong>more signals are pointing up than down</strong>. The trend is strong, volume supports the move, and no major red flags were found in the <span class="has-tip">fundamentals<span class="tip-box">The underlying financial health of a company (revenue, earnings, debt).</span></span>. This does not guarantee profit. It means conditions currently look favorable based on historical patterns.</p>
-</div>
-<div class="simple-section">
-<h4><i class="fas fa-list-check" style="color:var(--accent-color);"></i> Key signals used</h4>
-<ul class="simple-bullets">
-<li><i class="fas fa-check" style="color:#10b981;"></i><span><strong><span class="has-tip">RSI<span class="tip-box">Relative Strength Index (0-100). Above 70 is overbought (might fall soon), below 30 is oversold (might rise). 64 is strong but safe.</span></span> (64.2):</strong> Healthy <span class="has-tip">momentum<span class="tip-box">The strength or speed of a price trend.</span></span>. Not yet overbought. Good sign.</span></li>
-<li><i class="fas fa-check" style="color:#10b981;"></i><span><strong><span class="has-tip">MACD<span class="tip-box">Moving Average Convergence Divergence. A trend-following indicator. A 'crossover' means upward momentum is gaining strength.</span></span>:</strong> <span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span> crossover confirmed. Trend is gaining strength.</span></li>
-<li><i class="fas fa-check" style="color:#10b981;"></i><span><strong><span class="has-tip">HMM Market Regime<span class="tip-box">Hidden Markov Model. Our AI uses this advanced math to detect the 'hidden state' or overall mood of the market.</span></span>:</strong> Detected as Trending <span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span>. <span class="has-tip">Momentum<span class="tip-box">The strength or speed of a price trend.</span></span> <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> are most reliable here.</span></li>
-<li><i class="fas fa-check" style="color:#10b981;"></i><span><strong><span class="has-tip">P/E Ratio<span class="tip-box">Price-to-Earnings Ratio. Measures how much you pay for Rs 1 of the company's profit. Lower generally means it's cheaper.</span></span> (6.8x):</strong> Reasonably valued vs. the sector. Not overpriced.</span></li>
-<li><i class="fas fa-exclamation-triangle" style="color:#f59e0b;"></i><span><strong>Volume (1.54M):</strong> Above average. Confirms the move is genuine.</span></li>
-</ul>
-</div>
-<div class="simple-section" style="border-color:rgba(59,130,246,0.25);background:rgba(59,130,246,0.03);">
-<h4><i class="fas fa-shield-alt" style="color:var(--accent-color);"></i> Safety Check (<span class="has-tip">Disconfirmation Agent<span class="tip-box">A specialized AI sub-system designed to argue AGAINST the main prediction to ensure we don't ignore red flags.</span></span>)</h4>
-<p>The system searched <strong>14 historical cases</strong> with a similar setup to today's {TICKER} pattern. In <strong>85% of those cases</strong>, the stock continued upward. In 15% it pulled back. No major conflicting evidence found. This recommendation is considered relatively reliable given the historical base rate.</p>
-</div>
-<div class="actions-row">
-<a class="btn btn-primary" href="screener-demo.html"><i class="fas fa-robot"></i> Analyze with AI Screener</a>
-<button class="btn btn-secondary" onclick="switchTab('technical')"><i class="fas fa-chart-line"></i> View Technical Detail</button>
-<button class="btn btn-secondary"><i class="fas fa-star"></i> Add to Watchlist</button>
-</div>
-</div>
+
 <!-- TECHNICAL PANEL -->
-<div class="report-panel" id="panel-technical">
-<div class="widgets-grid" style="margin-bottom:2rem;">
-<div class="widget-card">
-<div class="widget-header">
-<h3>GenAI Technical Report</h3>
-<span class="badge bullish-badge" id="stock-confidence">92% Confidence</span>
-</div>
-<div class="widget-body">
-<p id="stock-ai-summary" style="color:var(--text-secondary);margin-bottom:1rem;line-height:1.8;"><strong>AI Summary:</strong> {TICKER} is currently exhibiting strong <span class="has-tip">bullish<span class="tip-box">A market state where prices are expected to rise.</span></span> <span class="has-tip">momentum<span class="tip-box">The strength or speed of a price trend.</span></span> within a low-<span class="has-tip">volatility<span class="tip-box">The rate at which the price of a stock increases or decreases.</span></span> market regime. The <span class="has-tip edge-left">Hidden Markov Model (HMM)<span class="tip-box">A statistical model used by our AI to identify the underlying, unobservable market regime (e.g., trending, volatile, sideways).</span></span> confirms the trend is stable. The <span class="has-tip">Genetic Algorithm<span class="tip-box">An AI optimization technique inspired by natural selection, used to find the most accurate combination of indicators for this specific stock.</span></span> has heavily weighted the <span class="has-tip">MACD crossover<span class="tip-box">Occurs when the fast MACD line crosses above the slower signal line, typically interpreted as a strong buy signal.</span></span> and <span class="has-tip edge-left">ADX/DMI<span class="tip-box">Average Directional Index. Measures the sheer strength of a trend regardless of whether it is going up or down.</span></span> <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span>, which both align positively.</p>
-<p style="color:var(--text-secondary);line-height:1.8;"><span class="has-tip">Fundamental<span class="tip-box">The underlying financial health of a company (revenue, earnings, debt).</span></span> tailwinds, specifically robust P/E positioning relative to the sector, further support this view. <span class="has-tip edge-left">Expected Calibration Error (ECE)<span class="tip-box">A metric that measures how accurately the system's confidence scores reflect reality. A low ECE (4.1%) means the AI's confidence is highly trustworthy.</span></span> for similar past predictions is low (4.1%), indicating high reliability.</p>
-</div>
-</div>
-<div class="widget-card">
-<div class="widget-header" style="background-color:rgba(37,99,235,0.05);">
-<h3 style="color:var(--accent-color);"><i class="fas fa-shield-alt"></i> Disconfirmation Check</h3>
-</div>
-<div class="widget-body">
-<div style="display:flex;gap:1rem;align-items:flex-start;">
-<i class="fas fa-check-circle" style="color:#10b981;font-size:2rem;"></i>
-<div>
-<h4 style="margin-bottom:0.5rem;">No Major Conflicts Found</h4>
-<p style="color:var(--text-secondary);font-size:0.95rem;">14 historical analogs analyzed. In 85% of cases the stock continued upward. No major macro contradictions detected.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
+
 <div class="widget-card" style="margin-bottom:2rem;">
 <div class="widget-header">
 <div style="display:flex;align-items:center;justify-content:space-between;width:100%;">
@@ -210,8 +144,7 @@
 <div class="widget-body" id="lightweight-chart-container" style="height:300px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border-color);border-radius:8px;">
 <span style="color:var(--text-secondary);"><i class="fas fa-chart-bar"></i> Loading Interactive Chart...</span>
 </div>
-</div>
-<div class="metrics-grid">
+</div><div class="metrics-grid">
 <div class="metric-card"><span class="metric-label"><span class="has-tip">HMM Regime<span class="tip-box">Hidden Markov Model. A statistical model used to detect the hidden overall mood of the market.</span></span></span><div class="metric-value bullish-text">Trending <span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span></div></div>
 <div class="metric-card"><span class="metric-label"><span class="has-tip">RSI (14)<span class="tip-box">Relative Strength Index. A momentum indicator from 0 to 100. Above 70 is overbought, below 30 is oversold.</span></span></span><div class="metric-value">64.2</div></div>
 <div class="metric-card"><span class="metric-label"><span class="has-tip">P/E Ratio<span class="tip-box">Price-to-Earnings Ratio. Measures how much you pay for Rs 1 of the company's profit. Lower generally means cheaper.</span></span></span><div class="metric-value">6.8x</div></div>
@@ -219,10 +152,10 @@
 <div class="metric-card"><span class="metric-label"><span class="has-tip edge-left">Market Cap<span class="tip-box">Total market value of the company's outstanding shares. (Current Share Price &times; Total Number of Shares).</span></span></span><div class="metric-value">Rs 165.00B</div></div>
 <div class="metric-card"><span class="metric-label"><span class="has-tip edge-left">MACD<span class="tip-box">Moving Average Convergence Divergence. A trend-following momentum indicator. 'Crossover UP' means gaining strength.</span></span></span><div class="metric-value bullish-text">Crossover UP</div></div>
 </div>
-<div class="actions-row">
-<a class="btn btn-primary" href="screener-demo.html"><i class="fas fa-robot"></i> Deep Analyze with AI Screener</a>
-<button class="btn btn-secondary" onclick="switchTab('simple')"><i class="fas fa-user"></i> View Simple Report</button>
-</div>
+<div style="text-align:center; margin-top: 3rem; margin-bottom: 2rem;">
+<button class="btn btn-primary" id="btn-run-ai" style="font-size: 1.1rem; padding: 0.75rem 2rem; border-radius: 30px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); transition: transform 0.2s ease;">
+<i class="fas fa-robot"></i> Run AI Analysis on this Stock
+        </button>
 </div>
 </main>
 </div>
@@ -230,7 +163,7 @@
 <script src="js/dashboard_data.js"></script>
 <script>
         function switchTab(tab) {
-            document.querySelectorAll('.report-tab').forEach(t => t.classList.remove('active'));
+            // removed tabs.forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.report-panel').forEach(p => p.classList.remove('active'));
             document.getElementById('tab-' + tab).classList.add('active');
             document.getElementById('panel-' + tab).classList.add('active');
@@ -278,7 +211,14 @@
                     document.getElementById('comp-ceo').innerText = details.ceo;
                     const low = (stockData.price * 0.7).toFixed(2);
                     const high = (stockData.price * 1.4).toFixed(2);
+                    
                     document.getElementById('comp-range').innerText = `Rs ${low} - ${high}`;
+                    
+                    // Add CTA functionality
+                    document.getElementById('btn-run-ai').onclick = function() {
+                        window.location.href = 'screener-demo.html?ticker=' + stockData.ticker;
+                    };
+
                     
                     // Replace "{TICKER}" text with actual ticker in the summary text
                     document.querySelectorAll('p').forEach(p => {
@@ -408,20 +348,15 @@
                 });
             }
             
-            // Switch tabs explicitly to ensure sizing is correct if rendered while hidden
-            const technicalTabBtn = document.getElementById('tab-technical');
-            if (technicalTabBtn) {
-                technicalTabBtn.addEventListener('click', () => {
-                    setTimeout(() => {
-                        initChart();
-                        if (chart) {
-                            const container = document.getElementById('lightweight-chart-container');
-                            chart.resize(container.clientWidth, 300);
-                            chart.timeScale().fitContent();
-                        }
-                    }, 50);
-                });
-            }
+            // Initialize chart immediately since it is always visible on this page
+            setTimeout(() => {
+                initChart();
+                if (chart) {
+                    const container = document.getElementById('lightweight-chart-container');
+                    chart.resize(container.clientWidth, 300);
+                    chart.timeScale().fitContent();
+                }
+            }, 100);
         });
     </script>
 </body>

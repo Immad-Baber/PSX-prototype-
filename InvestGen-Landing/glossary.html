@@ -1,84 +1,103 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+
+<html data-theme="light" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InvestOPak | Glossary</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InvestOPak | Glossary of Terms</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="css/style.css?v=3" rel="stylesheet"/>
+<style>
+        .glossary-wrapper { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem; }
+        .glossary-title { font-family: 'Outfit',sans-serif; font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 0.5rem; }
+        .glossary-subtitle { text-align: center; color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 3rem; }
+        .category-section { margin-bottom: 2.5rem; }
+        .category-label { font-family: 'Outfit',sans-serif; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-color); margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
+        .category-label::after { content: ''; flex: 1; height: 1px; background: var(--border-color); }
+        .term-card { background: var(--bg-secondary, #f8fafc); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem 1.5rem; margin-bottom: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
+        .term-card:hover { border-color: var(--accent-color); box-shadow: 0 4px 20px rgba(59,130,246,0.08); }
+        .term-name { font-family: 'Outfit',sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .term-tag { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; padding: 2px 8px; border-radius: 20px; background: rgba(59,130,246,0.1); color: var(--accent-color); white-space: nowrap; }
+        .term-tag.green { background: rgba(16,185,129,0.1); color: #059669; }
+        .term-tag.orange { background: rgba(245,158,11,0.1); color: #d97706; }
+        .term-tag.purple { background: rgba(139,92,246,0.1); color: #7c3aed; }
+        .term-def { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.65; }
+        .term-def strong { color: var(--text-primary, #0f172a); }
+        [data-theme="dark"] .term-card { background: rgba(255,255,255,0.03); }
+        [data-theme="dark"] .term-name, [data-theme="dark"] .term-def strong { color: #f1f5f9; }
+    </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container nav-container">
-            <a href="index.html" class="logo">Invest<span>OPak</span></a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="how-it-works.html">How We Work</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="glossary.html" style="color: var(--accent-color);">Glossary</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-            </ul>
-            <div class="nav-actions">
-                <button id="theme-toggle" aria-label="Toggle Theme">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <a href="login.html" class="btn btn-secondary">Login</a>
-                <a href="signup.html" class="btn btn-primary">Sign Up</a>
-            </div>
-        </div>
-    </nav>
-
-    <main>
-        <section class="section container" style="max-width: 800px;">
-            <h1 class="section-title">Glossary of Terms</h1>
-            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 3rem;">Definitions of core financial and technical concepts used in the InvestOPak platform.</p>
-            
-            <dl>
-                <div class="glossary-term">
-                    <dt>Hidden Markov Model (HMM)</dt>
-                    <dd>A statistical model used in InvestOPak to classify hidden market "regimes" (e.g., bull market, sideways volatility) based on observable data like price and volume.</dd>
-                </div>
-                
-                <div class="glossary-term">
-                    <dt>Genetic Algorithm (GA)</dt>
-                    <dd>An optimization technique inspired by natural evolution. We use it to dynamically tune technical indicator weights to fit the currently detected market regime.</dd>
-                </div>
-
-                <div class="glossary-term">
-                    <dt>Expected Calibration Error (ECE)</dt>
-                    <dd>A metric that measures the difference between an AI model's stated confidence and its actual accuracy over time. Lower ECE means the confidence score is highly reliable.</dd>
-                </div>
-
-                <div class="glossary-term">
-                    <dt>Walk-Forward Testing</dt>
-                    <dd>A robust backtesting strategy where the model is continuously retrained on past data and tested on the immediate future data, preventing overfitting.</dd>
-                </div>
-
-                <div class="glossary-term">
-                    <dt>Disconfirmation Agent</dt>
-                    <dd>A unique part of the InvestOPak pipeline that actively searches for historical evidence that contradicts the primary investment recommendation.</dd>
-                </div>
-            </dl>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container footer-content">
-            <div class="logo">Invest<span>OPak</span></div>
-            <div class="footer-links">
-                <a href="privacy.html">Privacy Policy</a>
-                <a href="terms.html">Terms of Service</a>
-                <a href="disclaimer.html">Disclaimer</a>
-            </div>
-            <div class="copyright">&copy; 2026 PSX Mentor Team. All rights reserved.</div>
-        </div>
-    </footer>
-
-    <script src="js/main.js"></script>
+<nav class="navbar">
+<div class="container nav-container">
+<a class="logo" href="index.html">Invest<span>OPak</span></a>
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="how-it-works.html">How We Work</a></li>
+<li><a href="faq.html">FAQ</a></li>
+<li><a href="glossary.html" style="color: var(--accent-color);">Glossary</a></li>
+<li><a href="contact.html">Contact Us</a></li>
+</ul>
+<div class="nav-actions">
+<button id="theme-toggle"><i class="fas fa-moon"></i></button>
+<a class="btn btn-secondary" href="login.html">Login</a>
+<a class="btn btn-primary" href="signup.html">Sign Up</a>
+</div>
+</div>
+</nav>
+<main>
+<div class="glossary-wrapper">
+<h1 class="glossary-title">Glossary of Terms</h1>
+<p class="glossary-subtitle">Every important word used in InvestOPak, explained in plain language.</p>
+<div class="category-section">
+<div class="category-label"><i class="fas fa-chart-line"></i> Technical <span class="has-tip">Indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span></div>
+<div class="term-card"><div class="term-name">RSI - Relative Strength Index <span class="term-tag green"><span class="has-tip">Momentum<span class="tip-box">The strength or speed of a price trend.</span></span></span></div><div class="term-def">Measures the <strong>speed and size of recent price changes</strong> on a scale of 0 to 100. When RSI goes <strong>above 70</strong>, the stock is overbought and may drop. When it falls <strong>below 30</strong>, it is oversold and may bounce. Think of it like a stretched rubber band: pull it too far and it snaps back.</div></div>
+<div class="term-card"><div class="term-name">MACD - Moving Average Convergence Divergence <span class="term-tag">Trend</span></div><div class="term-def">Compares two moving averages (12-day vs 26-day) to show <strong>trend direction and strength</strong>. When the short average crosses above the long one it is a <span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span> signal. When it crosses below, it is <span class="has-tip">Bearish<span class="tip-box">A market state where prices are expected to fall.</span></span>.</div></div>
+<div class="term-card"><div class="term-name">Bollinger Bands <span class="term-tag orange"><span class="has-tip">Volatility<span class="tip-box">The rate at which the price of a stock increases or decreases.</span></span></span></div><div class="term-def">Draws three lines on the chart: a <strong>middle average</strong>, an <strong>upper ceiling</strong>, and a <strong>lower floor</strong>. When price hits the upper band it often drops back; when it hits the lower band it often bounces up. Ideal for Sideways (range-bound) markets.</div></div>
+<div class="term-card"><div class="term-name">ADX - Average Directional Index <span class="term-tag">Trend Strength</span></div><div class="term-def">Measures <strong>how strong a trend is</strong>, regardless of direction. ADX above 25 means the trend is strong and worth following. Below 20 the market is drifting. InvestOPak uses ADX to filter out weak, unreliable signals.</div></div>
+<div class="term-card"><div class="term-name">OBV - On-Balance Volume <span class="term-tag green">Volume</span></div><div class="term-def">Uses <strong>trading volume</strong> to confirm whether a price move is genuine. If OBV rises while price is flat, institutions may be quietly buying before a breakout. Price can be manipulated, but volume rarely lies.</div></div>
+<div class="term-card"><div class="term-name">ATR - Average True Range <span class="term-tag orange">Risk</span></div><div class="term-def">Measures <strong>how much a stock typically moves per day</strong>. If LUCK has ATR of Rs 5, it swings around 5 rupees on a normal day. InvestOPak uses ATR to set smart Stop-Loss levels that are wide enough to survive normal daily noise.</div></div>
+<div class="term-card"><div class="term-name">SMA - Simple Moving Average <span class="term-tag">Trend</span></div><div class="term-def">The <strong>average closing price over N days</strong>. Smooths out daily noise to reveal the underlying trend. A stock trading above its 50-day SMA is generally in an uptrend.</div></div>
+<div class="term-card"><div class="term-name">EMA - Exponential Moving Average <span class="term-tag">Trend</span></div><div class="term-def">Like SMA but gives <strong>more weight to recent prices</strong>, so it reacts faster to new information. InvestOPak uses EMA inside MACD and RSI calculations for faster, more responsive signals.</div></div>
+</div>
+<div class="category-section">
+<div class="category-label"><i class="fas fa-robot"></i> AI and Machine Learning</div>
+<div class="term-card"><div class="term-name">HMM - Hidden Markov Model <span class="term-tag purple">Core AI</span></div><div class="term-def">Identifies <strong>hidden market regimes</strong> (Bull, Bear, Sideways) from observable signals like price and volume. The regime itself is invisible but its effects are not. The HMM reads these patterns and tells the system which <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> to prioritize.</div></div>
+<div class="term-card"><div class="term-name">Genetic Algorithm (GA) <span class="term-tag purple">Optimization</span></div><div class="term-def">Inspired by evolution (survival of the fittest), it <strong>tunes <span class="has-tip">indicator<span class="tip-box">A mathematical calculation based on price/volume used to predict future trends.</span></span> weights</strong> for each market regime, finding the optimal combination of signals that fits current market conditions.</div></div>
+<div class="term-card"><div class="term-name">RAG - Retrieval Augmented Generation <span class="term-tag purple">AI Agent</span></div><div class="term-def">The AI <strong>searches a database of historical market setups</strong> to find situations similar to today. If the current setup matches March 2022 at 94% similarity, the AI uses that historical outcome to inform its recommendation.</div></div>
+<div class="term-card"><div class="term-name">Disconfirmation Agent <span class="term-tag orange">Safety Layer</span></div><div class="term-def">A mandatory AI agent that <strong>actively tries to disprove the main recommendation</strong>. It searches history for cases where the exact same signals led to a loss. The system's built-in devil's advocate, protecting you from overconfident AI predictions.</div></div>
+<div class="term-card"><div class="term-name">What-If Scenario Analysis <span class="term-tag">Simulation</span></div><div class="term-def">Lets you ask <strong>what happens if a specific event occurs</strong> - such as inflation rising or oil prices spiking. The AI adjusts the analysis based on historical data for that scenario, showing potential impact before it happens.</div></div>
+</div>
+<div class="category-section">
+<div class="category-label"><i class="fas fa-tachometer-alt"></i> <span class="has-tip">Calibration<span class="tip-box">The process of adjusting AI parameters to match real-world historical data.</span></span> and Accuracy</div>
+<div class="term-card"><div class="term-name">Model <span class="has-tip">Calibration<span class="tip-box">The process of adjusting AI parameters to match real-world historical data.</span></span> <span class="term-tag green">Accuracy</span></div><div class="term-def">Checks <strong>how honest the AI is about its own confidence</strong>. A well-calibrated AI that claims 80% confidence should be right exactly 80% of the time over many predictions. InvestOPak tracks this live using real historical prediction logs.</div></div>
+<div class="term-card"><div class="term-name">Brier Score <span class="term-tag green">Metric</span></div><div class="term-def">Measures <strong>how accurate the AI confidence scores are</strong>. Ranges from 0 (perfect) to 1 (worst). Our score of 0.142 is strong, meaning our confidence numbers closely match actual real-world outcomes.</div></div>
+<div class="term-card"><div class="term-name">ECE - Expected <span class="has-tip">Calibration<span class="tip-box">The process of adjusting AI parameters to match real-world historical data.</span></span> Error <span class="term-tag green">Metric</span></div><div class="term-def">The <strong>average gap between stated confidence and actual accuracy</strong>. Our 5.8% ECE means our AI confidence claims are only 5.8% off from reality on average. Lower is better.</div></div>
+<div class="term-card"><div class="term-name">Walk-Forward Testing <span class="term-tag">Validation</span></div><div class="term-def">A backtesting method where the model <strong>is never allowed to see future data</strong>. It trains on old data, predicts the next period, then rolls forward. Prevents overfitting and proves the model can work in real, unseen conditions.</div></div>
+</div>
+<div class="category-section">
+<div class="category-label"><i class="fas fa-landmark"></i> Market and Finance Terms</div>
+<div class="term-card"><div class="term-name">Market Regime <span class="term-tag orange">PSX Context</span></div><div class="term-def">The <strong>overall state or mood of the market</strong>. InvestOPak identifies three regimes: <strong><span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span></strong> (trending up), <strong><span class="has-tip">Bearish<span class="tip-box">A market state where prices are expected to fall.</span></span></strong> (trending down), and <strong>Sideways</strong> (flat range). Different <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> work best in each regime.</div></div>
+<div class="term-card"><div class="term-name">AI Confidence Score <span class="term-tag purple">InvestOPak</span></div><div class="term-def">A percentage showing <strong>how confident the AI is in its recommendation</strong>. An 89% score means technical signals, <span class="has-tip">fundamentals<span class="tip-box">The underlying financial health of a company (revenue, earnings, debt).</span></span>, and historical patterns all strongly agree. The <span class="has-tip">Calibration<span class="tip-box">The process of adjusting AI parameters to match real-world historical data.</span></span> page shows how trustworthy these scores are.</div></div>
+<div class="term-card"><div class="term-name">PSX - Pakistan Stock Exchange <span class="term-tag">Market</span></div><div class="term-def">Pakistan's <strong>national stock exchange</strong> where listed company shares are traded. InvestOPak is built specifically for PSX, accounting for rupee <span class="has-tip">volatility<span class="tip-box">The rate at which the price of a stock increases or decreases.</span></span>, local sector dynamics (cement, oil, banks), and Pakistani trading hours.</div></div>
+<div class="term-card"><div class="term-name"><span class="has-tip">Fundamental<span class="tip-box">The underlying financial health of a company (revenue, earnings, debt).</span></span> Analysis <span class="term-tag green">Valuation</span></div><div class="term-def">Evaluating a company's <strong>financial health</strong> via its reports: P/E Ratio (price vs earnings), EPS (earnings per share), and Debt-to-Equity ratio. InvestOPak's <span class="has-tip">Fundamental<span class="tip-box">The underlying financial health of a company (revenue, earnings, debt).</span></span> Agent cross-checks these before every recommendation.</div></div>
+<div class="term-card"><div class="term-name">Stop-Loss <span class="term-tag orange">Risk Management</span></div><div class="term-def">A pre-set price level where you <strong>automatically sell to limit losses</strong> if the stock drops too far. InvestOPak uses ATR to set intelligent stop-losses: wide enough to survive normal daily swings, but tight enough to protect your capital from real downturns.</div></div>
+</div>
+</div>
+</main>
+<footer>
+<div class="container footer-content">
+<div class="logo">Invest<span>OPak</span></div>
+<div class="footer-links">
+<a href="privacy.html">Privacy Policy</a>
+<a href="terms.html">Terms of Service</a>
+<a href="disclaimer.html">Disclaimer</a>
+</div>
+<div class="copyright">&copy; 2026 PSX Mentor Team. All rights reserved.</div>
+</div>
+</footer>
+<script src="js/main.js"></script>
 </body>
 </html>

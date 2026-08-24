@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+
+<html data-theme="light" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InvestOPak | AI Screener Demo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="css/style.css">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InvestOPak | AI Screener Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="css/style.css?v=3" rel="stylesheet"/>
+<style>
         /* Specific Styles for AI Screener Demo adapting to Themes */
         .demo-wrapper {
             display: flex;
@@ -450,104 +451,95 @@
     </style>
 </head>
 <body class="dashboard-body">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <a href="index.html" class="logo">Invest<span>OPak</span></a>
-        </div>
-        <ul class="sidebar-nav">
-            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
-            <li><a href="screener-demo.html" class="active"><i class="fas fa-robot"></i> AI Screener</a></li>
-            <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
-            <li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
-            <li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
-            <li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
-        </ul>
-        <div class="sidebar-footer">
-            <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
-        </div>
-    </aside>
-
-    <div class="main-wrapper">
-        <header class="top-nav">
-            <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search ticker or company...">
-            </div>
-            <div class="top-nav-actions">
-                <button id="theme-toggle" aria-label="Toggle Theme">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <a href="notifications.html" class="nav-icon-btn"><i class="fas fa-bell"></i><span class="badge">2</span></a>
-                <a href="profile.html" class="user-profile" style="text-decoration: none; color: inherit;">
-                    <div class="avatar">IB</div>
-                    <span>Immad Baber</span>
-                </a>
-            </div>
-        </header>
-
-        <main class="dashboard-content" style="padding-top: 80px;">
-            <div class="demo-wrapper">
-                
-                <!-- Left Panel -->
-                <div class="glass-panel chat-container">
-                    <div class="chat-header">
-                        <h2><i class="fas fa-robot" style="color: var(--accent-color);"></i> Interactive Screener</h2>
-                        <span class="demo-badge">Demo Mode</span>
-                    </div>
-                    <div class="chat-messages" id="chat">
-                        <!-- Messages injected via JS -->
-                    </div>
-                    <div class="chat-input-area">
-                        <input type="text" id="chat-input" placeholder="Type a message or select an option...">
-                        <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
-                    </div>
-                </div>
-
-                <!-- Right Panel -->
-                <div class="glass-panel canvas-container">
-                    <div class="canvas-header">
-                        <h3><i class="fas fa-chart-line"></i> Live Analysis Canvas</h3>
-                    </div>
-                    
-                    <div class="chart-box">
-                        <div class="regime-badge" id="regime-badge">
-                            <i class="fas fa-arrows-alt-h"></i> Sideways Market
+<!-- Sidebar -->
+<aside class="sidebar">
+<div class="sidebar-header">
+<a class="logo" href="index.html">Invest<span>OPak</span></a>
+</div>
+<ul class="sidebar-nav">
+<li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+<li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
+<li><a class="active" href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener</a></li>
+<li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+<li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
+<li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
+<li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
+</ul>
+<div class="sidebar-footer">
+<a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+</div>
+</aside>
+<div class="main-wrapper">
+<header class="top-nav">
+<div class="search-bar">
+<i class="fas fa-search"></i>
+<input placeholder="Search ticker or company..." type="text"/>
+</div>
+<div class="top-nav-actions">
+<button aria-label="Toggle Theme" id="theme-toggle">
+<i class="fas fa-moon"></i>
+</button>
+<a class="nav-icon-btn" href="notifications.html"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+<a class="user-profile" href="profile.html" style="text-decoration: none; color: inherit;">
+<div class="avatar">IB</div>
+<span>Immad Baber</span>
+</a>
+</div>
+</header>
+<main class="dashboard-content" style="padding-top: 80px;">
+<div class="demo-wrapper">
+<!-- Left Panel -->
+<div class="glass-panel chat-container">
+<div class="chat-header">
+<h2><i class="fas fa-robot" style="color: var(--accent-color);"></i> Interactive Screener</h2>
+<span class="demo-badge">Demo Mode</span>
+</div>
+<div class="chat-messages" id="chat">
+<!-- Messages injected via JS -->
+</div>
+<div class="chat-input-area">
+<input id="chat-input" placeholder="Type a message or select an option..." type="text"/>
+<button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+</div>
+</div>
+<!-- Right Panel -->
+<div class="glass-panel canvas-container">
+<div class="canvas-header">
+<h3><i class="fas fa-chart-line"></i> Live Analysis Canvas</h3>
+</div>
+<div class="chart-box">
+<div class="regime-badge" id="regime-badge">
+<i class="fas fa-arrows-alt-h"></i> Sideways Market
                         </div>
-                        <canvas id="stockChart" style="width:100%; height:200px; margin-top: 20px;"></canvas>
-                    </div>
-
-                    <div class="indicators-box">
-                        <h4>Active Indicators</h4>
-                        <div class="chips-row">
-                            <div class="chip" id="chip-rsi">RSI</div>
-                            <div class="chip" id="chip-macd">MACD</div>
-                            <div class="chip" id="chip-bb">Bollinger Bands</div>
-                            <div class="chip" id="chip-adx">ADX</div>
-                            <div class="chip" id="chip-obv">OBV</div>
-                            <div class="chip" id="chip-atr">ATR</div>
-                        </div>
-                    </div>
-
-                    <div class="confidence-box">
-                        <div class="conf-info">
-                            <h4>AI Confidence Score</h4>
-                            <p>Based on current market regime</p>
-                        </div>
-                        <div class="circular-progress" id="conf-meter">
-                            <span class="progress-value" id="conf-val">0%</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </main>
-    </div>
-
-    <!-- Include main js to enable theme toggle across pages -->
-    <script src="js/main.js"></script>
-    <script>
+<canvas id="stockChart" style="width:100%; height:200px; margin-top: 20px;"></canvas>
+</div>
+<div class="indicators-box">
+<h4>Active <span class="has-tip">Indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span></h4>
+<div class="chips-row">
+<div class="chip" id="chip-rsi">RSI</div>
+<div class="chip" id="chip-macd">MACD</div>
+<div class="chip" id="chip-bb">Bollinger Bands</div>
+<div class="chip" id="chip-adx">ADX</div>
+<div class="chip" id="chip-obv">OBV</div>
+<div class="chip" id="chip-atr">ATR</div>
+</div>
+</div>
+<div class="confidence-box">
+<div class="conf-info">
+<h4>AI Confidence Score</h4>
+<p>Based on current market regime</p>
+</div>
+<div class="circular-progress" id="conf-meter">
+<span class="progress-value" id="conf-val">0%</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Include main js to enable theme toggle across pages -->
+<script src="js/main.js"></script>
+<script>
         // State Machine & Logic
         const chat = document.getElementById('chat');
         let step = 0;
