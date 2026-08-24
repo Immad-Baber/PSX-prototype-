@@ -545,8 +545,14 @@
 </div>
 <!-- Right Panel -->
 <div class="glass-panel canvas-container">
-<div class="canvas-header">
-<h3><i class="fas fa-chart-line"></i> Live Analysis Canvas</h3>
+<div class="canvas-header" style="display:flex; justify-content:space-between; align-items:center;">
+<h3 style="margin:0;"><i class="fas fa-chart-line"></i> Live Analysis Canvas</h3>
+<div style="display:flex; gap:0.5rem;" id="chart-filters-container">
+<button class="btn btn-primary filter-btn" data-period="ALL" style="padding:0.2rem 0.6rem;font-size:0.75rem;">All</button>
+<button class="btn filter-btn" data-period="3M" style="padding:0.2rem 0.6rem;font-size:0.75rem;">3M</button>
+<button class="btn filter-btn" data-period="1M" style="padding:0.2rem 0.6rem;font-size:0.75rem;">1M</button>
+<button class="btn filter-btn" data-period="7D" style="padding:0.2rem 0.6rem;font-size:0.75rem;">7D</button>
+</div>
 </div>
 <div class="chart-box">
 <div class="regime-badge" id="regime-badge">
@@ -728,6 +734,36 @@
             candleSeries.setData(data);
             setTimeout(() => chartInstance.timeScale().fitContent(), 100);
         }
+
+        // Setup chart time filters
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    filterBtns.forEach(b => b.classList.remove('btn-primary'));
+                    e.target.classList.add('btn-primary');
+                    
+                    if(!chartInstance || !candleSeries) return;
+                    
+                    const period = e.target.getAttribute('data-period');
+                    const timeScale = chartInstance.timeScale();
+                    const mockData = candleSeries.data();
+                    if(!mockData || mockData.length === 0) return;
+                    
+                    if (period === 'ALL' || period === '3M') {
+                        timeScale.fitContent();
+                    } else if (period === '1M') {
+                        const startData = mockData[Math.max(0, mockData.length - 30)];
+                        const endData = mockData[mockData.length - 1];
+                        timeScale.setVisibleRange({ from: startData.time, to: endData.time });
+                    } else if (period === '7D') {
+                        const startData = mockData[Math.max(0, mockData.length - 7)];
+                        const endData = mockData[mockData.length - 1];
+                        timeScale.setVisibleRange({ from: startData.time, to: endData.time });
+                    }
+                });
+            });
+        });
         
         // Indicator Toggle Logic
         function toggleIndicator(el) {
