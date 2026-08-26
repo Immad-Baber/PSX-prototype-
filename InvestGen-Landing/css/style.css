@@ -206,7 +206,7 @@ a:hover {
   align-items: center;
   padding-left: 36px;
   background-image: var(--logo-url);
-  background-size: 26px 26px;
+  background-size: contain;
   background-position: left center;
   background-repeat: no-repeat;
   text-decoration: none;
@@ -605,13 +605,22 @@ a:hover {
 /* --------------------------------------------------------------------------
    7. Widget Panels & Cards
    -------------------------------------------------------------------------- */
-.widget-card, .glass-panel {
+.widget-card {
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xs);
   margin-bottom: 1.25rem;
-  overflow: hidden;
+  overflow: visible;
+  transition: border-color 0.15s ease;
+}
+
+.glass-panel {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xs);
+  margin-bottom: 1.25rem;
   transition: border-color 0.15s ease;
 }
 
@@ -885,6 +894,44 @@ a:hover {
 }
 
 /* --------------------------------------------------------------------------
+   Calibration Pipeline Loop — Interactive Hover States
+   -------------------------------------------------------------------------- */
+.pipeline-step {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+
+.pipeline-step:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.pipeline-step:nth-child(1):hover { border-color: var(--accent-color); }
+.pipeline-step:nth-child(2):hover { border-color: var(--bullish); }
+.pipeline-step:nth-child(3):hover { border-color: var(--bearish); }
+.pipeline-step:nth-child(4):hover { border-color: var(--neutral); }
+
+.pipeline-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.5rem auto;
+  transition: transform 0.2s ease;
+}
+
+.pipeline-step:hover .pipeline-icon {
+  transform: scale(1.15);
+}
+
+/* --------------------------------------------------------------------------
    10. Tooltips
    -------------------------------------------------------------------------- */
 .has-tip {
@@ -932,6 +979,33 @@ a:hover {
   visibility: visible;
   opacity: 1;
   transform: translateX(-50%) translateY(0);
+}
+
+/* Specific alignments for pipeline steps at left/right edges */
+.pipeline-step:first-child .tip-box {
+  left: 0;
+  transform: translateX(0) translateY(4px);
+}
+.pipeline-step:first-child .tip-box::after {
+  left: 30px;
+  transform: none;
+}
+.pipeline-step:first-child:hover .tip-box {
+  transform: translateX(0) translateY(0);
+}
+
+.pipeline-step:last-child .tip-box {
+  left: auto;
+  right: 0;
+  transform: translateX(0) translateY(4px);
+}
+.pipeline-step:last-child .tip-box::after {
+  left: auto;
+  right: 30px;
+  transform: none;
+}
+.pipeline-step:last-child:hover .tip-box {
+  transform: translateX(0) translateY(0);
 }
 
 /* --------------------------------------------------------------------------

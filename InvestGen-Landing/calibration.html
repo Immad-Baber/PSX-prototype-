@@ -6,7 +6,7 @@
     <title>InvestOPak | Quantitative Model Calibration</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-    <link href="css/style.css?v=4" rel="stylesheet"/>
+    <link href="css/style.css?v=5" rel="stylesheet"/>
 </head>
 <body class="dashboard-body">
 
@@ -65,31 +65,46 @@
             <!-- Quantitative Metrics Row -->
             <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 1.25rem;">
                 <div class="metric-card">
-                    <span class="metric-label">Predictions Made</span>
+                    <span class="metric-label has-tip">
+                        Predictions Made <i class="fas fa-circle-info" style="font-size: 0.7rem; color: var(--text-muted);"></i>
+                        <span class="tip-box">Total forward-looking trade signals evaluated across PSX equities in the current testing cohort.</span>
+                    </span>
                     <div class="metric-value">100</div>
                     <div class="metric-sub">Analyzed PSX signals</div>
                 </div>
 
                 <div class="metric-card">
-                    <span class="metric-label">Hit Rate Accuracy</span>
+                    <span class="metric-label has-tip">
+                        Hit Rate Accuracy <i class="fas fa-circle-info" style="font-size: 0.7rem; color: var(--text-muted);"></i>
+                        <span class="tip-box">Percentage of forward-looking predictions where stock moved in expected direction by >1.5% within 5 trading sessions.</span>
+                    </span>
                     <div class="metric-value bullish">74.0%</div>
                     <div class="metric-sub"><span class="bullish">74 / 100</span> verified wins</div>
                 </div>
 
                 <div class="metric-card">
-                    <span class="metric-label">Brier Score</span>
+                    <span class="metric-label has-tip">
+                        Brier Score <i class="fas fa-circle-info" style="font-size: 0.7rem; color: var(--text-muted);"></i>
+                        <span class="tip-box">Measures mean squared error between model predicted probabilities and real outcomes. Lower is better (0 = perfect calibration).</span>
+                    </span>
                     <div class="metric-value" style="font-size: 1.4rem;">0.142</div>
                     <div class="metric-sub"><span class="bullish">▼ -0.02</span> lower error (strong)</div>
                 </div>
 
                 <div class="metric-card">
-                    <span class="metric-label">Calibration Error (ECE)</span>
+                    <span class="metric-label has-tip">
+                        Calibration Error (ECE) <i class="fas fa-circle-info" style="font-size: 0.7rem; color: var(--text-muted);"></i>
+                        <span class="tip-box">Expected Calibration Error: Absolute difference between model confidence and actual empirical win rates.</span>
+                    </span>
                     <div class="metric-value bullish" style="font-size: 1.4rem;">5.8%</div>
                     <div class="metric-sub"><span class="bullish">✓ High confidence fidelity</span></div>
                 </div>
 
                 <div class="metric-card">
-                    <span class="metric-label">GA Cycles Executed</span>
+                    <span class="metric-label has-tip">
+                        GA Cycles Executed <i class="fas fa-circle-info" style="font-size: 0.7rem; color: var(--text-muted);"></i>
+                        <span class="tip-box">Generations of genetic algorithms evolved to dynamically optimize multi-factor indicator weights for the active regime.</span>
+                    </span>
                     <div class="metric-value">1,420</div>
                     <div class="metric-sub">Self-adaptive generations</div>
                 </div>
@@ -99,40 +114,44 @@
             <div class="widget-card" style="margin-bottom: 1.25rem;">
                 <div class="widget-header">
                     <h3><i class="fas fa-diagram-project" style="color: var(--accent-color);"></i> Continuous Self-Adaptive Feedback Loop</h3>
-                    <span class="badge badge-blue">Automated Pipeline</span>
+                    <span class="badge badge-blue">Hover Steps for Details</span>
                 </div>
                 <div class="widget-body">
                     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; text-align: center;">
-                        <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem;">
-                            <div style="width: 36px; height: 36px; border-radius: var(--radius-md); background: var(--accent-light); color: var(--accent-color); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem auto;">
+                        <div class="pipeline-step has-tip" style="border-bottom: 1px solid var(--border-color); display: block;">
+                            <div class="pipeline-icon" style="background: var(--accent-light); color: var(--accent-color);">
                                 <i class="fas fa-brain"></i>
                             </div>
                             <h4 style="font-size: 0.85rem; margin-bottom: 0.25rem;">1. Regime Inference</h4>
                             <p style="font-size: 0.75rem; color: var(--text-secondary); margin: 0;">HMM classifies market into Bullish, Bearish, or Sideways.</p>
+                            <span class="tip-box" style="width: 250px;">Hidden Markov Model processes 10-day volatility, volume flow, and price action to detect underlying market regime without lagging signals.</span>
                         </div>
 
-                        <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem;">
-                            <div style="width: 36px; height: 36px; border-radius: var(--radius-md); background: rgba(16,185,129,0.1); color: var(--bullish); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem auto;">
+                        <div class="pipeline-step has-tip" style="border-bottom: 1px solid var(--border-color); display: block;">
+                            <div class="pipeline-icon" style="background: rgba(16,185,129,0.1); color: var(--bullish);">
                                 <i class="fas fa-dna"></i>
                             </div>
                             <h4 style="font-size: 0.85rem; margin-bottom: 0.25rem;">2. GA Parameter Optimization</h4>
                             <p style="font-size: 0.75rem; color: var(--text-secondary); margin: 0;">Genetic algorithms evolve weights for technical indicators.</p>
+                            <span class="tip-box" style="width: 250px;">Genetic Algorithm tests mutated populations of indicator weights (RSI, MACD, Bollinger Bands) to find optimal parameters for the active market regime.</span>
                         </div>
 
-                        <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem;">
-                            <div style="width: 36px; height: 36px; border-radius: var(--radius-md); background: rgba(239,68,68,0.1); color: var(--bearish); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem auto;">
+                        <div class="pipeline-step has-tip" style="border-bottom: 1px solid var(--border-color); display: block;">
+                            <div class="pipeline-icon" style="background: rgba(239,68,68,0.1); color: var(--bearish);">
                                 <i class="fas fa-shield-alt"></i>
                             </div>
                             <h4 style="font-size: 0.85rem; margin-bottom: 0.25rem;">3. Disconfirmation Audit</h4>
                             <p style="font-size: 0.75rem; color: var(--text-secondary); margin: 0;">Vector database matches setups with failure analogs.</p>
+                            <span class="tip-box" style="width: 250px;">Vector similarity search scans 10 years of PSX history to locate false breakouts and historical analogs that contradict current bullish or bearish bias.</span>
                         </div>
 
-                        <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem;">
-                            <div style="width: 36px; height: 36px; border-radius: var(--radius-md); background: rgba(245,158,11,0.1); color: var(--neutral); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem auto;">
+                        <div class="pipeline-step has-tip" style="border-bottom: 1px solid var(--border-color); display: block;">
+                            <div class="pipeline-icon" style="background: rgba(245,158,11,0.1); color: var(--neutral);">
                                 <i class="fas fa-scale-balanced"></i>
                             </div>
                             <h4 style="font-size: 0.85rem; margin-bottom: 0.25rem;">4. Confidence Calibration</h4>
                             <p style="font-size: 0.75rem; color: var(--text-secondary); margin: 0;">Scores mapped against Brier score to prevent overconfidence.</p>
+                            <span class="tip-box" style="width: 250px;">Platt scaling and isotonic regression map raw confidence scores to empirical win probabilities, preventing overconfident false signals.</span>
                         </div>
                     </div>
                 </div>
@@ -153,8 +172,14 @@
                                     <th>Symbol</th>
                                     <th>Regime Detected</th>
                                     <th>Predicted Signal</th>
-                                    <th>Actual PSX Outcome</th>
-                                    <th>Brier Error</th>
+                                    <th class="has-tip">
+                                        Actual PSX Outcome <i class="fas fa-circle-info" style="font-size: 0.7rem; color: var(--text-muted);"></i>
+                                        <span class="tip-box">Measured price movement within the 5-day verification window.</span>
+                                    </th>
+                                    <th class="has-tip">
+                                        Brier Error <i class="fas fa-circle-info" style="font-size: 0.7rem; color: var(--text-muted);"></i>
+                                        <span class="tip-box">Squared error for this prediction. Scores under 0.10 indicate high calibration accuracy.</span>
+                                    </th>
                                     <th class="text-right">Audit Status</th>
                                 </tr>
                             </thead>

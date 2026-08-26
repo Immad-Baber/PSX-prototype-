@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Outfit:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-<link href="css/style.css?v=4" rel="stylesheet"/>
+<link href="css/style.css?v=5" rel="stylesheet"/>
 <style>
         /* =============================================
            SCREENER DEMO — PREMIUM UI (Portfolio360 Style)
@@ -437,42 +437,9 @@
         }
         [data-theme="dark"] .chip.active { color: #10b981; }
 
-        /* Chip tooltip */
-        .chip .tooltip-text {
-            visibility: hidden;
-            width: 240px;
-            background: #1e293b;
-            color: #f1f5f9;
-            text-align: left;
-            border-radius: 8px;
-            padding: 10px 14px;
-            position: absolute;
-            z-index: 9999;
-            top: calc(100% + 8px);
-            left: 50%;
-            transform: translateX(-50%) translateY(-4px);
-            opacity: 0;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-            font-size: 0.76rem;
-            line-height: 1.5;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-            pointer-events: none;
-        }
-        .chip .tooltip-text::before {
-            content: '';
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            margin-left: -6px;
-            border-width: 6px;
-            border-style: solid;
-            border-color: transparent transparent #1e293b transparent;
-        }
-        .chip:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
+        /* Chip tooltips — handled via JS fixed-position global tooltip */
+        /* (no position:absolute inside chip needed) */
+
 
         /* ── Confidence Score ─ Horizontal bar ── */
         .confidence-box {
@@ -718,12 +685,12 @@
     <div class="indicators-box">
       <p class="section-label">Active Indicators</p>
       <div class="chips-row">
-        <div class="chip" id="chip-rsi" onclick="toggleIndicator(this)">RSI<span class="tooltip-text">Relative Strength Index: Measures momentum to spot overbought or oversold conditions.</span></div>
-        <div class="chip" id="chip-macd" onclick="toggleIndicator(this)">MACD<span class="tooltip-text">MACD: Compares two moving averages to show trend direction and strength.</span></div>
-        <div class="chip" id="chip-bb" onclick="toggleIndicator(this)">Bollinger Bands<span class="tooltip-text">Bollinger Bands: Shows volatility. Price hitting upper band may drop, hitting lower band may rise.</span></div>
-        <div class="chip" id="chip-adx" onclick="toggleIndicator(this)">ADX<span class="tooltip-text">Average Directional Index: Measures the strength of a trend, regardless of direction.</span></div>
-        <div class="chip" id="chip-obv" onclick="toggleIndicator(this)">OBV<span class="tooltip-text">On-Balance Volume: Uses trading volume to confirm price trends and spot buying/selling pressure.</span></div>
-        <div class="chip" id="chip-atr" onclick="toggleIndicator(this)">ATR<span class="tooltip-text">Average True Range: Measures volatility to help set safe stop-loss levels.</span></div>
+        <div class="chip" id="chip-rsi"  onclick="toggleIndicator(this)" data-tip="<strong>RSI (14)</strong><br>Relative Strength Index: Measures momentum to spot overbought or oversold conditions.">RSI</div>
+        <div class="chip" id="chip-macd" onclick="toggleIndicator(this)" data-tip="<strong>MACD (26)</strong><br>Compares two moving averages to show trend direction and momentum strength.">MACD</div>
+        <div class="chip" id="chip-bb"   onclick="toggleIndicator(this)" data-tip="<strong>Bollinger Bands (20)</strong><br>Shows volatility bands. Price at upper band may reverse down; lower band may bounce up.">Bollinger Bands</div>
+        <div class="chip" id="chip-adx"  onclick="toggleIndicator(this)" data-tip="<strong>ADX</strong><br>Average Directional Index: Measures trend strength regardless of direction. >25 = strong trend.">ADX</div>
+        <div class="chip" id="chip-obv"  onclick="toggleIndicator(this)" data-tip="<strong>OBV</strong><br>On-Balance Volume: Uses volume flow to confirm price trends and detect accumulation/distribution.">OBV</div>
+        <div class="chip" id="chip-atr"  onclick="toggleIndicator(this)" data-tip="<strong>ATR</strong><br>Average True Range: Measures volatility to help set safe, calibrated stop-loss levels.">ATR</div>
       </div>
     </div>
 
@@ -1423,6 +1390,91 @@
         setTimeout(() => {
             processStep();
         }, 500);
+    </script>
+
+    <script>
+        // Global fixed-position tooltip — escapes all overflow:hidden containers
+        (function() {
+            const TIP_WIDTH = 240;
+            const TIP_MARGIN = 10; // gap below chip
+            const EDGE_PAD = 12;   // min distance from viewport edges
+
+            // Create one shared tooltip element appended to body
+            const tip = document.createElement('div');
+            tip.id = 'global-chip-tip';
+            tip.style.cssText = [
+                'position:fixed',
+                'z-index:99999',
+                'width:' + TIP_WIDTH + 'px',
+                'background:#1e293b',
+                'color:#f1f5f9',
+                'font-size:0.76rem',
+                'line-height:1.5',
+                'border-radius:8px',
+                'padding:10px 14px',
+                'pointer-events:none',
+                'box-shadow:0 8px 24px rgba(0,0,0,0.3)',
+                'opacity:0',
+                'transform:translateY(-4px)',
+                'transition:opacity 0.15s ease,transform 0.15s ease',
+                'display:none',
+            ].join(';');
+            document.body.appendChild(tip);
+
+            function showTip(chip) {
+                const text = chip.getAttribute('data-tip');
+                if (!text) return;
+                tip.innerHTML = text;
+                tip.style.display = 'block';
+
+                const rect = chip.getBoundingClientRect();
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+
+                // Horizontal: centre under chip, clamp to viewport
+                let left = rect.left + rect.width / 2 - TIP_WIDTH / 2;
+                left = Math.max(EDGE_PAD, Math.min(left, vw - TIP_WIDTH - EDGE_PAD));
+
+                // Vertical: prefer below, fall back to above
+                let top = rect.bottom + TIP_MARGIN;
+                if (top + tip.offsetHeight > vh - EDGE_PAD) {
+                    top = rect.top - tip.offsetHeight - TIP_MARGIN;
+                }
+
+                tip.style.left = left + 'px';
+                tip.style.top  = top  + 'px';
+
+                requestAnimationFrame(() => {
+                    tip.style.opacity = '1';
+                    tip.style.transform = 'translateY(0)';
+                });
+            }
+
+            function hideTip() {
+                tip.style.opacity = '0';
+                tip.style.transform = 'translateY(-4px)';
+                setTimeout(() => { tip.style.display = 'none'; }, 150);
+            }
+
+            // Attach to every .chip on the page (including those added later)
+            function bindChips() {
+                document.querySelectorAll('.chip[data-tip]').forEach(chip => {
+                    if (chip._tipBound) return;
+                    chip._tipBound = true;
+                    chip.addEventListener('mouseenter', () => showTip(chip));
+                    chip.addEventListener('mouseleave', hideTip);
+                    chip.addEventListener('focus',      () => showTip(chip));
+                    chip.addEventListener('blur',       hideTip);
+                });
+            }
+
+            // Run now and after any dynamic content loads
+            window.addEventListener('load', bindChips);
+            // Also observe DOM for chips added by the chat state machine
+            if (window.MutationObserver) {
+                new MutationObserver(bindChips).observe(document.body, { childList: true, subtree: true });
+            }
+        })();
     </script>
 </body>
 </html>

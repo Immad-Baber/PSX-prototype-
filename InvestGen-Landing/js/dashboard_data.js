@@ -211,27 +211,38 @@ function renderChart(chartData, containerId) {
     if (!chartContainer) return;
     
     chartContainer.innerHTML = ''; // Clear placeholder
-    // FIX: Remove flex properties that collapse the TradingView canvas
     chartContainer.style.display = 'block';
     
     // Detect dark mode
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const textColor = isDark ? '#d1d5db' : '#333';
+    const textColor = isDark ? '#94a3b8' : '#475569';
+    
+    // Measure exact container width upfront before creating chart
+    const initialWidth = Math.floor(chartContainer.getBoundingClientRect().width || chartContainer.clientWidth || 800);
+    const initialHeight = chartContainer.clientHeight || 380;
     
     const chart = LightweightCharts.createChart(chartContainer, {
-        width: chartContainer.clientWidth,
-        height: chartContainer.clientHeight || 350,
+        width: initialWidth,
+        height: initialHeight,
         layout: {
             background: { type: 'solid', color: 'transparent' },
             textColor: textColor,
+            fontFamily: "'Plus Jakarta Sans', sans-serif",
+            fontSize: 11,
         },
         grid: {
-            vertLines: { color: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
-            horzLines: { color: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
+            vertLines: { color: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)' },
+            horzLines: { color: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)' },
         },
         timeScale: {
-            borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
-        }
+            borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)',
+            fixLeftEdge: true,
+            fixRightEdge: true,
+            rightOffset: 0,
+            lockVisibleTimeRangeOnResize: true,
+        },
+        handleScroll: { mouseWheel: false, pressedMouseMove: true },
+        handleScale: { mouseWheel: false, pinch: false },
     });
 
     const candlestickSeries = chart.addSeries(LightweightCharts.CandlestickSeries, {
@@ -245,12 +256,25 @@ function renderChart(chartData, containerId) {
     // Ensure data is sorted chronologically
     const sortedData = [...chartData].sort((a, b) => new Date(a.time) - new Date(b.time));
 
+    // Set data and fit synchronously immediately (no setTimeout or rAF delay that causes visual jump)
     candlestickSeries.setData(sortedData);
-    
-    // Force fit
-    setTimeout(() => {
-        chart.timeScale().fitContent();
-    }, 100);
+    chart.timeScale().fitContent();
+
+    // Guarded ResizeObserver: only resize if dimensions genuinely change (e.g. window resize), not on initial mount
+    let lastWidth = initialWidth;
+    if (window.ResizeObserver) {
+        const ro = new ResizeObserver(entries => {
+            for (const entry of entries) {
+                const newWidth = Math.floor(entry.contentRect.width);
+                if (newWidth > 0 && Math.abs(newWidth - lastWidth) > 3) {
+                    lastWidth = newWidth;
+                    chart.applyOptions({ width: newWidth });
+                    chart.timeScale().fitContent();
+                }
+            }
+        });
+        ro.observe(chartContainer);
+    }
 
     // Add filter logic if buttons exist
     const filterBtns = document.querySelectorAll('.filter-btn');
