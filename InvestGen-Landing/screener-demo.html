@@ -5,34 +5,38 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>InvestOPak | AI Screener Demo</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Outfit:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-<link href="css/style.css?v=3" rel="stylesheet"/>
+<link href="css/style.css?v=4" rel="stylesheet"/>
 <style>
-        /* Specific Styles for AI Screener Demo adapting to Themes */
+        /* =============================================
+           SCREENER DEMO — PREMIUM UI (Portfolio360 Style)
+           ============================================= */
+
+        /* Layout */
         .demo-wrapper {
             display: flex;
-            height: calc(100vh - 80px);
+            height: calc(100vh - 60px - 3rem);
             overflow: hidden;
-            gap: 20px;
-            padding: 20px;
+            gap: 16px;
+            padding: 0;
             max-width: 1400px;
             margin: 0 auto;
             width: 100%;
         }
 
-        /* Glassmorphism utility using theme variables */
+        /* Panels */
         .glass-panel {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            box-shadow: var(--card-shadow);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
             display: flex;
             flex-direction: column;
         }
 
-        /* Left Panel - Chat */
+        /* ── Left Panel ─ Chat ── */
         .chat-container {
             flex: 0 0 55%;
             position: relative;
@@ -40,115 +44,124 @@
         }
 
         .chat-header {
-            padding: 1.2rem;
+            padding: 14px 18px;
             border-bottom: 1px solid var(--border-color);
+            border-left: 3px solid var(--accent-color);
+            border-radius: 12px 12px 0 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background: var(--bg-secondary);
         }
 
         .chat-header h2 {
             margin: 0;
-            font-size: 1.2rem;
+            font-size: 1rem;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 9px;
+            color: var(--text-primary);
         }
 
         .demo-badge {
-            font-size: 0.7rem;
-            background: rgba(16, 185, 129, 0.15);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            background: rgba(16, 185, 129, 0.12);
             color: #10b981;
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 4px;
+            border: 1px solid rgba(16,185,129,0.25);
         }
 
         .chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 20px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
             scroll-behavior: smooth;
         }
-        
-        .chat-messages::-webkit-scrollbar { width: 6px; }
+
+        .chat-messages::-webkit-scrollbar { width: 5px; }
         .chat-messages::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
 
         .message {
             display: flex;
-            gap: 12px;
-            max-width: 85%;
-            animation: fadeIn 0.3s ease forwards;
+            gap: 10px;
+            max-width: 88%;
+            animation: fadeInUp 0.28s ease forwards;
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(8px);
         }
 
-        @keyframes fadeIn {
+        @keyframes fadeInUp {
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .message.ai {
-            align-self: flex-start;
-        }
-
-        .message.user {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
+        .message.ai  { align-self: flex-start; }
+        .message.user { align-self: flex-end; flex-direction: row-reverse; }
 
         .avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1rem;
             flex-shrink: 0;
         }
 
-        .message.ai .avatar { background: rgba(59, 130, 246, 0.15); color: var(--accent-color); border: 1px solid rgba(59, 130, 246, 0.3); }
-        .message.user .avatar { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+        .message.ai .avatar {
+            background: rgba(37,99,235,0.1);
+            color: var(--accent-color);
+            border: 1px solid rgba(37,99,235,0.2);
+        }
+        .message.user .avatar {
+            background: rgba(16,185,129,0.1);
+            color: #10b981;
+            border: 1px solid rgba(16,185,129,0.2);
+        }
 
         .msg-bubble {
-            padding: 12px 16px;
-            border-radius: 16px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            position: relative;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            line-height: 1.55;
         }
 
         .message.ai .msg-bubble {
             background: var(--bg-primary);
             border: 1px solid var(--border-color);
-            border-top-left-radius: 4px;
+            border-top-left-radius: 3px;
             color: var(--text-primary);
         }
 
         .message.user .msg-bubble {
             background: var(--accent-color);
             color: #fff;
-            border-top-right-radius: 4px;
+            border-top-right-radius: 3px;
         }
 
+        /* Typing dots */
         .typing-indicator {
             display: flex;
             gap: 4px;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-primary);
-            border-radius: 16px;
-            border-top-left-radius: 4px;
+            border-radius: 10px;
+            border-top-left-radius: 3px;
             border: 1px solid var(--border-color);
             width: fit-content;
         }
 
         .typing-indicator span {
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
             background: var(--text-secondary);
             border-radius: 50%;
             animation: bounce 1.4s infinite ease-in-out both;
@@ -162,92 +175,181 @@
             40% { transform: scale(1); }
         }
 
+        /* Quick replies */
         .quick-replies {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-            margin-left: 48px;
+            gap: 7px;
+            margin-top: 8px;
+            margin-left: 42px;
         }
 
         .qr-btn {
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
             color: var(--accent-color);
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 6px 14px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 0.85rem;
-            transition: all 0.2s;
+            font-size: 0.82rem;
+            font-weight: 500;
+            transition: all 0.18s ease;
         }
 
         .qr-btn:hover {
-            background: rgba(59, 130, 246, 0.2);
-            transform: translateY(-2px);
+            background: var(--accent-color);
+            color: #fff;
+            border-color: var(--accent-color);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(37,99,235,0.2);
         }
 
+        /* Chat input */
         .chat-input-area {
-            padding: 16px;
+            padding: 14px 16px;
             border-top: 1px solid var(--border-color);
             display: flex;
-            gap: 12px;
+            gap: 10px;
+            background: var(--bg-secondary);
+            border-radius: 0 0 12px 12px;
         }
 
         .chat-input-area input {
             flex: 1;
             background: var(--bg-primary);
             border: 1px solid var(--border-color);
-            padding: 12px 16px;
-            border-radius: 24px;
+            padding: 10px 15px;
+            border-radius: 8px;
             color: var(--text-primary);
+            font-size: 0.88rem;
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.18s, box-shadow 0.18s;
         }
-        
-        .chat-input-area input:focus { border-color: var(--accent-color); }
-        
+
+        .chat-input-area input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+        }
+
         .chat-input-area button {
             background: var(--accent-color);
             color: white;
             border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.2s;
+            transition: background 0.18s, transform 0.1s;
+            flex-shrink: 0;
         }
 
-        .chat-input-area button:hover { background: var(--accent-hover); }
-        .chat-input-area button:disabled { background: var(--border-color); color: var(--text-secondary); cursor: not-allowed; }
+        .chat-input-area button:hover { background: var(--accent-hover); transform: scale(1.05); }
+        .chat-input-area button:disabled { background: var(--border-color); color: var(--text-secondary); cursor: not-allowed; transform: none; }
 
-        /* Right Panel - Canvas */
+        /* ── Right Panel ─ Canvas ── */
         .canvas-container {
             flex: 1;
-            padding: 20px;
+            padding: 0;
             display: flex;
             flex-direction: column;
-            gap: 20px;
             overflow-y: auto;
+            min-width: 0;
         }
-        .canvas-container::-webkit-scrollbar { width: 6px; }
+        .canvas-container::-webkit-scrollbar { width: 5px; }
         .canvas-container::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
 
-        .canvas-header h3 { margin: 0; font-size: 1.1rem; color: var(--text-primary); }
+        /* Canvas header */
+        .canvas-header {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
 
+        .canvas-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .canvas-header h3 {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Live pulse dot */
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .live-dot::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: rgba(16,185,129,0.3);
+            animation: livePulse 1.8s ease-in-out infinite;
+        }
+        @keyframes livePulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.6); opacity: 0; }
+        }
+
+        /* Tab-style filter group */
+        .tab-group {
+            display: flex;
+            gap: 2px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 7px;
+            padding: 3px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .tab-btn:hover { color: var(--text-primary); }
+
+        .tab-btn.active {
+            background: var(--bg-secondary);
+            color: var(--accent-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* Chart box */
         .chart-box {
             background: var(--bg-primary);
-            border-radius: 12px;
             flex: 0 0 auto;
             height: clamp(180px, 30vh, 300px);
             position: relative;
-            border: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
             overflow: hidden;
             display: flex;
             align-items: stretch;
-            justify-content: center;
         }
 
         /* Mock Chart SVG */
@@ -258,171 +360,203 @@
             stroke-width: 3;
             stroke-linecap: round;
             stroke-linejoin: round;
-            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.3));
+            filter: drop-shadow(0 0 8px rgba(59,130,246,0.3));
         }
 
+        /* Regime badge */
         .regime-badge {
             position: absolute;
-            top: 16px;
-            right: 16px;
-            background: rgba(245, 158, 11, 0.15);
+            top: 12px;
+            right: 12px;
+            background: rgba(245,158,11,0.12);
             color: #d97706;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border: 1px solid rgba(245, 158, 11, 0.2);
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            border: 1px solid rgba(245,158,11,0.2);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             opacity: 0.3;
-            transition: opacity 0.5s, transform 0.5s;
+            transition: opacity 0.5s;
         }
         [data-theme="dark"] .regime-badge { color: #fbbf24; }
         .regime-badge.active { opacity: 1; }
 
+        /* Canvas sections padding wrapper */
+        .canvas-body {
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Section label */
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            margin: 0 0 8px 0;
+        }
+
+        /* Indicators */
         .indicators-box {
             display: flex;
             flex-direction: column;
-            gap: 10px;
         }
 
-        .indicators-box h4 { margin: 0; font-size: 0.9rem; color: var(--text-secondary); }
-        
         .chips-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 7px;
         }
 
         .chip {
-            padding: 6px 12px;
+            padding: 5px 11px;
             background: var(--bg-primary);
             border: 1px solid var(--border-color);
             color: var(--text-secondary);
-            border-radius: 8px;
-            font-size: 0.85rem;
-            transition: all 0.4s ease;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
             cursor: help;
             position: relative;
         }
 
         .chip.active {
-            background: rgba(16, 185, 129, 0.1);
-            border-color: #10b981;
+            background: rgba(16,185,129,0.08);
+            border-color: rgba(16,185,129,0.5);
             color: #059669;
-            box-shadow: 0 0 12px rgba(16, 185, 129, 0.1);
+            box-shadow: 0 0 0 3px rgba(16,185,129,0.08);
         }
+        [data-theme="dark"] .chip.active { color: #10b981; }
 
-        /* Smooth Custom Tooltip - positioned BELOW chip for readability */
+        /* Chip tooltip */
         .chip .tooltip-text {
             visibility: hidden;
             width: 240px;
-            background-color: #1e293b;
+            background: #1e293b;
             color: #f1f5f9;
             text-align: left;
             border-radius: 8px;
             padding: 10px 14px;
             position: absolute;
             z-index: 9999;
-            top: calc(100% + 8px); /* Position BELOW the chip */
+            top: calc(100% + 8px);
             left: 50%;
             transform: translateX(-50%) translateY(-4px);
             opacity: 0;
-            transition: opacity 0.25s ease, transform 0.25s ease;
-            font-size: 0.78rem;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            font-size: 0.76rem;
             line-height: 1.5;
             box-shadow: 0 8px 24px rgba(0,0,0,0.25);
             pointer-events: none;
         }
-        
         .chip .tooltip-text::before {
-            content: "";
+            content: '';
             position: absolute;
-            bottom: 100%; /* Arrow pointing UP */
+            bottom: 100%;
             left: 50%;
             margin-left: -6px;
             border-width: 6px;
             border-style: solid;
             border-color: transparent transparent #1e293b transparent;
         }
-
         .chip:hover .tooltip-text {
             visibility: visible;
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
-        [data-theme="dark"] .chip.active { color: #10b981; }
 
-        /* Confidence Meter */
+        /* ── Confidence Score ─ Horizontal bar ── */
         .confidence-box {
-            margin-top: auto;
             background: var(--bg-primary);
-            padding: 20px;
-            border-radius: 12px;
+            padding: 14px 16px;
+            border-radius: 8px;
             border: 1px solid var(--border-color);
+        }
+
+        .conf-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-bottom: 10px;
         }
 
-        .conf-info h4 { margin: 0 0 5px 0; color: var(--text-primary); }
-        .conf-info p { margin: 0; font-size: 0.85rem; color: var(--text-secondary); }
-
-        .circular-progress {
-            position: relative;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: conic-gradient(var(--border-color) 100%, transparent 0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 1.5s ease;
+        .conf-header h4 {
+            margin: 0;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
-        .circular-progress::before {
-            content: "";
-            position: absolute;
-            width: 66px;
-            height: 66px;
-            background: var(--bg-primary);
-            border-radius: 50%;
-        }
-
-        .progress-value {
-            position: relative;
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.2rem;
+        .conf-pct {
+            font-size: 1.1rem;
             font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-secondary);
+            transition: color 0.4s;
+            min-width: 48px;
+            text-align: right;
+        }
+        .conf-pct.filled { color: #10b981; }
+
+        .conf-bar-track {
+            width: 100%;
+            height: 7px;
+            background: var(--border-color);
+            border-radius: 99px;
+            overflow: hidden;
+        }
+
+        .conf-bar-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 99px;
+            background: linear-gradient(90deg, #2563eb, #10b981);
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .conf-sub {
+            margin-top: 6px;
+            font-size: 0.72rem;
             color: var(--text-secondary);
         }
 
-        /* Multi-select chips for "Add more" */
+        /* Multi-select in chat */
         .multi-select-container {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin-top: 10px;
-            margin-left: 48px;
+            margin-top: 8px;
+            margin-left: 42px;
             background: var(--bg-primary);
             padding: 12px;
-            border-radius: 12px;
+            border-radius: 8px;
             border: 1px solid var(--border-color);
         }
         .multi-select-container .ms-label {
-            color: var(--text-primary); font-size: 0.9rem; margin-bottom: 5px;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-weight: 500;
         }
         .ms-chip {
-            padding: 6px 12px;
+            padding: 5px 11px;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             color: var(--text-secondary);
-            border-radius: 20px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
+            font-weight: 500;
             user-select: none;
-            transition: all 0.2s;
+            transition: all 0.18s;
         }
         .ms-chip.selected {
             background: var(--accent-color);
@@ -433,66 +567,72 @@
             background: #10b981;
             color: white;
             border: none;
-            padding: 6px 16px;
+            padding: 6px 14px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
-            margin-top: 8px;
+            font-size: 0.82rem;
             align-self: flex-start;
+            transition: background 0.18s;
         }
+        .confirm-btn:hover { background: #059669; }
 
-        /* Stock selection input */
+        /* Stock selector in chat */
         .stock-selector {
-            margin-left: 48px;
-            margin-top: 10px;
+            margin-left: 42px;
+            margin-top: 8px;
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
         .stock-selector input {
             background: var(--bg-primary);
             border: 1px solid var(--accent-color);
             color: var(--text-primary);
-            padding: 8px 12px;
+            padding: 7px 12px;
             border-radius: 6px;
             outline: none;
+            font-size: 0.85rem;
         }
         .stock-selector button {
             background: var(--accent-color);
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 7px 14px;
             border-radius: 6px;
             cursor: pointer;
+            font-weight: 600;
+            font-size: 0.82rem;
+            transition: background 0.18s;
         }
+        .stock-selector button:hover { background: var(--accent-hover); }
 
         /* Final Report Card */
         .final-report-card {
             background: var(--bg-secondary);
-            border: 1px solid rgba(16, 185, 129, 0.4);
-            border-radius: 12px;
-            padding: 16px;
-            margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid rgba(16,185,129,0.35);
+            border-left: 3px solid #10b981;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-top: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         [data-theme="dark"] .final-report-card {
-            background: linear-gradient(145deg, rgba(30,41,59,0.9), rgba(15,23,42,0.9));
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background: rgba(17,24,39,0.8);
         }
         .frc-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
+            padding-bottom: 8px;
             margin-bottom: 10px;
         }
-        .frc-title { font-family: 'Outfit', sans-serif; font-size: 1.2rem; color: var(--text-primary); margin:0;}
-        .frc-tag { background: rgba(16,185,129,0.15); color: #059669; padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 0.8rem;}
+        .frc-title { font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text-primary); margin: 0; }
+        .frc-tag { background: rgba(16,185,129,0.12); color: #059669; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; }
         [data-theme="dark"] .frc-tag { color: #10b981; }
-        
-        .frc-body ul { margin: 0; padding-left: 20px; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 12px; }
-        .frc-body li { margin-bottom: 6px; }
-        .frc-footer { font-size: 0.75rem; color: var(--text-secondary); text-align: center; font-style: italic; }
+        .frc-body ul { margin: 0; padding-left: 18px; color: var(--text-secondary); font-size: 0.86rem; margin-bottom: 10px; }
+        .frc-body li { margin-bottom: 5px; }
+        .frc-footer { font-size: 0.72rem; color: var(--text-secondary); text-align: center; font-style: italic; }
     </style>
 </head>
 <body class="dashboard-body">
@@ -531,7 +671,7 @@
 </a>
 </div>
 </header>
-<main class="dashboard-content" style="padding-top: 80px;">
+<main class="dashboard-content">
 <div class="demo-wrapper">
 <!-- Left Panel -->
 <div class="glass-panel chat-container">
@@ -549,41 +689,57 @@
 </div>
 <!-- Right Panel -->
 <div class="glass-panel canvas-container">
-<div class="canvas-header" style="display:flex; justify-content:space-between; align-items:center;">
-<h3 style="margin:0;"><i class="fas fa-chart-line"></i> Live Analysis Canvas</h3>
-<div style="display:flex; gap:0.5rem;" id="chart-filters-container">
-<button class="btn btn-primary filter-btn" data-period="ALL" style="padding:0.2rem 0.6rem;font-size:0.75rem;">All</button>
-<button class="btn filter-btn" data-period="3M" style="padding:0.2rem 0.6rem;font-size:0.75rem;">3M</button>
-<button class="btn filter-btn" data-period="1M" style="padding:0.2rem 0.6rem;font-size:0.75rem;">1M</button>
-<button class="btn filter-btn" data-period="7D" style="padding:0.2rem 0.6rem;font-size:0.75rem;">7D</button>
-</div>
-</div>
-<div class="chart-box">
-<div class="regime-badge" id="regime-badge">
-<i class="fas fa-arrows-alt-h"></i> Sideways Market
-                        </div>
-<div id="stockChartContainer" style="width:100%; height:100%;"></div>
-</div>
-<div class="indicators-box">
-<h4>Active <span class="has-tip">Indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span></h4>
-<div class="chips-row">
-<div class="chip" id="chip-rsi" onclick="toggleIndicator(this)">RSI<span class="tooltip-text">Relative Strength Index: Measures <span class="has-tip">momentum<span class="tip-box">The strength or speed of a price trend.</span></span> to spot overbought or oversold conditions.</span></div>
-<div class="chip" id="chip-macd" onclick="toggleIndicator(this)">MACD<span class="tooltip-text">MACD: Compares two moving averages to show trend direction and strength.</span></div>
-<div class="chip" id="chip-bb" onclick="toggleIndicator(this)">Bollinger Bands<span class="tooltip-text">Bollinger Bands: Shows <span class="has-tip">volatility<span class="tip-box">The rate at which the price of a stock increases or decreases.</span></span>. Price hitting upper band may drop, hitting lower band may rise.</span></div>
-<div class="chip" id="chip-adx" onclick="toggleIndicator(this)">ADX<span class="tooltip-text">Average Directional Index: Measures the strength of a trend, regardless of direction.</span></div>
-<div class="chip" id="chip-obv" onclick="toggleIndicator(this)">OBV<span class="tooltip-text">On-Balance Volume: Uses trading volume to confirm price trends and spot buying/selling pressure.</span></div>
-<div class="chip" id="chip-atr" onclick="toggleIndicator(this)">ATR<span class="tooltip-text">Average True Range: Measures pure <span class="has-tip">volatility<span class="tip-box">The rate at which the price of a stock increases or decreases.</span></span> to help set safe stop-loss levels.</span></div>
-</div>
-</div>
-<div class="confidence-box">
-<div class="conf-info">
-<h4>AI Confidence Score</h4>
-<p>Based on current market regime</p>
-</div>
-<div class="circular-progress" id="conf-meter">
-<span class="progress-value" id="conf-val">0%</span>
-</div>
-</div>
+  <!-- Header -->
+  <div class="canvas-header">
+    <div class="canvas-header-left">
+      <span class="live-dot"></span>
+      <h3><i class="fas fa-chart-line" style="color:var(--accent-color);"></i> Live Analysis Canvas</h3>
+    </div>
+    <div class="tab-group" id="chart-filters-container">
+      <button class="tab-btn active filter-btn" data-period="ALL">All</button>
+      <button class="tab-btn filter-btn" data-period="3M">3M</button>
+      <button class="tab-btn filter-btn" data-period="1M">1M</button>
+      <button class="tab-btn filter-btn" data-period="7D">7D</button>
+    </div>
+  </div>
+
+  <!-- Candlestick Chart -->
+  <div class="chart-box">
+    <div class="regime-badge" id="regime-badge">
+      <i class="fas fa-arrows-alt-h"></i> Sideways Market
+    </div>
+    <div id="stockChartContainer" style="width:100%; height:100%;"></div>
+  </div>
+
+  <!-- Body sections -->
+  <div class="canvas-body">
+
+    <!-- Indicators -->
+    <div class="indicators-box">
+      <p class="section-label">Active Indicators</p>
+      <div class="chips-row">
+        <div class="chip" id="chip-rsi" onclick="toggleIndicator(this)">RSI<span class="tooltip-text">Relative Strength Index: Measures momentum to spot overbought or oversold conditions.</span></div>
+        <div class="chip" id="chip-macd" onclick="toggleIndicator(this)">MACD<span class="tooltip-text">MACD: Compares two moving averages to show trend direction and strength.</span></div>
+        <div class="chip" id="chip-bb" onclick="toggleIndicator(this)">Bollinger Bands<span class="tooltip-text">Bollinger Bands: Shows volatility. Price hitting upper band may drop, hitting lower band may rise.</span></div>
+        <div class="chip" id="chip-adx" onclick="toggleIndicator(this)">ADX<span class="tooltip-text">Average Directional Index: Measures the strength of a trend, regardless of direction.</span></div>
+        <div class="chip" id="chip-obv" onclick="toggleIndicator(this)">OBV<span class="tooltip-text">On-Balance Volume: Uses trading volume to confirm price trends and spot buying/selling pressure.</span></div>
+        <div class="chip" id="chip-atr" onclick="toggleIndicator(this)">ATR<span class="tooltip-text">Average True Range: Measures volatility to help set safe stop-loss levels.</span></div>
+      </div>
+    </div>
+
+    <!-- Confidence Score -->
+    <div class="confidence-box">
+      <div class="conf-header">
+        <h4>AI Confidence Score</h4>
+        <span class="conf-pct" id="conf-val">0%</span>
+      </div>
+      <div class="conf-bar-track">
+        <div class="conf-bar-fill" id="conf-meter"></div>
+      </div>
+      <p class="conf-sub">Based on current market regime &amp; disconfirmation analysis</p>
+    </div>
+
+  </div>
 </div>
 </div>
 </main>
@@ -761,8 +917,8 @@
             const filterBtns = document.querySelectorAll('.filter-btn');
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    filterBtns.forEach(b => b.classList.remove('btn-primary'));
-                    e.target.classList.add('btn-primary');
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
                     
                     if(!chartInstance || !candleSeries) return;
                     
@@ -1189,18 +1345,18 @@
             } else if (trigger === 'disconfirmation-warning') {
                 // Not altering chart for disconfirmation visually, just show warning in chat
             } else if (trigger === 'finalize') {
-                const meter = document.getElementById('conf-meter');
-                const val = document.getElementById('conf-val');
+                const bar  = document.getElementById('conf-meter');
+                const val  = document.getElementById('conf-val');
+                const target = 82;
                 let conf = 0;
-                const target = 82; 
-                const borderColor = getComputedStyle(document.body).getPropertyValue('--border-color').trim() || '#e2e8f0';
-                
-                meter.style.background = `conic-gradient(#10b981 ${target}%, ${borderColor} 0)`;
-                val.style.color = '#10b981';
-                
+
+                // Animate the horizontal bar
+                bar.style.width = target + '%';
+                val.classList.add('filled');
+
                 const interval = setInterval(() => {
                     conf += 2;
-                    if(conf >= target) {
+                    if (conf >= target) {
                         conf = target;
                         clearInterval(interval);
                     }

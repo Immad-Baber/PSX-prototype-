@@ -1,125 +1,177 @@
 <!DOCTYPE html>
-
-<html data-theme="light" lang="en">
+<html lang="en" data-theme="light">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>InvestOPak | Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<link href="css/style.css?v=3" rel="stylesheet"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>InvestOPak | Financial Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="css/style.css?v=4" rel="stylesheet"/>
 </head>
 <body class="dashboard-body">
-<aside class="sidebar">
-<div class="sidebar-header">
-<a class="logo" href="index.html">Invest<span>OPak</span></a>
-</div>
-<ul class="sidebar-nav">
-<li><a class="active" href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-<li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
-<li><a href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener</a></li>
-<li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
-<li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
-<li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
-<li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
-</ul>
-<div class="sidebar-footer">
-<a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
-</div>
-</aside>
-<div class="main-wrapper">
-<header class="top-nav">
-<div class="search-bar">
-<i class="fas fa-search"></i>
-<input placeholder="Search ticker or company..." type="text"/>
-</div>
-<div class="top-nav-actions">
-<button aria-label="Toggle Theme" id="theme-toggle">
-<i class="fas fa-moon"></i>
-</button>
-<a class="nav-icon-btn" href="notifications.html"><i class="fas fa-bell"></i><span class="badge">2</span></a>
-<a class="user-profile" href="profile.html" style="text-decoration: none; color: inherit;">
-<div class="avatar">IB</div>
-<span>Immad Baber</span>
-<i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 0.5rem;"></i>
-</a>
-</div>
-</header>
-<main class="dashboard-content">
-<div class="welcome-header">
-<h1>Welcome back, Immad.</h1>
-<p class="market-status">The market regime is <span class="bullish">Trending <span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span></span>.</p>
-</div>
-<div class="dashboard-brief">
-<div class="brief-accent"></div>
-<div class="brief-content">
-<span class="brief-label">Portfolio Insights</span>
-<h2>Alignment is optimal. 3 high-probability setups detected.</h2>
-<p>Momentum shifts identified in your watchlist. <strong>LUCK</strong> and <strong>ENGRO</strong> are showing strong breakout signals in the current <span class="has-tip">bullish<span class="tip-box">A market state where prices are expected to rise.</span></span> regime.</p>
-</div>
-<button class="btn btn-primary" onclick="window.location.href='screener-demo.html'">View AI Insights <i class="fas fa-arrow-right"></i></button>
-</div>
-<div class="metrics-grid">
-<div class="metric-card">
-<span class="metric-label">Stocks Monitored</span>
-<div class="metric-value" id="watchlist-count">2</div>
-<span class="metric-sub">Active AI tracking in your watchlist.</span>
-</div>
-<div class="metric-card">
-<span class="metric-label">PSX Regime Status</span>
-<div class="metric-value bullish-text"><span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span></div>
-<span class="metric-sub">Low-<span class="has-tip">volatility<span class="tip-box">The rate at which the price of a stock increases or decreases.</span></span>, strong <span class="has-tip">momentum<span class="tip-box">The strength or speed of a price trend.</span></span>.</span>
-</div>
-<div class="metric-card">
-<span class="metric-label">AI Confidence Score</span>
-<div class="metric-value">82%</div>
-<span class="metric-sub">Aggregate portfolio <span class="has-tip">calibration<span class="tip-box">The process of adjusting AI parameters to match real-world historical data.</span></span>.</span>
-</div>
-<div class="metric-card">
-<span class="metric-label">Portfolio Value</span>
-<div class="metric-value">Rs. 1,049K</div>
-<span class="metric-sub">Across 5 open holdings.</span>
-</div>
-</div>
-<div class="widgets-grid" style="grid-template-columns: 1fr;">
-<div class="widget-card" style="margin-bottom: 2rem;">
-<div class="widget-header">
-<h3>Active Watchlist &amp; Holdings</h3>
-</div>
-<div class="widget-body">
-<div id="dashboard-watchlist-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem;">
-<span style="color: var(--text-secondary);">Loading holdings...</span>
-</div>
-</div>
-</div>
-<div class="widget-card">
-<div class="widget-header" style="display: flex; justify-content: space-between; align-items: center;">
-<h3>Today's Top 5 Stocks</h3>
-</div>
-<div class="widget-body">
-<table class="data-table">
-<thead>
-<tr>
-<th>Company</th>
-<th>Name</th>
-<th>Price</th>
-<th>Change</th>
-<th>AI Signal</th>
-<th>Confidence</th>
-</tr>
-</thead>
-<tbody id="dashboard-top-5-body">
-<tr>
-<td colspan="6" style="text-align: center; color: var(--text-secondary);">Loading top movers...</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</main>
-</div>
-<script src="js/main.js?v=2"></script>
-<script src="js/dashboard_data.js?v=2"></script>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a class="logo" href="index.html">Invest<span>OPak</span></a>
+        </div>
+        <ul class="sidebar-nav">
+            <li><a class="active" href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
+            <li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
+            <li><a href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener</a></li>
+            <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+            <li><a href="all-stocks.html"><i class="fas fa-layer-group"></i> All Stocks</a></li>
+            <li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
+            <li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+        <header class="top-nav">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input placeholder="Search ticker, company or sector..." type="text"/>
+                <span class="search-kbd">Ctrl K</span>
+            </div>
+            <div class="top-nav-actions">
+                <button aria-label="Toggle Theme" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a class="nav-icon-btn" href="notifications.html" title="Notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">2</span>
+                </a>
+                <a class="user-profile" href="profile.html">
+                    <div class="avatar">IB</div>
+                    <span>Immad Baber</span>
+                    <i class="fas fa-chevron-down" style="font-size: 0.65rem; color: var(--text-muted);"></i>
+                </a>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <!-- Page Header -->
+            <div class="welcome-header">
+                <div>
+                    <h1>Dashboard</h1>
+                    <p class="market-status">
+                        <span>PSX KSE-100</span>
+                        <span class="bullish" style="font-weight: 600;">177,370.71 ▲ +0.23%</span>
+                        <span style="color: var(--text-muted);">·</span>
+                        <span>Regime: <strong class="bullish"><span class="has-tip">Trending Bullish<span class="tip-box">Low-volatility regime with strong institutional momentum.</span></span></strong></span>
+                    </p>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-secondary" onclick="window.location.href='all-stocks.html'"><i class="fas fa-search"></i> Explore PSX</button>
+                    <button class="btn btn-primary" onclick="window.location.href='screener-demo.html'"><i class="fas fa-bolt"></i> Run AI Screener</button>
+                </div>
+            </div>
+
+            <!-- 4 Key Financial Metrics -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-label">Portfolio Value</span>
+                        <span class="badge bullish-badge">+8.2% Total</span>
+                    </div>
+                    <div class="metric-value">Rs 1,049,500</div>
+                    <div class="metric-sub">
+                        <span class="bullish">▲ +Rs 14,230</span> vs previous close
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-label">Today's P&amp;L</span>
+                        <span class="badge bullish-badge">+1.38%</span>
+                    </div>
+                    <div class="metric-value bullish">+Rs 14,230</div>
+                    <div class="metric-sub">Across 5 open portfolio holdings</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-label">AI Confidence</span>
+                        <span class="badge badge-blue">Calibrated</span>
+                    </div>
+                    <div class="metric-value">82%</div>
+                    <div class="metric-sub">Multi-agent aggregate alignment score</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-label">Monitored Stocks</span>
+                        <span class="badge badge-neutral" id="watchlist-count">2 Active</span>
+                    </div>
+                    <div class="metric-value">2</div>
+                    <div class="metric-sub">Live HMM regime &amp; vector analog tracking</div>
+                </div>
+            </div>
+
+            <!-- Institutional Briefing -->
+            <div class="dashboard-brief">
+                <div class="brief-content">
+                    <span class="brief-label"><i class="fas fa-shield-alt"></i> Intelligence Briefing</span>
+                    <h2>Portfolio Alignment is Optimal · 3 High-Probability Setups Detected</h2>
+                    <p>Momentum shift identified across your tracked universe. <strong>LUCK</strong> and <strong>ENGRO</strong> are exhibiting breakout characteristics within the current bullish regime.</p>
+                </div>
+                <button class="btn btn-primary" onclick="window.location.href='screener-demo.html'">View AI Analysis <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Content Grid: Holdings Quick-View & Top Movers -->
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1.25rem; margin-bottom: 1.25rem;">
+                
+                <!-- Watchlist Quick Cards -->
+                <div class="widget-card" style="margin-bottom: 0;">
+                    <div class="widget-header">
+                        <h3><i class="fas fa-star" style="color: var(--neutral); font-size: 0.85rem;"></i> Active Watchlist</h3>
+                        <a href="watchlist.html" class="btn btn-secondary btn-sm">View All</a>
+                    </div>
+                    <div class="widget-body">
+                        <div id="dashboard-watchlist-grid" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <span style="color: var(--text-muted); font-size: 0.85rem;">Loading watchlist data...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Today's Top 5 PSX Movers Table -->
+                <div class="widget-card" style="margin-bottom: 0;">
+                    <div class="widget-header">
+                        <h3><i class="fas fa-chart-line" style="color: var(--accent-color); font-size: 0.85rem;"></i> Today's Top Movers</h3>
+                        <span class="badge badge-blue">Real-time Feed</span>
+                    </div>
+                    <div class="widget-body" style="padding: 0;">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Symbol</th>
+                                        <th>Company</th>
+                                        <th class="text-right">Price</th>
+                                        <th class="text-right">Change</th>
+                                        <th>Regime</th>
+                                        <th class="text-right">Confidence</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dashboard-top-5-body">
+                                    <tr>
+                                        <td colspan="6" class="text-center" style="color: var(--text-muted); padding: 2rem;">Loading market data...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js?v=2"></script>
+    <script src="js/dashboard_data.js?v=2"></script>
 </body>
 </html>

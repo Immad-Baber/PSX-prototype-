@@ -3,61 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InvestOPak | Settings</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <title>InvestOPak | Platform Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="stylesheet" href="css/style.css?v=4">
+    <style>
+        .settings-nav {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .settings-nav-item {
+            padding: 0.6rem 0.9rem;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: all 0.15s ease;
+        }
+        .settings-nav-item:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+        .settings-nav-item.active {
+            background: var(--accent-light);
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        .settings-section {
+            display: none;
+        }
+        .settings-section.active {
+            display: block;
+        }
+    </style>
 </head>
 <body class="dashboard-body">
+
+    <!-- Sidebar -->
     <aside class="sidebar">
-        <div class="sidebar-header"><a href="index.html" class="logo">Invest<span>OPak</span></a></div>
+        <div class="sidebar-header">
+            <a href="index.html" class="logo">Invest<span>OPak</span></a>
+        </div>
         <ul class="sidebar-nav">
-            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
             <li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
             <li><a href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener</a></li>
             <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
-            <li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
+            <li><a href="all-stocks.html"><i class="fas fa-layer-group"></i> All Stocks</a></li>
             <li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
             <li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
         </ul>
-        <div class="sidebar-footer"><a href="settings.html" class="active"><i class="fas fa-cog"></i> Settings</a></div>
+        <div class="sidebar-footer">
+            <a href="settings.html" class="active"><i class="fas fa-cog"></i> Settings</a>
+        </div>
     </aside>
 
+    <!-- Main Content Area -->
     <div class="main-wrapper">
         <header class="top-nav">
-            <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search ticker or company..."></div>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input placeholder="Search settings, preferences..." type="text"/>
+            </div>
             <div class="top-nav-actions">
-                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+                <button aria-label="Toggle Theme" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
                 <a href="notifications.html" class="nav-icon-btn"><i class="fas fa-bell"></i><span class="badge">2</span></a>
-                <a href="profile.html" class="user-profile" style="text-decoration: none; color: inherit;"><div class="avatar">IB</div><span>Immad Baber</span></a>
+                <a href="profile.html" class="user-profile">
+                    <div class="avatar">IB</div>
+                    <span>Immad Baber</span>
+                </a>
             </div>
         </header>
 
         <main class="dashboard-content">
+            <!-- Header -->
             <div class="welcome-header">
-                <h1>Settings</h1>
-                <p class="market-status">Manage your platform preferences.</p>
-            </div>
-
-            <div class="widget-card" style="max-width: 600px;">
-                <div class="widget-body">
-                    <div class="form-group">
-                        <label>Email Notifications</label>
-                        <select style="width: 100%; padding: 0.8rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
-                            <option>Only urgent disconfirmation alerts</option>
-                            <option>Daily Portfolio Digest</option>
-                            <option>None</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Theme Preference</label>
-                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">Use the toggle in the top right to switch between Light and Dark mode.</p>
-                    </div>
-                    <button class="btn btn-primary">Save Settings</button>
+                <div>
+                    <h1>Settings &amp; Preferences</h1>
+                    <p class="market-status">Manage Terminal Display, Model Sensitivities, and Account Alerts</p>
                 </div>
             </div>
+
+            <!-- Two Column Layout: Navigation & Settings Pane -->
+            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1.5rem; max-width: 960px;">
+                <!-- Secondary Nav -->
+                <div>
+                    <ul class="settings-nav">
+                        <li class="settings-nav-item active" onclick="switchTab('general', this)"><i class="fas fa-sliders"></i> General</li>
+                        <li class="settings-nav-item" onclick="switchTab('ai-models', this)"><i class="fas fa-brain"></i> AI &amp; Risk Engine</li>
+                        <li class="settings-nav-item" onclick="switchTab('notifications', this)"><i class="fas fa-bell"></i> Notifications</li>
+                        <li class="settings-nav-item" onclick="switchTab('appearance', this)"><i class="fas fa-palette"></i> Appearance</li>
+                        <li class="settings-nav-item" onclick="switchTab('account', this)"><i class="fas fa-user-shield"></i> Account &amp; API</li>
+                    </ul>
+                </div>
+
+                <!-- Settings Content Pane -->
+                <div>
+                    <!-- 1. General -->
+                    <div class="widget-card settings-section active" id="sec-general" style="margin-bottom: 0;">
+                        <div class="widget-header">
+                            <h3><i class="fas fa-sliders" style="color: var(--accent-color);"></i> General Preferences</h3>
+                        </div>
+                        <div class="widget-body">
+                            <div class="form-group">
+                                <label>Default Benchmark Market</label>
+                                <select>
+                                    <option selected>Pakistan Stock Exchange (PSX KSE-100)</option>
+                                    <option>PSX KSE-30 (Liquid Index)</option>
+                                    <option>PSX All Share</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Base Reporting Currency</label>
+                                <select>
+                                    <option selected>PKR - Pakistani Rupee (Rs)</option>
+                                    <option>USD - US Dollar ($)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Data Refresh Frequency</label>
+                                <select>
+                                    <option selected>Real-time Tick Feed (PSX Fast Stream)</option>
+                                    <option>1-Minute Delayed Batch</option>
+                                    <option>5-Minute Snapshot</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary btn-sm">Save General Settings</button>
+                        </div>
+                    </div>
+
+                    <!-- 2. AI Models & Risk Engine -->
+                    <div class="widget-card settings-section" id="sec-ai-models" style="margin-bottom: 0;">
+                        <div class="widget-header">
+                            <h3><i class="fas fa-brain" style="color: var(--accent-color);"></i> AI &amp; Risk Parameters</h3>
+                        </div>
+                        <div class="widget-body">
+                            <div class="form-group">
+                                <label>Disconfirmation Safeguard Sensitivity</label>
+                                <select>
+                                    <option selected>Strict (Surface analog matches with &gt;85% vector similarity)</option>
+                                    <option>Moderate (Alert on &gt;90% similarity)</option>
+                                    <option>Permissive (Only critical downside invalidations)</option>
+                                </select>
+                                <span style="font-size: 0.75rem; color: var(--text-muted);">Triggers alerts when past setups failed despite strong bullish technicals.</span>
+                            </div>
+                            <div class="form-group">
+                                <label>HMM Market Regime Detection Window</label>
+                                <select>
+                                    <option selected>Adaptive 60-Day Lookback (Recommended)</option>
+                                    <option>30-Day High Sensitivity</option>
+                                    <option>90-Day Macro Lookback</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Genetic Algorithm Mutation Rate</label>
+                                <select>
+                                    <option selected>0.05 (Standard Convergence)</option>
+                                    <option>0.08 (Higher Exploration)</option>
+                                    <option>0.02 (Conservative Stability)</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary btn-sm">Save Model Parameters</button>
+                        </div>
+                    </div>
+
+                    <!-- 3. Notifications -->
+                    <div class="widget-card settings-section" id="sec-notifications" style="margin-bottom: 0;">
+                        <div class="widget-header">
+                            <h3><i class="fas fa-bell" style="color: var(--accent-color);"></i> Notification Feeds</h3>
+                        </div>
+                        <div class="widget-body">
+                            <div class="form-group">
+                                <label>Email Alert Digest</label>
+                                <select>
+                                    <option selected>Urgent Disconfirmation &amp; Regime Shift Alerts Only</option>
+                                    <option>Daily Morning Market &amp; Portfolio Briefing</option>
+                                    <option>Weekly Performance Report</option>
+                                    <option>Disabled</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>In-App Audio Signals</label>
+                                <select>
+                                    <option selected>Muted</option>
+                                    <option>Chime on High-Confidence Buy Signal (&gt;90%)</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary btn-sm">Save Notification Preferences</button>
+                        </div>
+                    </div>
+
+                    <!-- 4. Appearance -->
+                    <div class="widget-card settings-section" id="sec-appearance" style="margin-bottom: 0;">
+                        <div class="widget-header">
+                            <h3><i class="fas fa-palette" style="color: var(--accent-color);"></i> Appearance &amp; Layout</h3>
+                        </div>
+                        <div class="widget-body">
+                            <div class="form-group">
+                                <label>Interface Theme</label>
+                                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Toggle between Light and Dark mode using the header button or select below.</p>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-secondary btn-sm" onclick="setTheme('light')"><i class="fas fa-sun"></i> Light Mode</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="setTheme('dark')"><i class="fas fa-moon"></i> Dark Mode</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Table Data Density</label>
+                                <select>
+                                    <option selected>Compact (Institutional Terminal Standard)</option>
+                                    <option>Comfortable (Increased Row Padding)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Account & API -->
+                    <div class="widget-card settings-section" id="sec-account" style="margin-bottom: 0;">
+                        <div class="widget-header">
+                            <h3><i class="fas fa-user-shield" style="color: var(--accent-color);"></i> Account &amp; Broker API</h3>
+                        </div>
+                        <div class="widget-body">
+                            <div class="form-group">
+                                <label>Account Holder</label>
+                                <input type="text" value="Immad Baber" readonly style="background: var(--bg-tertiary);">
+                            </div>
+                            <div class="form-group">
+                                <label>Registered Email</label>
+                                <input type="email" value="immadbaber@gmail.com" readonly style="background: var(--bg-tertiary);">
+                            </div>
+                            <div class="form-group">
+                                <label>PSX Broker API Connection</label>
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                                    <div>
+                                        <div style="font-weight: 600; font-size: 0.85rem;">AKD Securities Feed (Live Gateway)</div>
+                                        <div style="font-size: 0.75rem; color: var(--bullish);">Connected · Latency: 12ms</div>
+                                    </div>
+                                    <button class="btn btn-secondary btn-sm">Manage Key</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </main>
     </div>
-    <script src="js/main.js"></script>
+
+    <script src="js/main.js?v=2"></script>
+    <script>
+        function switchTab(sectionKey, navItem) {
+            document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
+            document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
+            navItem.classList.add('active');
+            const target = document.getElementById('sec-' + sectionKey);
+            if (target) target.classList.add('active');
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            const icon = document.querySelector('#theme-toggle i');
+            if (icon) {
+                icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+        }
+    </script>
 </body>
 </html>

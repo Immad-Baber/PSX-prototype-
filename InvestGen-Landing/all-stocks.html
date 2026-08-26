@@ -3,129 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InvestOPak | All Stocks</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <title>InvestOPak | All Stocks Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="stylesheet" href="css/style.css?v=4">
     <style>
-        .search-container {
-            position: relative;
-            margin-bottom: 2rem;
-            width: 100%;
-            max-width: 600px;
-        }
-        .search-container input {
-            width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-size: 1.1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            transition: all 0.2s;
-        }
-        .search-container input:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 4px 12px -1px rgba(0, 0, 0, 0.1);
-        }
-        .search-container i {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-        
-        .stocks-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .stock-card {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-        }
-        .stock-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            border-color: var(--accent-color);
-        }
-        .stock-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-        .stock-symbol {
-            font-size: 1.25rem;
-            font-weight: 700;
-            font-family: 'Outfit', sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
         .watchlist-star {
-            color: #d1d5db; /* gray */
+            color: var(--text-muted);
             cursor: pointer;
-            transition: color 0.2s;
-            font-size: 1rem;
+            transition: color 0.15s ease, transform 0.15s ease;
+            font-size: 0.9rem;
+            padding: 4px;
         }
         .watchlist-star:hover {
-            color: #fbbf24; /* yellow hover */
+            color: #fbbf24;
+            transform: scale(1.15);
         }
         .watchlist-star.active {
-            color: #f59e0b; /* active gold */
+            color: #f59e0b;
         }
-        .stock-name {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 180px;
+        .stock-row {
+            cursor: pointer;
         }
-        .stock-price {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
+        .stock-row:hover td {
+            background-color: var(--bg-hover) !important;
         }
-        .stock-change {
-            font-size: 0.95rem;
-            font-weight: 500;
+        .filter-toolbar {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-lg);
         }
-        
-        #no-results {
-            display: none;
-            text-align: center;
-            padding: 4rem;
-            color: var(--text-secondary);
-            background: var(--bg-primary);
-            border-radius: 12px;
-            border: 1px dashed var(--border-color);
-            grid-column: 1 / -1;
+        .filter-inputs {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            align-items: center;
+            flex: 1;
         }
     </style>
 </head>
 <body class="dashboard-body">
 
+    <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <a href="index.html" class="logo">Invest<span>OPak</span></a>
         </div>
         <ul class="sidebar-nav">
-            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
             <li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
             <li><a href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener</a></li>
             <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
-            <li><a href="all-stocks.html" class="active"><i class="fas fa-list"></i> All Stocks</a></li>
+            <li><a href="all-stocks.html" class="active"><i class="fas fa-layer-group"></i> All Stocks</a></li>
             <li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
             <li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
         </ul>
@@ -134,13 +70,20 @@
         </div>
     </aside>
 
+    <!-- Main Content Area -->
     <div class="main-wrapper">
         <header class="top-nav">
-            <div class="top-nav-actions" style="margin-left: auto;">
-                <button id="theme-toggle" aria-label="Toggle Theme">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input placeholder="Search ticker, company or sector..." type="text"/>
+                <span class="search-kbd">Ctrl K</span>
+            </div>
+            <div class="top-nav-actions">
+                <button aria-label="Toggle Theme" id="theme-toggle">
                     <i class="fas fa-moon"></i>
                 </button>
-                <a href="profile.html" class="user-profile" style="text-decoration: none; color: inherit;">
+                <a href="notifications.html" class="nav-icon-btn"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+                <a href="profile.html" class="user-profile">
                     <div class="avatar">IB</div>
                     <span>Immad Baber</span>
                 </a>
@@ -148,125 +91,232 @@
         </header>
 
         <main class="dashboard-content">
+            <!-- Page Header -->
             <div class="welcome-header">
-                <h1>PSX Market Explorer</h1>
-                <p style="color: var(--text-secondary); font-size: 1.1rem;">Search and discover all listed companies on the Pakistan Stock Exchange.</p>
-            </div>
-
-            <div class="search-container">
-                <i class="fas fa-search"></i>
-                <input type="text" id="stock-search-input" placeholder="Search by ticker symbol or company name (e.g. ENGRO, Lucky Cement)...">
-            </div>
-
-            <div class="stocks-grid" id="all-stocks-grid">
-                <!-- Loading State -->
-                <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: var(--text-secondary);">
-                    <i class="fas fa-circle-notch fa-spin fa-2x" style="margin-bottom: 1rem; color: var(--accent-color);"></i>
-                    <p>Loading market data from PSX...</p>
+                <div>
+                    <h1>PSX Equities Explorer</h1>
+                    <p class="market-status">Real-time Pakistan Stock Exchange Listed Company Directory</p>
                 </div>
-                
-                <!-- No Results State -->
-                <div id="no-results">
-                    <i class="fas fa-search fa-2x" style="margin-bottom: 1rem; opacity: 0.5;"></i>
-                    <h3>No stocks found</h3>
-                    <p>Try adjusting your search terms.</p>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-secondary btn-sm" id="btn-export"><i class="fas fa-download"></i> Export CSV</button>
+                    <button class="btn btn-primary btn-sm" onclick="window.location.href='screener-demo.html'"><i class="fas fa-bolt"></i> AI Screener</button>
                 </div>
             </div>
+
+            <!-- Filter Toolbar -->
+            <div class="filter-toolbar">
+                <div class="filter-inputs">
+                    <!-- Search input -->
+                    <div style="position: relative; width: 280px;">
+                        <i class="fas fa-search" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.8rem;"></i>
+                        <input type="text" id="stock-search-input" placeholder="Search symbol or name (e.g. ENGRO, OGDC)..." style="padding-left: 30px; font-size: 0.82rem; height: 34px;">
+                    </div>
+
+                    <!-- Sector Filter -->
+                    <select id="sector-filter" style="width: 190px; font-size: 0.82rem; height: 34px;">
+                        <option value="">All Sectors</option>
+                        <option value="Commercial Banks">Commercial Banks</option>
+                        <option value="Oil & Gas">Oil &amp; Gas</option>
+                        <option value="Fertilizer">Fertilizer</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Cement">Cement</option>
+                        <option value="Power">Power &amp; Energy</option>
+                        <option value="Textile">Textile</option>
+                        <option value="Chemical">Chemicals</option>
+                        <option value="Automobile">Automobile</option>
+                        <option value="Pharmaceuticals">Pharmaceuticals</option>
+                    </select>
+
+                    <!-- Sort Order -->
+                    <select id="sort-filter" style="width: 170px; font-size: 0.82rem; height: 34px;">
+                        <option value="change-desc">Change: High to Low</option>
+                        <option value="change-asc">Change: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="ticker-asc">Ticker: A to Z</option>
+                    </select>
+                </div>
+
+                <div style="font-size: 0.78rem; color: var(--text-muted);" id="stock-count-display">
+                    Loading equities...
+                </div>
+            </div>
+
+            <!-- Financial Data Table Container -->
+            <div class="widget-card" style="margin-bottom: 0;">
+                <div class="widget-body" style="padding: 0;">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40px; text-align: center;"><i class="fas fa-star" style="color: var(--text-muted); font-size: 0.75rem;"></i></th>
+                                    <th>Symbol</th>
+                                    <th>Company Name</th>
+                                    <th>Sector</th>
+                                    <th class="text-right">Last Price</th>
+                                    <th class="text-right">24h Change</th>
+                                    <th class="text-center">AI Signal</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-stocks-table-body">
+                                <tr>
+                                    <td colspan="8" class="text-center" style="padding: 3rem; color: var(--text-muted);">
+                                        <i class="fas fa-circle-notch fa-spin fa-2x" style="margin-bottom: 0.5rem; color: var(--accent-color); display: block;"></i>
+                                        Loading market data from PSX feed...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
     <script src="js/main.js?v=2"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
-            const grid = document.getElementById('all-stocks-grid');
+            const tableBody = document.getElementById('all-stocks-table-body');
             const searchInput = document.getElementById('stock-search-input');
-            const noResults = document.getElementById('no-results');
+            const sectorFilter = document.getElementById('sector-filter');
+            const sortFilter = document.getElementById('sort-filter');
+            const countDisplay = document.getElementById('stock-count-display');
             
             let allStocksData = [];
+            let watchlistSet = new Set(['ENGRO', 'LUCK', 'SYS']);
 
             try {
-                // Fetch the expanded market data JSON
                 const response = await fetch('data/market_data.json?v=' + new Date().getTime());
                 const data = await response.json();
                 
-                if (data.all_stocks) {
+                if (data.all_stocks && data.all_stocks.length > 0) {
                     allStocksData = data.all_stocks;
-                    renderGrid(allStocksData);
+                    applyFiltersAndRender();
                 } else {
-                    grid.innerHTML = '<div style="grid-column: 1/-1; color: red;">Error: all_stocks data not found in JSON. Please run the data engine.</div>';
+                    tableBody.innerHTML = '<tr><td colspan="8" class="text-center" style="color: var(--bearish); padding: 2rem;">No stocks found in dataset.</td></tr>';
                 }
             } catch (e) {
-                grid.innerHTML = '<div style="grid-column: 1/-1; color: red;">Error loading data: ' + e.message + '</div>';
+                tableBody.innerHTML = `<tr><td colspan="8" class="text-center" style="color: var(--bearish); padding: 2rem;">Error loading data: ${e.message}</td></tr>`;
             }
 
-            function renderGrid(stocks) {
-                // Clear loading state but keep the no-results div
-                grid.innerHTML = '';
-                grid.appendChild(noResults);
-                
+            function applyFiltersAndRender() {
+                const term = searchInput.value.trim().toLowerCase();
+                const sector = sectorFilter.value;
+                const sortBy = sortFilter.value;
+
+                let filtered = allStocksData.filter(stock => {
+                    const matchesSearch = !term || 
+                        stock.ticker.toLowerCase().includes(term) || 
+                        stock.name.toLowerCase().includes(term);
+                    
+                    const matchesSector = !sector || 
+                        (stock.sector && stock.sector.toLowerCase().includes(sector.toLowerCase()));
+
+                    return matchesSearch && matchesSector;
+                });
+
+                // Sorting
+                filtered.sort((a, b) => {
+                    if (sortBy === 'change-desc') return b.change - a.change;
+                    if (sortBy === 'change-asc') return a.change - b.change;
+                    if (sortBy === 'price-desc') return b.price - a.price;
+                    if (sortBy === 'price-asc') return a.price - b.price;
+                    if (sortBy === 'ticker-asc') return a.ticker.localeCompare(b.ticker);
+                    return 0;
+                });
+
+                countDisplay.innerHTML = `Showing <strong>${filtered.length}</strong> of ${allStocksData.length} equities`;
+                renderTable(filtered);
+            }
+
+            function renderTable(stocks) {
                 if (stocks.length === 0) {
-                    noResults.style.display = 'block';
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="8" class="text-center" style="padding: 3rem; color: var(--text-muted);">
+                                <i class="fas fa-search fa-2x" style="margin-bottom: 0.5rem; opacity: 0.4; display: block;"></i>
+                                No matching equities found. Try adjusting your search filters.
+                            </td>
+                        </tr>
+                    `;
                     return;
                 }
-                
-                noResults.style.display = 'none';
 
+                tableBody.innerHTML = '';
                 stocks.forEach(stock => {
                     const isPositive = stock.change > 0;
-                    const changeClass = isPositive ? 'bullish' : 'bearish';
+                    const isZero = stock.change === 0;
+                    const changeClass = isPositive ? 'bullish' : (isZero ? 'sideways' : 'bearish');
                     const sign = isPositive ? '+' : '';
-                    
-                    const card = document.createElement('div');
-                    card.className = 'stock-card';
-                    card.onclick = () => window.location.href = 'stock-details.html?ticker=' + stock.ticker;
-                    
-                    card.innerHTML = `
-                        <div class="stock-header">
-                            <div>
-                                <div class="stock-symbol">
-                                    ${stock.ticker}
-                                    <i class="fas fa-star watchlist-star" onclick="toggleWatchlist(event, this)"></i>
-                                </div>
-                                <div class="stock-name" title="${stock.name}">${stock.name}</div>
+                    const isStarred = watchlistSet.has(stock.ticker);
+
+                    // Mock dynamic AI Signal for rich fintech terminal feel
+                    let aiSignal = '<span class="badge badge-neutral">Hold</span>';
+                    if (stock.change > 1.5) {
+                        aiSignal = '<span class="badge bullish-badge"><i class="fas fa-arrow-trend-up"></i> Buy</span>';
+                    } else if (stock.change > 3.0) {
+                        aiSignal = '<span class="badge bullish-badge"><i class="fas fa-bolt"></i> Strong Buy</span>';
+                    } else if (stock.change < -1.5) {
+                        aiSignal = '<span class="badge bearish-badge"><i class="fas fa-arrow-trend-down"></i> Caution</span>';
+                    }
+
+                    const tr = document.createElement('tr');
+                    tr.className = 'stock-row';
+                    tr.onclick = (e) => {
+                        // Prevent row click when clicking star or button
+                        if (e.target.closest('.watchlist-star') || e.target.closest('a') || e.target.closest('button')) return;
+                        window.location.href = 'stock-details.html?ticker=' + stock.ticker;
+                    };
+
+                    tr.innerHTML = `
+                        <td class="text-center">
+                            <i class="fas fa-star watchlist-star ${isStarred ? 'active' : ''}" onclick="toggleWatchlist(event, this, '${stock.ticker}')"></i>
+                        </td>
+                        <td>
+                            <strong style="color: var(--accent-color); font-size: 0.9rem;">${stock.ticker}</strong>
+                        </td>
+                        <td>
+                            <div style="font-weight: 500; color: var(--text-primary); max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${stock.name}">
+                                ${stock.name}
                             </div>
-                            <span class="badge ${changeClass}-badge" style="font-size: 0.75rem; padding: 0.2rem 0.5rem;">${stock.sector || 'Equities'}</span>
-                        </div>
-                        <div class="stock-price">Rs ${stock.price.toFixed(2)}</div>
-                        <div class="stock-change ${changeClass}">
+                        </td>
+                        <td>
+                            <span class="badge badge-blue" style="font-size: 0.7rem;">${stock.sector || 'Equities'}</span>
+                        </td>
+                        <td class="text-right" style="font-weight: 600;">
+                            Rs ${stock.price.toFixed(2)}
+                        </td>
+                        <td class="text-right ${changeClass}" style="font-weight: 600;">
                             ${sign}${stock.change.toFixed(2)}%
-                        </div>
+                        </td>
+                        <td class="text-center">
+                            ${aiSignal}
+                        </td>
+                        <td class="text-right">
+                            <a href="stock-details.html?ticker=${stock.ticker}" class="btn btn-secondary btn-sm" style="padding: 2px 8px; font-size: 0.72rem;">
+                                Analyze <i class="fas fa-chevron-right" style="font-size: 0.65rem;"></i>
+                            </a>
+                        </td>
                     `;
-                    grid.appendChild(card);
+                    tableBody.appendChild(tr);
                 });
             }
 
-            // Expose toggleWatchlist globally so the inline onclick can call it
-            window.toggleWatchlist = function(event, element) {
-                event.stopPropagation(); // prevent clicking the card from redirecting to stock-report
+            window.toggleWatchlist = function(event, element, ticker) {
+                event.stopPropagation();
                 element.classList.toggle('active');
-                
-                // Show a quick toast or alert just to show functionality in prototype
                 if (element.classList.contains('active')) {
-                    console.log("Added to watchlist");
+                    watchlistSet.add(ticker);
                 } else {
-                    console.log("Removed from watchlist");
+                    watchlistSet.delete(ticker);
                 }
             };
 
-            searchInput.addEventListener('input', (e) => {
-                const term = e.target.value.toLowerCase();
-                if (!term) {
-                    renderGrid(allStocksData);
-                    return;
-                }
-                
-                const filtered = allStocksData.filter(stock => 
-                    stock.ticker.toLowerCase().includes(term) || 
-                    stock.name.toLowerCase().includes(term)
-                );
-                
-                renderGrid(filtered);
-            });
+            searchInput.addEventListener('input', applyFiltersAndRender);
+            sectorFilter.addEventListener('change', applyFiltersAndRender);
+            sortFilter.addEventListener('change', applyFiltersAndRender);
         });
     </script>
 </body>

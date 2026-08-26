@@ -1,185 +1,156 @@
 <!DOCTYPE html>
-
-<html data-theme="light" lang="en">
+<html lang="en" data-theme="light">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>InvestOPak | Stock Details</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<link href="css/style.css?v=3" rel="stylesheet"/>
-<script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
-<style>
-        .report-toggle {
-            display: inline-flex;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 4px;
-            gap: 4px;
-            margin-bottom: 1.5rem;
-        }
-        .report-tab {
-            padding: 9px 22px;
-            border-radius: 7px;
-            border: none;
-            background: transparent;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-        }
-        .report-tab.active { background: var(--accent-color); color: #fff; box-shadow: 0 2px 8px rgba(59,130,246,0.3); }
-        .report-tab:not(.active):hover { background: var(--border-color); color: var(--text-main); }
-        .report-panel { display: none; }
-        .report-panel.active { display: block; }
-        .simple-verdict {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(16,185,129,0.02));
-            border: 1px solid rgba(16,185,129,0.25);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-        }
-        .verdict-icon {
-            font-size: 2.5rem;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: rgba(16,185,129,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .verdict-text h2 { font-family: "Outfit",sans-serif; font-size: 1.8rem; margin: 0 0 0.4rem 0; color: #10b981; }
-        .verdict-text p { margin: 0; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
-        .confidence-pill {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(16,185,129,0.1); color: #059669;
-            border-radius: 20px; padding: 4px 14px;
-            font-size: 0.85rem; font-weight: 600; margin-top: 0.75rem;
-        }
-        .simple-section {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .simple-section h4 { font-family: "Outfit",sans-serif; margin: 0 0 0.75rem 0; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
-        .simple-section p { margin: 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.7; }
-        .simple-bullets { list-style: none; padding: 0; margin: 0; }
-        .simple-bullets li { display: flex; align-items: flex-start; gap: 10px; padding: 5px 0; color: var(--text-secondary); font-size: 0.92rem; }
-        .simple-bullets li i { margin-top: 3px; flex-shrink: 0; }
-        .actions-row { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
-    </style>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>InvestOPak | Stock Analysis Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="css/style.css?v=4" rel="stylesheet"/>
+    <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body class="dashboard-body">
-<aside class="sidebar">
-<div class="sidebar-header"><a class="logo" href="index.html">Invest<span>OPak</span></a></div>
-<ul class="sidebar-nav">
-<li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-<li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
-<li><a href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener</a></li>
-<li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
-<li><a class="active" href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
-<li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
-<li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
-</ul>
-<div class="sidebar-footer"><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></div>
-</aside>
-<div class="main-wrapper">
-<header class="top-nav">
-<div class="search-bar"><i class="fas fa-search"></i><input placeholder="Search ticker or company..." type="text"/></div>
-<div class="top-nav-actions">
-<button id="theme-toggle"><i class="fas fa-moon"></i></button>
-<a class="nav-icon-btn" href="notifications.html"><i class="fas fa-bell"></i><span class="badge">2</span></a>
-<a class="user-profile" href="profile.html" style="text-decoration:none;color:inherit;"><div class="avatar">IB</div><span>Immad Baber</span></a>
-</div>
-</header>
-<main class="dashboard-content" id="main-content" style="opacity: 0; transition: opacity 0.3s ease;">
-<!-- Header -->
-<div class="welcome-header" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1rem;">
-<div>
-<h1 id="stock-report-title" style="font-size:2.2rem;margin-bottom:0;">Loading...</h1>
-<p class="market-status" id="stock-price-header" style="font-size:1.6rem;font-weight:bold;margin:0.25rem 0 0;">Loading...</p>
-</div>
-<div style="display:flex;gap:0.75rem;">
-<button class="btn btn-secondary"><i class="fas fa-star"></i> Add to Watchlist</button>
-</div>
-</div>
-<!-- Company Details -->
-<div class="company-details" style="display: flex; gap: 2rem; background: var(--bg-primary); padding: 1rem 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); border: 1px solid var(--border-color); align-items: center; flex-wrap: wrap;">
-<div><strong>Sector:</strong> <span id="comp-sector" style="color:var(--text-main);">Commercial Banks</span></div>
-<div><strong>Industry:</strong> <span id="comp-industry" style="color:var(--text-main);">Banking</span></div>
-<div><strong>CEO:</strong> <span id="comp-ceo" style="color:var(--text-main);">N/A</span></div>
-<div><strong>52W Range:</strong> <span id="comp-range" style="color:var(--text-main);">Rs 102.50 - 188.00</span></div>
-<div style="margin-left: auto;"><a href="#" style="color:var(--accent-color);text-decoration:none;font-weight:500;"><i class="fas fa-globe"></i> Investor Relations</a></div>
-</div>
-<!-- Report Toggle -->
 
-<!-- SIMPLE PANEL -->
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a class="logo" href="index.html">Invest<span>OPak</span></a>
+        </div>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
+            <li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
+            <li><a href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener</a></li>
+            <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+            <li><a class="active" href="all-stocks.html"><i class="fas fa-layer-group"></i> All Stocks</a></li>
+            <li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
+            <li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+        </div>
+    </aside>
 
-<!-- TECHNICAL PANEL -->
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+        <header class="top-nav">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input placeholder="Search ticker, company or sector..." type="text"/>
+                <span class="search-kbd">Ctrl K</span>
+            </div>
+            <div class="top-nav-actions">
+                <button aria-label="Toggle Theme" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a class="nav-icon-btn" href="notifications.html"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+                <a class="user-profile" href="profile.html">
+                    <div class="avatar">IB</div>
+                    <span>Immad Baber</span>
+                </a>
+            </div>
+        </header>
 
-<div class="widget-card" style="margin-bottom:2rem;">
-<div class="widget-header">
-<div style="display:flex;align-items:center;justify-content:space-between;width:100%;">
-<h3 style="margin:0;">Technical Chart (OHLCV)</h3>
-<div style="display:flex;gap:0.5rem;">
-<button class="btn btn-primary filter-btn" data-period="ALL" style="padding:0.2rem 0.8rem;font-size:0.85rem;">All</button>
-<button class="btn filter-btn" data-period="3M" style="padding:0.2rem 0.8rem;font-size:0.85rem;">3M</button>
-<button class="btn filter-btn" data-period="1M" style="padding:0.2rem 0.8rem;font-size:0.85rem;">1M</button>
-<button class="btn filter-btn" data-period="7D" style="padding:0.2rem 0.8rem;font-size:0.85rem;">7D</button>
-</div>
-</div>
-</div>
-<div class="widget-body" id="lightweight-chart-container" style="height:300px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border-color);border-radius:8px;">
-<span style="color:var(--text-secondary);"><i class="fas fa-chart-bar"></i> Loading Interactive Chart...</span>
-</div>
-</div><div class="metrics-grid">
-<div class="metric-card"><span class="metric-label"><span class="has-tip">HMM Regime<span class="tip-box">Hidden Markov Model. A statistical model used to detect the hidden overall mood of the market.</span></span></span><div class="metric-value bullish-text">Trending <span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span></div></div>
-<div class="metric-card"><span class="metric-label"><span class="has-tip">RSI (14)<span class="tip-box">Relative Strength Index. A momentum indicator from 0 to 100. Above 70 is overbought, below 30 is oversold.</span></span></span><div class="metric-value">64.2</div></div>
-<div class="metric-card"><span class="metric-label"><span class="has-tip">P/E Ratio<span class="tip-box">Price-to-Earnings Ratio. Measures how much you pay for Rs 1 of the company's profit. Lower generally means cheaper.</span></span></span><div class="metric-value">6.8x</div></div>
-<div class="metric-card"><span class="metric-label"><span class="has-tip edge-left">Volume<span class="tip-box">The total number of shares traded today. Higher volume confirms the strength of a price movement.</span></span></span><div class="metric-value">1,542,300</div></div>
-<div class="metric-card"><span class="metric-label"><span class="has-tip edge-left">Market Cap<span class="tip-box">Total market value of the company's outstanding shares. (Current Share Price &times; Total Number of Shares).</span></span></span><div class="metric-value">Rs 165.00B</div></div>
-<div class="metric-card"><span class="metric-label"><span class="has-tip edge-left">MACD<span class="tip-box">Moving Average Convergence Divergence. A trend-following momentum indicator. 'Crossover UP' means gaining strength.</span></span></span><div class="metric-value bullish-text">Crossover UP</div></div>
-</div>
-<div style="text-align:center; margin-top: 3rem; margin-bottom: 2rem;">
-<button class="btn btn-primary" id="btn-run-ai" style="font-size: 1.1rem; padding: 0.75rem 2rem; border-radius: 30px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); transition: transform 0.2s ease;">
-<i class="fas fa-robot"></i> Run AI Analysis on this Stock
-        </button>
-</div>
-</main>
-</div>
-<script src="js/main.js"></script>
-<script src="js/dashboard_data.js"></script>
-<script>
-        function switchTab(tab) {
-            // removed tabs.forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.report-panel').forEach(p => p.classList.remove('active'));
-            document.getElementById('tab-' + tab).classList.add('active');
-            document.getElementById('panel-' + tab).classList.add('active');
-        }
-        
+        <main class="dashboard-content" id="main-content" style="opacity: 0; transition: opacity 0.2s ease;">
+            <!-- Header -->
+            <div class="welcome-header" style="align-items: center; margin-bottom: 1rem;">
+                <div>
+                    <h1 id="stock-report-title" style="font-size: 1.5rem; margin-bottom: 2px;">Loading...</h1>
+                    <div id="stock-price-header" style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary);">Loading...</div>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-secondary btn-sm" id="btn-toggle-watchlist"><i class="fas fa-star"></i> Add to Watchlist</button>
+                    <button class="btn btn-primary btn-sm" id="btn-run-ai"><i class="fas fa-bolt"></i> Run Full AI Analysis</button>
+                </div>
+            </div>
+
+            <!-- Company Metadata Strip -->
+            <div style="display: flex; gap: 1.5rem; background: var(--bg-secondary); padding: 0.75rem 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; font-size: 0.82rem; color: var(--text-secondary); border: 1px solid var(--border-color); align-items: center; flex-wrap: wrap;">
+                <div><strong>Sector:</strong> <span id="comp-sector" style="color: var(--text-primary); font-weight: 500;">Commercial Banks</span></div>
+                <div><strong>Industry:</strong> <span id="comp-industry" style="color: var(--text-primary); font-weight: 500;">Banking</span></div>
+                <div><strong>Executive:</strong> <span id="comp-ceo" style="color: var(--text-primary); font-weight: 500;">N/A</span></div>
+                <div><strong>52-Week Range:</strong> <span id="comp-range" style="color: var(--text-primary); font-weight: 600;">Rs 102.50 - 188.00</span></div>
+                <div style="margin-left: auto;"><a href="#" style="color: var(--accent-color); font-weight: 500;"><i class="fas fa-arrow-up-right-from-square" style="font-size: 0.75rem;"></i> Financial Filings</a></div>
+            </div>
+
+            <!-- Technical Candlestick Chart -->
+            <div class="widget-card" style="margin-bottom: 1.25rem;">
+                <div class="widget-header">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <h3><i class="fas fa-chart-candlestick" style="color: var(--accent-color);"></i> Interactive OHLCV Candlestick Chart</h3>
+                        <div class="tab-group">
+                            <button class="tab-btn active filter-btn" data-period="ALL">All</button>
+                            <button class="tab-btn filter-btn" data-period="3M">3M</button>
+                            <button class="tab-btn filter-btn" data-period="1M">1M</button>
+                            <button class="tab-btn filter-btn" data-period="7D">7D</button>
+                        </div>
+                    </div>
+                    <span class="badge bullish-badge"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> Live PSX Data</span>
+                </div>
+                <div class="widget-body" style="padding: 0.75rem;">
+                    <div id="lightweight-chart-container" style="height: 320px; width: 100%; border-radius: var(--radius-md); background: var(--bg-primary); display: flex; align-items: center; justify-content: center;">
+                        <span style="color: var(--text-muted); font-size: 0.85rem;"><i class="fas fa-circle-notch fa-spin"></i> Loading Technical Chart...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6 Key Financial & Technical Metrics -->
+            <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.75rem; margin-bottom: 1.25rem;">
+                <div class="metric-card" style="padding: 0.75rem 1rem;">
+                    <span class="metric-label" style="font-size: 0.68rem;">HMM Regime</span>
+                    <div class="metric-value bullish" style="font-size: 1.05rem; margin: 2px 0;">Bullish</div>
+                    <div class="metric-sub" style="font-size: 0.7rem;">Persistent trend</div>
+                </div>
+                <div class="metric-card" style="padding: 0.75rem 1rem;">
+                    <span class="metric-label" style="font-size: 0.68rem;">RSI (14-Day)</span>
+                    <div class="metric-value" style="font-size: 1.05rem; margin: 2px 0;">64.2</div>
+                    <div class="metric-sub" style="font-size: 0.7rem;">Moderate momentum</div>
+                </div>
+                <div class="metric-card" style="padding: 0.75rem 1rem;">
+                    <span class="metric-label" style="font-size: 0.68rem;">P/E Valuation</span>
+                    <div class="metric-value" style="font-size: 1.05rem; margin: 2px 0;">6.8x</div>
+                    <div class="metric-sub" style="font-size: 0.7rem;"><span class="bullish">Undervalued</span></div>
+                </div>
+                <div class="metric-card" style="padding: 0.75rem 1rem;">
+                    <span class="metric-label" style="font-size: 0.68rem;">24h Volume</span>
+                    <div class="metric-value" style="font-size: 1.05rem; margin: 2px 0;">1.54M</div>
+                    <div class="metric-sub" style="font-size: 0.7rem;">Above 20D average</div>
+                </div>
+                <div class="metric-card" style="padding: 0.75rem 1rem;">
+                    <span class="metric-label" style="font-size: 0.68rem;">Market Cap</span>
+                    <div class="metric-value" style="font-size: 1.05rem; margin: 2px 0;">Rs 165.0B</div>
+                    <div class="metric-sub" style="font-size: 0.7rem;">Large Cap PSX</div>
+                </div>
+                <div class="metric-card" style="padding: 0.75rem 1rem;">
+                    <span class="metric-label" style="font-size: 0.68rem;">MACD Signal</span>
+                    <div class="metric-value bullish" style="font-size: 1.05rem; margin: 2px 0;">Crossover UP</div>
+                    <div class="metric-sub" style="font-size: 0.7rem;">Positive delta</div>
+                </div>
+            </div>
+
+            <!-- Quantitative Synthesis Summary -->
+            <div class="dashboard-brief" style="margin-bottom: 0;">
+                <div class="brief-content">
+                    <span class="brief-label"><i class="fas fa-shield-alt"></i> Disconfirmation Status</span>
+                    <h2>Quantitative Model Verdict: Favorable Risk-Adjusted Setup</h2>
+                    <p>Technicals are backed by strong cash flow yield. However, keep position sizes sized to current market regime parameters.</p>
+                </div>
+                <button class="btn btn-primary" id="btn-deep-dive"><i class="fas fa-arrow-right"></i> Open AI Screener</button>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="js/main.js?v=2"></script>
+    <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const urlParams = new URLSearchParams(window.location.search);
             const ticker = urlParams.get('ticker') || 'ENGRO';
             let stockData = null;
             
             try {
-                // Fetch the expanded market data JSON
                 const response = await fetch('data/market_data.json?v=' + new Date().getTime());
                 const data = await response.json();
                 
-                // Search in both top_5 and all_stocks
                 if (data.top_5) {
                     stockData = data.top_5.find(s => s.ticker === ticker);
                 }
@@ -188,16 +159,14 @@
                 }
 
                 if (stockData) {
-                    // Update header
-                    document.getElementById('stock-report-title').innerHTML = `${stockData.ticker} <span style="font-size:1.1rem;color:var(--text-secondary);font-weight:normal;">${stockData.name || 'Stock Report'}</span>`;
+                    document.getElementById('stock-report-title').innerHTML = `${stockData.ticker} <span style="font-size:0.95rem;color:var(--text-secondary);font-weight:normal;margin-left:0.5rem;">${stockData.name || 'Stock Report'}</span>`;
                     
                     const isPositive = stockData.change >= 0;
                     const changeClass = isPositive ? 'bullish' : 'bearish';
                     const sign = isPositive ? '+' : '';
                     
-                    document.getElementById('stock-price-header').innerHTML = `Rs. ${stockData.price.toFixed(2)} <span class="${changeClass}" style="font-size:1rem;margin-left:0.5rem;">${sign}${stockData.change.toFixed(2)}% Today</span>`;
+                    document.getElementById('stock-price-header').innerHTML = `Rs ${stockData.price.toFixed(2)} <span class="${changeClass}" style="font-size:0.85rem;margin-left:0.5rem;font-weight:600;">${sign}${stockData.change.toFixed(2)}% Today</span>`;
                     
-                    // Populate Company Details
                     const mockDetails = {
                         'ENGRO': { sector: 'Fertilizer', industry: 'Chemicals', ceo: 'Ghias Khan' },
                         'OGDC': { sector: 'Oil & Gas Exploration', industry: 'Energy', ceo: 'Ahmed Hayat Lak' },
@@ -211,149 +180,105 @@
                     document.getElementById('comp-ceo').innerText = details.ceo;
                     const low = (stockData.price * 0.7).toFixed(2);
                     const high = (stockData.price * 1.4).toFixed(2);
-                    
                     document.getElementById('comp-range').innerText = `Rs ${low} - ${high}`;
                     
-                    // Add CTA functionality
-                    document.getElementById('btn-run-ai').onclick = function() {
-                        window.location.href = 'screener-demo.html?ticker=' + stockData.ticker;
-                    };
-
-                    
-                    // Replace "{TICKER}" text with actual ticker in the summary text
-                    document.querySelectorAll('p').forEach(p => {
-                        if(p.innerHTML.includes('{TICKER}')) {
-                            p.innerHTML = p.innerHTML.replace(/\{TICKER\}/g, stockData.ticker);
-                        }
-                    });
+                    const navToScreener = () => window.location.href = 'screener-demo.html?ticker=' + stockData.ticker;
+                    document.getElementById('btn-run-ai').onclick = navToScreener;
+                    document.getElementById('btn-deep-dive').onclick = navToScreener;
                 } else {
-                    document.getElementById('stock-report-title').innerHTML = ticker + ' <span style="font-size:1.1rem;color:var(--text-secondary);font-weight:normal;">Stock Report</span>';
+                    document.getElementById('stock-report-title').innerHTML = ticker + ' <span style="font-size:0.95rem;color:var(--text-secondary);font-weight:normal;">Stock Report</span>';
                 }
             } catch (e) {
                 console.error("Could not load stock data", e);
-                document.getElementById('stock-report-title').innerHTML = ticker + ' <span style="font-size:1.1rem;color:var(--text-secondary);font-weight:normal;">Stock Report</span>';
+                document.getElementById('stock-report-title').innerHTML = ticker + ' <span style="font-size:0.95rem;color:var(--text-secondary);font-weight:normal;">Stock Report</span>';
             }
             
-            // Fade in the dashboard content
             document.getElementById('main-content').style.opacity = '1';
             
             let chart = null;
-            let candlestickSeries = null;
-            
             function initChart() {
-                if (chart) return; // already initialized
-                
+                if (chart) return;
                 const chartContainer = document.getElementById('lightweight-chart-container');
                 chartContainer.innerHTML = '';
                 chartContainer.style.display = 'block';
-                chartContainer.style.border = 'none';
 
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
                 chart = LightweightCharts.createChart(chartContainer, {
                     width: chartContainer.clientWidth || 800,
-                    height: 300,
-                layout: {
-                    background: { type: 'solid', color: 'transparent' },
-                    textColor: '#475569',
-                },
-                grid: {
-                    vertLines: { color: 'rgba(226, 232, 240, 0.5)' },
-                    horzLines: { color: 'rgba(226, 232, 240, 0.5)' },
-                },
-                rightPriceScale: {
-                    borderVisible: false,
-                },
-                timeScale: {
-                    borderVisible: false,
-                    timeVisible: true,
-                },
-            });
-
-            const candlestickSeries = chart.addCandlestickSeries({
-                upColor: '#10b981',
-                downColor: '#ef4444',
-                borderVisible: false,
-                wickUpColor: '#10b981',
-                wickDownColor: '#ef4444',
-            });
-            
-            // Generate valid mock OHLC data ending near the stock's current price
-            const basePrice = stockData ? stockData.price : 100;
-            const mockData = [];
-            let currentPrice = basePrice * 0.9;
-            const now = new Date();
-            
-            for (let i = 60; i >= 0; i--) {
-                const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
-                
-                // For the last candle, force the close to be the exact basePrice
-                let open = currentPrice;
-                let close = (i === 0) ? basePrice : currentPrice + (Math.random() - 0.45) * (basePrice * 0.02);
-                
-                // Ensure high is strictly the maximum and low is strictly the minimum
-                let high = Math.max(open, close) + Math.random() * (basePrice * 0.01);
-                let low = Math.min(open, close) - Math.random() * (basePrice * 0.01);
-                
-                mockData.push({
-                    time: date.toISOString().split('T')[0],
-                    open: open,
-                    high: high,
-                    low: low,
-                    close: close
+                    height: 320,
+                    layout: {
+                        background: { type: 'solid', color: 'transparent' },
+                        textColor: isDark ? '#94a3b8' : '#475569',
+                    },
+                    grid: {
+                        vertLines: { color: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)' },
+                        horzLines: { color: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)' },
+                    },
+                    rightPriceScale: { borderVisible: false },
+                    timeScale: { borderVisible: false, timeVisible: true },
                 });
-                currentPrice = close;
-            }
-            
+
+                const candlestickSeries = chart.addCandlestickSeries({
+                    upColor: '#10b981', downColor: '#ef4444',
+                    borderVisible: false, wickUpColor: '#10b981', wickDownColor: '#ef4444',
+                });
+                
+                const basePrice = stockData ? stockData.price : 100;
+                const mockData = [];
+                let currentPrice = basePrice * 0.9;
+                const now = new Date();
+                
+                for (let i = 60; i >= 0; i--) {
+                    const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+                    let open = currentPrice;
+                    let close = (i === 0) ? basePrice : currentPrice + (Math.random() - 0.45) * (basePrice * 0.02);
+                    let high = Math.max(open, close) + Math.random() * (basePrice * 0.01);
+                    let low = Math.min(open, close) - Math.random() * (basePrice * 0.01);
+                    
+                    mockData.push({
+                        time: date.toISOString().split('T')[0],
+                        open: open, high: high, low: low, close: close
+                    });
+                    currentPrice = close;
+                }
                 
                 candlestickSeries.setData(mockData);
 
-                // Handle resize
                 window.addEventListener('resize', () => {
                     if(chartContainer.clientWidth > 0 && chart) {
-                        chart.resize(chartContainer.clientWidth, 300);
+                        chart.resize(chartContainer.clientWidth, 320);
                     }
                 });
 
-                // Implement filter buttons
                 const filterBtns = document.querySelectorAll('.filter-btn');
                 filterBtns.forEach(btn => {
                     btn.addEventListener('click', (e) => {
-                        // Update active styling
-                        filterBtns.forEach(b => b.classList.remove('btn-primary'));
-                        e.target.classList.add('btn-primary');
+                        filterBtns.forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
 
                         const period = e.target.getAttribute('data-period');
                         const timeScale = chart.timeScale();
                         
-                        // We have exactly 61 data points (index 0 to 60)
                         if (period === 'ALL' || period === '3M') {
                             timeScale.fitContent();
                         } else if (period === '1M') {
-                            // Last 30 days
                             const startData = mockData[Math.max(0, mockData.length - 30)];
                             const endData = mockData[mockData.length - 1];
-                            timeScale.setVisibleRange({
-                                from: startData.time,
-                                to: endData.time,
-                            });
+                            timeScale.setVisibleRange({ from: startData.time, to: endData.time });
                         } else if (period === '7D') {
-                            // Last 7 days
                             const startData = mockData[Math.max(0, mockData.length - 7)];
                             const endData = mockData[mockData.length - 1];
-                            timeScale.setVisibleRange({
-                                from: startData.time,
-                                to: endData.time,
-                            });
+                            timeScale.setVisibleRange({ from: startData.time, to: endData.time });
                         }
                     });
                 });
             }
             
-            // Initialize chart immediately since it is always visible on this page
             setTimeout(() => {
                 initChart();
                 if (chart) {
                     const container = document.getElementById('lightweight-chart-container');
-                    chart.resize(container.clientWidth, 300);
+                    chart.resize(container.clientWidth, 320);
                     chart.timeScale().fitContent();
                 }
             }, 100);

@@ -1,109 +1,178 @@
 <!DOCTYPE html>
-
-<html data-theme="light" lang="en">
+<html lang="en" data-theme="light">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>InvestOPak | AI Screener</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<link href="css/style.css?v=3" rel="stylesheet"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>InvestOPak | AI Stock Screener</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="css/style.css?v=4" rel="stylesheet"/>
 </head>
 <body class="dashboard-body">
-<!-- Sidebar -->
-<aside class="sidebar">
-<div class="sidebar-header">
-<a class="logo" href="index.html">Invest<span>OPak</span></a>
-</div>
-<ul class="sidebar-nav">
-<li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-<li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
-<li><a href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener</a></li>
-<li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
-<li><a href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
-<li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
-<li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
-</ul>
-<div class="sidebar-footer">
-<a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
-</div>
-</aside>
-<!-- Main Content -->
-<div class="main-wrapper">
-<header class="top-nav">
-<div class="search-bar">
-<i class="fas fa-search"></i>
-<input placeholder="Search ticker or company..." type="text"/>
-</div>
-<div class="top-nav-actions">
-<button aria-label="Toggle Theme" id="theme-toggle">
-<i class="fas fa-moon"></i>
-</button>
-<a class="nav-icon-btn" href="notifications.html"><i class="fas fa-bell"></i><span class="badge">2</span></a>
-<a class="user-profile" href="profile.html" style="text-decoration: none; color: inherit;">
-<div class="avatar">IB</div>
-<span>Immad Baber</span>
-</a>
-</div>
-</header>
-<main class="dashboard-content">
-<div class="welcome-header">
-<h1>AI Screener</h1>
-<p class="market-status">Filter PSX stocks using Regime-Adaptive Genetic Algorithm weights.</p>
-</div>
-<div class="widget-card" style="margin-bottom: 2rem;">
-<div class="widget-body" style="display: flex; gap: 1rem; flex-wrap: wrap;">
-<div class="form-group" style="flex: 1; min-width: 200px;">
-<label>Technical <span class="has-tip">Indicator<span class="tip-box">A mathematical calculation based on price/volume used to predict future trends.</span></span></label>
-<select class="form-group input" style="width: 100%; padding: 0.8rem; border-radius: 6px;">
-<option>RSI (Relative Strength)</option>
-<option>MACD</option>
-<option>Bollinger Bands</option>
-</select>
-</div>
-<div class="form-group" style="flex: 1; min-width: 200px;">
-<label><span class="has-tip">Fundamental<span class="tip-box">The underlying financial health of a company (revenue, earnings, debt).</span></span> Filter</label>
-<select class="form-group input" style="width: 100%; padding: 0.8rem; border-radius: 6px;">
-<option>P/E Ratio &lt; 15</option>
-<option>High Dividend Yield</option>
-<option>Profit Growth &gt; 10%</option>
-</select>
-</div>
-<div class="form-group" style="display: flex; align-items: flex-end;">
-<button class="btn btn-primary" style="height: 48px;">Apply Filters</button>
-</div>
-</div>
-</div>
-<div class="widget-card">
-<div class="widget-body">
-<table class="data-table">
-<thead>
-<tr>
-<th>Ticker</th>
-<th>Sector</th>
-<th>AI Signal</th>
-<th>Confidence</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>SYS</strong></td>
-<td>Technology</td>
-<td><span class="badge bullish-badge">Strong Buy</span></td>
-<td>92%</td>
-</tr>
-<tr>
-<td><strong>LUCK</strong></td>
-<td>Cement</td>
-<td><span class="badge sideways-badge">Hold</span></td>
-<td>65%</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</main>
-</div>
-<script src="js/main.js"></script>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a class="logo" href="index.html">Invest<span>OPak</span></a>
+        </div>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
+            <li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
+            <li><a class="active" href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener</a></li>
+            <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+            <li><a href="all-stocks.html"><i class="fas fa-layer-group"></i> All Stocks</a></li>
+            <li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
+            <li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+        <header class="top-nav">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input placeholder="Search ticker, company or sector..." type="text"/>
+                <span class="search-kbd">Ctrl K</span>
+            </div>
+            <div class="top-nav-actions">
+                <button aria-label="Toggle Theme" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a class="nav-icon-btn" href="notifications.html"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+                <a class="user-profile" href="profile.html">
+                    <div class="avatar">IB</div>
+                    <span>Immad Baber</span>
+                </a>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <!-- Header -->
+            <div class="welcome-header">
+                <div>
+                    <h1>Quantitative AI Screener</h1>
+                    <p class="market-status">Multi-Factor Filtering with Genetic Algorithm Optimization &amp; Disconfirmation Checks</p>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-primary" onclick="window.location.href='screener-demo.html'"><i class="fas fa-terminal"></i> Open Interactive AI Workspace</button>
+                </div>
+            </div>
+
+            <!-- Quantitative Filter Console -->
+            <div class="widget-card" style="margin-bottom: 1.25rem;">
+                <div class="widget-header">
+                    <h3><i class="fas fa-filter" style="color: var(--accent-color);"></i> Screener Parameters</h3>
+                    <span class="badge badge-blue">HMM-Adaptive Weights</span>
+                </div>
+                <div class="widget-body">
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Technical Indicator</label>
+                            <select>
+                                <option selected>RSI Oversold (&lt; 40)</option>
+                                <option>MACD Bullish Cross</option>
+                                <option>Bollinger Band Lower Touch</option>
+                                <option>ADX Strong Trend (&gt; 25)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Fundamental Valuation</label>
+                            <select>
+                                <option selected>P/E Ratio &lt; Sector Average</option>
+                                <option>High Dividend Yield (&gt; 8%)</option>
+                                <option>ROE &gt; 18%</option>
+                                <option>Low Debt-to-Equity (&lt; 0.5)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Market Regime Target</label>
+                            <select>
+                                <option selected>Trending Bullish (PSX Regime)</option>
+                                <option>Range-Bound Sideways</option>
+                                <option>High Volatility Defensive</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0; display: flex; align-items: flex-end;">
+                            <button class="btn btn-primary" style="width: 100%; height: 34px;"><i class="fas fa-play"></i> Run Screen</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screened Results Table -->
+            <div class="widget-card" style="margin-bottom: 0;">
+                <div class="widget-header">
+                    <h3><i class="fas fa-table-list" style="color: var(--accent-color);"></i> Screened Setups</h3>
+                    <span class="badge bullish-badge">3 Qualifying Equities</span>
+                </div>
+                <div class="widget-body" style="padding: 0;">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Symbol</th>
+                                    <th>Company</th>
+                                    <th>Sector</th>
+                                    <th class="text-right">Price</th>
+                                    <th class="text-right">P/E</th>
+                                    <th class="text-right">RSI</th>
+                                    <th class="text-center">AI Signal</th>
+                                    <th class="text-right">Confidence</th>
+                                    <th class="text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong style="color: var(--accent-color);">SYS</strong></td>
+                                    <td>Systems Limited</td>
+                                    <td><span class="badge badge-blue">Technology</span></td>
+                                    <td class="text-right" style="font-weight: 600;">Rs 445.80</td>
+                                    <td class="text-right">14.2x</td>
+                                    <td class="text-right">38.4</td>
+                                    <td class="text-center"><span class="badge bullish-badge"><i class="fas fa-bolt"></i> Strong Buy</span></td>
+                                    <td class="text-right bullish">92%</td>
+                                    <td class="text-right">
+                                        <a href="stock-details.html?ticker=SYS" class="btn btn-secondary btn-sm" style="padding: 2px 7px; font-size: 0.72rem;">Analyze</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color: var(--accent-color);">ENGRO</strong></td>
+                                    <td>Engro Corporation</td>
+                                    <td><span class="badge badge-blue">Fertilizer</span></td>
+                                    <td class="text-right" style="font-weight: 600;">Rs 305.20</td>
+                                    <td class="text-right">7.8x</td>
+                                    <td class="text-right">34.1</td>
+                                    <td class="text-center"><span class="badge bullish-badge"><i class="fas fa-arrow-trend-up"></i> Buy</span></td>
+                                    <td class="text-right bullish">89%</td>
+                                    <td class="text-right">
+                                        <a href="stock-details.html?ticker=ENGRO" class="btn btn-secondary btn-sm" style="padding: 2px 7px; font-size: 0.72rem;">Analyze</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color: var(--accent-color);">LUCK</strong></td>
+                                    <td>Lucky Cement</td>
+                                    <td><span class="badge badge-blue">Cement</span></td>
+                                    <td class="text-right" style="font-weight: 600;">Rs 453.40</td>
+                                    <td class="text-right">9.1x</td>
+                                    <td class="text-right">41.0</td>
+                                    <td class="text-center"><span class="badge sideways-badge"><i class="fas fa-arrows-alt-h"></i> Accumulate</span></td>
+                                    <td class="text-right bullish">82%</td>
+                                    <td class="text-right">
+                                        <a href="stock-details.html?ticker=LUCK" class="btn btn-secondary btn-sm" style="padding: 2px 7px; font-size: 0.72rem;">Analyze</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="js/main.js?v=2"></script>
 </body>
 </html>
