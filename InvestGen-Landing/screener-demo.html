@@ -230,19 +230,23 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            overflow-y: auto;
         }
+        .canvas-container::-webkit-scrollbar { width: 6px; }
+        .canvas-container::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
 
         .canvas-header h3 { margin: 0; font-size: 1.1rem; color: var(--text-primary); }
 
         .chart-box {
             background: var(--bg-primary);
             border-radius: 12px;
-            height: 250px;
+            flex: 0 0 auto;
+            height: clamp(180px, 30vh, 300px);
             position: relative;
             border: 1px solid var(--border-color);
             overflow: hidden;
             display: flex;
-            align-items: center;
+            align-items: stretch;
             justify-content: center;
         }
 
@@ -558,7 +562,7 @@
 <div class="regime-badge" id="regime-badge">
 <i class="fas fa-arrows-alt-h"></i> Sideways Market
                         </div>
-<div id="stockChartContainer" style="width:100%; height:250px;"></div>
+<div id="stockChartContainer" style="width:100%; height:100%;"></div>
 </div>
 <div class="indicators-box">
 <h4>Active <span class="has-tip">Indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span></h4>
@@ -680,9 +684,11 @@
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             const textColor = isDark ? '#d1d5db' : '#64748b';
 
+            const w = container.clientWidth || container.offsetWidth || 400;
+            const h = container.clientHeight || container.offsetHeight || 250;
             chartInstance = LightweightCharts.createChart(container, {
-                width: container.clientWidth,
-                height: container.clientHeight || 250,
+                width: w,
+                height: h,
                 layout: {
                     background: { type: 'solid', color: 'transparent' },
                     textColor: textColor,
@@ -725,6 +731,21 @@
         // Initialize the chart on window load so container has proper dimensions
         window.addEventListener('load', () => {
             initChart();
+
+            // Keep chart canvas in sync with its container on any resize
+            const chartContainer = document.getElementById('stockChartContainer');
+            if (chartContainer && typeof ResizeObserver !== 'undefined') {
+                const ro = new ResizeObserver(() => {
+                    if (!chartInstance) return;
+                    const w = chartContainer.clientWidth;
+                    const h = chartContainer.clientHeight;
+                    if (w > 0 && h > 0) {
+                        chartInstance.resize(w, h);
+                        chartInstance.timeScale().fitContent();
+                    }
+                });
+                ro.observe(chartContainer);
+            }
         });
         
         // Switch chart to specific stock (stock-level prices ~100-300 range)
