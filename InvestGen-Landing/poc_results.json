@@ -1,0 +1,9 @@
+{
+    "ticker": "LUCK",
+    "data_points_analyzed": 2445,
+    "latest_date": "2026-08-20",
+    "detected_regime_proxy": "Bullish",
+    "brier_score": 0.2704,
+    "naive_baseline_score": 0.25,
+    "note": "Baseline Risk Experiment: GMM proxy used as a stand-in for HMM. The resulting Brier score of 0.27 is worse than the naive 50/50 baseline (0.25). This establishes a measured, uncalibrated baseline on real PSX data, explicitly motivating the need for the calibration loop and full HMM implementation planned for M1-M3."
+}

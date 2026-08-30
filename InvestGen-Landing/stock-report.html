@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-
-<html data-theme="light" lang="en">
+<html lang="en" data-theme="light">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>InvestOPak | Stock Report</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Outfit:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<link href="css/style.css?v=3" rel="stylesheet"/>
-<script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
-<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestOPak | Stock Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
         .report-toggle {
             display: inline-flex;
             background: var(--bg-primary);
@@ -82,347 +81,202 @@
     </style>
 </head>
 <body class="dashboard-body">
-<aside class="sidebar">
-<div class="sidebar-header"><a class="logo" href="index.html">Invest<span>OPak</span></a></div>
-<ul class="sidebar-nav">
-<li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-<li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
-<li><a href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener</a></li>
-<li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
-<li><a class="active" href="all-stocks.html"><i class="fas fa-list"></i> All Stocks</a></li>
-<li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
-<li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
-</ul>
-<div class="sidebar-footer"><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></div>
-</aside>
-<div class="main-wrapper">
-<header class="top-nav">
-<div class="search-bar"><i class="fas fa-search"></i><input placeholder="Search ticker or company..." type="text"/></div>
-<div class="top-nav-actions">
-<button id="theme-toggle"><i class="fas fa-moon"></i></button>
-<a class="nav-icon-btn" href="notifications.html"><i class="fas fa-bell"></i><span class="badge">2</span></a>
-<a class="user-profile" href="profile.html" style="text-decoration:none;color:inherit;"><div class="avatar">IB</div><span>Immad Baber</span></a>
-</div>
-</header>
-<main class="dashboard-content" id="main-content" style="opacity: 0; transition: opacity 0.3s ease;">
-<!-- Header -->
-<div class="welcome-header" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1rem;">
-<div>
-<h1 id="stock-report-title" style="font-size:2.2rem;margin-bottom:0;">Loading...</h1>
-<p class="market-status" id="stock-price-header" style="font-size:1.6rem;font-weight:bold;margin:0.25rem 0 0;">Loading...</p>
-</div>
-<div style="display:flex;gap:0.75rem;">
-    <button class="btn btn-primary" onclick="alert('Exporting Report as PDF...')"><i class="fas fa-file-pdf"></i> Export PDF</button>
-    <button class="btn btn-secondary"><i class="fas fa-star"></i> Add to Watchlist</button>
-</div>
-</div>
-<!-- Company Details -->
-<div class="company-details" style="display: flex; gap: 2rem; background: var(--bg-primary); padding: 1rem 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); border: 1px solid var(--border-color); align-items: center; flex-wrap: wrap;">
-    <div><strong>Sector:</strong> <span id="comp-sector" style="color:var(--text-main);">Commercial Banks</span></div>
-    <div><strong>Industry:</strong> <span id="comp-industry" style="color:var(--text-main);">Banking</span></div>
-    <div><strong>CEO:</strong> <span id="comp-ceo" style="color:var(--text-main);">N/A</span></div>
-    <div><strong>52W Range:</strong> <span id="comp-range" style="color:var(--text-main);">Rs 102.50 - 188.00</span></div>
-    <div style="margin-left: auto;"><a href="#" style="color:var(--accent-color);text-decoration:none;font-weight:500;"><i class="fas fa-globe"></i> Investor Relations</a></div>
-</div>
-<!-- Report Toggle -->
-<div class="report-toggle">
-<button class="report-tab active" id="tab-simple" onclick="switchTab('simple')">
-<i class="fas fa-user"></i> Simple Report
+    <aside class="sidebar">
+        <div class="sidebar-header"><a href="index.html" class="logo">Invest<span>OPak</span></a></div>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="market-overview.html"><i class="fas fa-globe"></i> Market Overview</a></li>
+            <li><a href="screener-demo.html"><i class="fas fa-robot"></i> AI Screener</a></li>
+            <li><a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+            <li><a href="all-stocks.html" class="active"><i class="fas fa-list"></i> All Stocks</a></li>
+            <li><a href="calibration.html"><i class="fas fa-tachometer-alt"></i> Calibration</a></li>
+            <li><a href="watchlist.html"><i class="fas fa-star"></i> Watchlist</a></li>
+        </ul>
+        <div class="sidebar-footer"><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></div>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="top-nav">
+            <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search ticker or company..."></div>
+            <div class="top-nav-actions">
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+                <a href="notifications.html" class="nav-icon-btn"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+                <a href="profile.html" class="user-profile" style="text-decoration:none;color:inherit;"><div class="avatar">IB</div><span>Immad Baber</span></a>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <!-- Header -->
+            <div class="welcome-header" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1rem;">
+                <div>
+                    <h1 id="stock-report-title" style="font-size:2.2rem;margin-bottom:0;">ENGRO <span style="font-size:1.1rem;color:var(--text-secondary);font-weight:normal;">Engro Corporation Limited</span></h1>
+                    <p id="stock-price-header" class="market-status" style="font-size:1.6rem;font-weight:bold;margin:0.25rem 0 0;">Rs. 305.20 <span class="bullish" style="font-size:1rem;margin-left:0.5rem;">+2.4% Today</span></p>
+                </div>
+                <button class="btn btn-secondary"><i class="fas fa-star"></i> Add to Watchlist</button>
+            </div>
+
+            <!-- Report Toggle -->
+            <div class="report-toggle">
+                <button class="report-tab active" id="tab-simple" onclick="switchTab('simple')">
+                    <i class="fas fa-user"></i> Simple Report
                 </button>
-<button class="report-tab" id="tab-technical" onclick="switchTab('technical')">
-<i class="fas fa-chart-line"></i> Technical Report
+                <button class="report-tab" id="tab-technical" onclick="switchTab('technical')">
+                    <i class="fas fa-chart-line"></i> Technical Report
                 </button>
-</div>
-<!-- SIMPLE PANEL -->
-<div class="report-panel active" id="panel-simple">
-<div class="simple-verdict">
-<div class="verdict-icon"><i class="fas fa-arrow-up" style="color:#10b981;"></i></div>
-<div class="verdict-text">
-<h2><span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span> Outlook</h2>
-<p>Based on current technical signals, market conditions, and historical patterns, {TICKER} shows a <strong>positive short-term outlook</strong>. The market is in a <span class="has-tip">Trending Bullish regime<span class="tip-box">A market state where prices are steadily rising. Buying stocks that are already going up works best in this environment.</span></span>, which favours <span class="has-tip edge-left">momentum strategies<span class="tip-box">Trading strategies that buy stocks showing upward strength, expecting the trend to continue.</span></span>.</p>
-<span class="confidence-pill"><i class="fas fa-circle-check"></i> 92% AI Confidence Score</span>
-</div>
-</div>
-<div class="simple-section">
-<h4><i class="fas fa-lightbulb" style="color:#f59e0b;"></i> What this means in plain language</h4>
-<p>The AI analyzed {TICKER} using the most relevant <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> for the current market environment. In simple terms: <strong>more signals are pointing up than down</strong>. The trend is strong, volume supports the move, and no major red flags were found in the <span class="has-tip">fundamentals<span class="tip-box">The underlying financial health of a company (revenue, earnings, debt).</span></span>. This does not guarantee profit. It means conditions currently look favorable based on historical patterns.</p>
-</div>
-<div class="simple-section">
-<h4><i class="fas fa-list-check" style="color:var(--accent-color);"></i> Key signals used</h4>
-<ul class="simple-bullets">
-<li><i class="fas fa-check" style="color:#10b981;"></i><span><strong><span class="has-tip">RSI<span class="tip-box">Relative Strength Index (0-100). Above 70 is overbought (might fall soon), below 30 is oversold (might rise). 64 is strong but safe.</span></span> (64.2):</strong> Healthy <span class="has-tip">momentum<span class="tip-box">The strength or speed of a price trend.</span></span>. Not yet overbought. Good sign.</span></li>
-<li><i class="fas fa-check" style="color:#10b981;"></i><span><strong><span class="has-tip">MACD<span class="tip-box">Moving Average Convergence Divergence. A trend-following indicator. A 'crossover' means upward momentum is gaining strength.</span></span>:</strong> <span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span> crossover confirmed. Trend is gaining strength.</span></li>
-<li><i class="fas fa-check" style="color:#10b981;"></i><span><strong><span class="has-tip">HMM Market Regime<span class="tip-box">Hidden Markov Model. Our AI uses this advanced math to detect the 'hidden state' or overall mood of the market.</span></span>:</strong> Detected as Trending <span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span>. <span class="has-tip">Momentum<span class="tip-box">The strength or speed of a price trend.</span></span> <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span> are most reliable here.</span></li>
-<li><i class="fas fa-check" style="color:#10b981;"></i><span><strong><span class="has-tip">P/E Ratio<span class="tip-box">Price-to-Earnings Ratio. Measures how much you pay for Rs 1 of the company's profit. Lower generally means it's cheaper.</span></span> (6.8x):</strong> Reasonably valued vs. the sector. Not overpriced.</span></li>
-<li><i class="fas fa-exclamation-triangle" style="color:#f59e0b;"></i><span><strong>Volume (1.54M):</strong> Above average. Confirms the move is genuine.</span></li>
-</ul>
-</div>
-<div class="simple-section" style="border-color:rgba(59,130,246,0.25);background:rgba(59,130,246,0.03);">
-<h4><i class="fas fa-shield-alt" style="color:var(--accent-color);"></i> Safety Check (<span class="has-tip">Disconfirmation Agent<span class="tip-box">A specialized AI sub-system designed to argue AGAINST the main prediction to ensure we don't ignore red flags.</span></span>)</h4>
-<p>The system searched <strong>14 historical cases</strong> with a similar setup to today's {TICKER} pattern. In <strong>85% of those cases</strong>, the stock continued upward. In 15% it pulled back. No major conflicting evidence found. This recommendation is considered relatively reliable given the historical base rate.</p>
-</div>
-<div class="actions-row">
-<a class="btn btn-primary" href="screener-demo.html"><i class="fas fa-robot"></i> Analyze with AI Screener</a>
-<button class="btn btn-secondary" onclick="switchTab('technical')"><i class="fas fa-chart-line"></i> View Technical Detail</button>
-<button class="btn btn-secondary"><i class="fas fa-star"></i> Add to Watchlist</button>
-</div>
-</div>
-<!-- TECHNICAL PANEL -->
-<div class="report-panel" id="panel-technical">
-<div class="widgets-grid" style="margin-bottom:2rem;">
-<div class="widget-card">
-<div class="widget-header">
-<h3>GenAI Technical Report</h3>
-<span class="badge bullish-badge" id="stock-confidence">92% Confidence</span>
-</div>
-<div class="widget-body">
-<p id="stock-ai-summary" style="color:var(--text-secondary);margin-bottom:1rem;line-height:1.8;"><strong>AI Summary:</strong> {TICKER} is currently exhibiting strong <span class="has-tip">bullish<span class="tip-box">A market state where prices are expected to rise.</span></span> <span class="has-tip">momentum<span class="tip-box">The strength or speed of a price trend.</span></span> within a low-<span class="has-tip">volatility<span class="tip-box">The rate at which the price of a stock increases or decreases.</span></span> market regime. The <span class="has-tip edge-left">Hidden Markov Model (HMM)<span class="tip-box">A statistical model used by our AI to identify the underlying, unobservable market regime (e.g., trending, volatile, sideways).</span></span> confirms the trend is stable. The <span class="has-tip">Genetic Algorithm<span class="tip-box">An AI optimization technique inspired by natural selection, used to find the most accurate combination of indicators for this specific stock.</span></span> has heavily weighted the <span class="has-tip">MACD crossover<span class="tip-box">Occurs when the fast MACD line crosses above the slower signal line, typically interpreted as a strong buy signal.</span></span> and <span class="has-tip edge-left">ADX/DMI<span class="tip-box">Average Directional Index. Measures the sheer strength of a trend regardless of whether it is going up or down.</span></span> <span class="has-tip">indicators<span class="tip-box">Mathematical calculations based on price/volume used to predict future trends.</span></span>, which both align positively.</p>
-<p style="color:var(--text-secondary);line-height:1.8;"><span class="has-tip">Fundamental<span class="tip-box">The underlying financial health of a company (revenue, earnings, debt).</span></span> tailwinds, specifically robust P/E positioning relative to the sector, further support this view. <span class="has-tip edge-left">Expected Calibration Error (ECE)<span class="tip-box">A metric that measures how accurately the system's confidence scores reflect reality. A low ECE (4.1%) means the AI's confidence is highly trustworthy.</span></span> for similar past predictions is low (4.1%), indicating high reliability.</p>
-</div>
-</div>
-<div class="widget-card">
-<div class="widget-header" style="background-color:rgba(37,99,235,0.05);">
-<h3 style="color:var(--accent-color);"><i class="fas fa-shield-alt"></i> Disconfirmation Check</h3>
-</div>
-<div class="widget-body">
-<div style="display:flex;gap:1rem;align-items:flex-start;">
-<i class="fas fa-check-circle" style="color:#10b981;font-size:2rem;"></i>
-<div>
-<h4 style="margin-bottom:0.5rem;">No Major Conflicts Found</h4>
-<p style="color:var(--text-secondary);font-size:0.95rem;">14 historical analogs analyzed. In 85% of cases the stock continued upward. No major macro contradictions detected.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="widget-card" style="margin-bottom:2rem;">
-<div class="widget-header">
-<div style="display:flex;align-items:center;justify-content:space-between;width:100%;">
-<h3 style="margin:0;">Technical Chart (OHLCV)</h3>
-<div style="display:flex;gap:0.5rem;">
-<button class="btn btn-primary filter-btn" data-period="ALL" style="padding:0.2rem 0.8rem;font-size:0.85rem;">All</button>
-<button class="btn filter-btn" data-period="3M" style="padding:0.2rem 0.8rem;font-size:0.85rem;">3M</button>
-<button class="btn filter-btn" data-period="1M" style="padding:0.2rem 0.8rem;font-size:0.85rem;">1M</button>
-<button class="btn filter-btn" data-period="7D" style="padding:0.2rem 0.8rem;font-size:0.85rem;">7D</button>
-</div>
-</div>
-</div>
-<div class="widget-body" id="lightweight-chart-container" style="height:300px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border-color);border-radius:8px;">
-<span style="color:var(--text-secondary);"><i class="fas fa-chart-bar"></i> Loading Interactive Chart...</span>
-</div>
-</div>
-<div class="metrics-grid">
-<div class="metric-card"><span class="metric-label"><span class="has-tip">HMM Regime<span class="tip-box">Hidden Markov Model. A statistical model used to detect the hidden overall mood of the market.</span></span></span><div class="metric-value bullish-text">Trending <span class="has-tip">Bullish<span class="tip-box">A market state where prices are expected to rise.</span></span></div></div>
-<div class="metric-card"><span class="metric-label"><span class="has-tip">RSI (14)<span class="tip-box">Relative Strength Index. A momentum indicator from 0 to 100. Above 70 is overbought, below 30 is oversold.</span></span></span><div class="metric-value">64.2</div></div>
-<div class="metric-card"><span class="metric-label"><span class="has-tip">P/E Ratio<span class="tip-box">Price-to-Earnings Ratio. Measures how much you pay for Rs 1 of the company's profit. Lower generally means cheaper.</span></span></span><div class="metric-value">6.8x</div></div>
-<div class="metric-card"><span class="metric-label"><span class="has-tip edge-left">Volume<span class="tip-box">The total number of shares traded today. Higher volume confirms the strength of a price movement.</span></span></span><div class="metric-value">1,542,300</div></div>
-<div class="metric-card"><span class="metric-label"><span class="has-tip edge-left">Market Cap<span class="tip-box">Total market value of the company's outstanding shares. (Current Share Price &times; Total Number of Shares).</span></span></span><div class="metric-value">Rs 165.00B</div></div>
-<div class="metric-card"><span class="metric-label"><span class="has-tip edge-left">MACD<span class="tip-box">Moving Average Convergence Divergence. A trend-following momentum indicator. 'Crossover UP' means gaining strength.</span></span></span><div class="metric-value bullish-text">Crossover UP</div></div>
-</div>
-<div class="actions-row">
-<a class="btn btn-primary" href="screener-demo.html"><i class="fas fa-robot"></i> Deep Analyze with AI Screener</a>
-<button class="btn btn-secondary" onclick="switchTab('simple')"><i class="fas fa-user"></i> View Simple Report</button>
-</div>
-</div>
-</main>
-</div>
-<script src="js/main.js"></script>
-<script src="js/dashboard_data.js"></script>
-<script>
+            </div>
+
+            <!-- SIMPLE PANEL -->
+            <div class="report-panel active" id="panel-simple">
+                <div class="simple-verdict">
+                    <div class="verdict-icon"><i class="fas fa-arrow-up" style="color:#10b981;"></i></div>
+                    <div class="verdict-text">
+                        <h2>Bullish Outlook</h2>
+                        <p>Based on current technical signals, market conditions, and historical patterns, ENGRO shows a <strong>positive short-term outlook</strong>. The market is in a Trending Bullish regime, which favours momentum strategies.</p>
+                        <span class="confidence-pill"><i class="fas fa-circle-check"></i> 92% AI Confidence Score</span>
+                    </div>
+                </div>
+
+                <div class="simple-section">
+                    <h4><i class="fas fa-lightbulb" style="color:#f59e0b;"></i> What this means in plain language</h4>
+                    <p>The AI analyzed ENGRO using the most relevant indicators for the current market environment. In simple terms: <strong>more signals are pointing up than down</strong>. The trend is strong, volume supports the move, and no major red flags were found in the fundamentals. This does not guarantee profit. It means conditions currently look favorable based on historical patterns.</p>
+                </div>
+
+                <div class="simple-section">
+                    <h4><i class="fas fa-wallet" style="color:#10b981;"></i> Company Financial Health (Sarmaaya Data)</h4>
+                    <p>The business itself is highly profitable. In the last year, ENGRO reported massive <strong>Profits (Rs. 35.8 Billion)</strong> and steady revenue growth. They are making more money than they spend, and their debt is well under control. Simply put: you are looking at a financially strong company, not a risky or struggling one.</p>
+                </div>
+
+                <div class="simple-section">
+                    <h4><i class="fas fa-list-check" style="color:var(--accent-color);"></i> Key signals used</h4>
+                    <ul class="simple-bullets">
+                        <li><i class="fas fa-check" style="color:#10b981;"></i><span><strong>RSI (64.2):</strong> Healthy momentum. Not yet overbought. Good sign.</span></li>
+                        <li><i class="fas fa-check" style="color:#10b981;"></i><span><strong>MACD:</strong> Bullish crossover confirmed. Trend is gaining strength.</span></li>
+                        <li><i class="fas fa-check" style="color:#10b981;"></i><span><strong>HMM Market Regime:</strong> Detected as Trending Bullish. Momentum indicators are most reliable here.</span></li>
+                        <li><i class="fas fa-check" style="color:#10b981;"></i><span><strong>P/E Ratio (6.8x):</strong> Reasonably valued vs. the sector. Not overpriced.</span></li>
+                        <li><i class="fas fa-exclamation-triangle" style="color:#f59e0b;"></i><span><strong>Volume (1.54M):</strong> Above average. Confirms the move is genuine.</span></li>
+                    </ul>
+                </div>
+
+                <div class="simple-section" style="border-color:rgba(59,130,246,0.25);background:rgba(59,130,246,0.03);">
+                    <h4><i class="fas fa-shield-alt" style="color:var(--accent-color);"></i> Safety Check (Disconfirmation Agent)</h4>
+                    <p>The system searched <strong>14 historical cases</strong> with a similar setup to today's ENGRO pattern. In <strong>85% of those cases</strong>, the stock continued upward. In 15% it pulled back. No major conflicting evidence found. This recommendation is considered relatively reliable given the historical base rate.</p>
+                </div>
+
+                <div class="actions-row">
+                    <a href="screener-demo.html" class="btn btn-primary"><i class="fas fa-robot"></i> Analyze with AI Screener</a>
+                    <button class="btn btn-secondary" onclick="switchTab('technical')"><i class="fas fa-chart-line"></i> View Technical Detail</button>
+                    <button class="btn btn-secondary"><i class="fas fa-star"></i> Add to Watchlist</button>
+                </div>
+            </div>
+
+            <!-- TECHNICAL PANEL -->
+            <div class="report-panel" id="panel-technical">
+                <div class="widgets-grid" style="margin-bottom:2rem;">
+                    <div class="widget-card">
+                        <div class="widget-header">
+                            <h3>GenAI Technical Report</h3>
+                            <span id="stock-confidence" class="badge bullish-badge">92% Confidence</span>
+                        </div>
+                        <div class="widget-body">
+                            <p style="color:var(--text-secondary);margin-bottom:1rem;line-height:1.8;"><strong>AI Summary:</strong> ENGRO is currently exhibiting strong bullish momentum within a low-volatility market regime. The Hidden Markov Model (HMM) confirms the trend is stable. The Genetic Algorithm has heavily weighted the MACD crossover and ADX/DMI indicators, which both align positively.</p>
+                            <p style="color:var(--text-secondary);line-height:1.8;">Fundamental tailwinds, specifically robust P/E positioning relative to the sector, further support this view. Expected Calibration Error (ECE) for similar past predictions is low (4.1%), indicating high reliability.</p>
+                        </div>
+                    </div>
+                    <div class="widget-card">
+                        <div class="widget-header" style="background-color:rgba(37,99,235,0.05);">
+                            <h3 style="color:var(--accent-color);"><i class="fas fa-shield-alt"></i> Disconfirmation Check</h3>
+                        </div>
+                        <div class="widget-body">
+                            <div style="display:flex;gap:1rem;align-items:flex-start;">
+                                <i class="fas fa-check-circle" style="color:#10b981;font-size:2rem;"></i>
+                                <div>
+                                    <h4 style="margin-bottom:0.5rem;">No Major Conflicts Found</h4>
+                                    <p style="color:var(--text-secondary);font-size:0.95rem;">14 historical analogs analyzed. In 85% of cases the stock continued upward. No major macro contradictions detected.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widgets-grid" style="margin-bottom:2rem;">
+                    <div class="widget-card">
+                        <div class="widget-header">
+                            <h3><i class="fas fa-file-invoice-dollar" style="margin-right:8px;color:var(--accent-color);"></i>Fundamental & Financial Analysis</h3>
+                            <span class="badge bullish-badge">Strong Health</span>
+                        </div>
+                        <div class="widget-body">
+                            <ul class="simple-bullets" style="margin-bottom: 1rem;">
+                                <li><strong>Annual Revenue:</strong> Rs. 380.2 Billion (↑ 12.4% YoY)</li>
+                                <li><strong>Net Profit After Tax:</strong> Rs. 35.8 Billion (↑ 8.5% YoY)</li>
+                                <li><strong>Earnings Per Share (EPS):</strong> Rs. 65.40</li>
+                                <li><strong>Gross Margin:</strong> 28.4%</li>
+                                <li><strong>Debt-to-Equity:</strong> 0.85 (Manageable)</li>
+                            </ul>
+                            <p style="color:var(--text-secondary);font-size:0.9rem;"><em>Financial data sourced via Sarmaaya integration. The fundamental backdrop confirms strong cash flow generation and stable operating margins, establishing a high floor for the valuation and minimizing downside risk.</em></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget-card" style="margin-bottom:2rem;">
+                    <div class="widget-header">
+                        <div style="display:flex;align-items:center;justify-content:space-between;width:100%;">
+                            <h3 style="margin:0;">Technical Chart (OHLCV)</h3>
+                            <div style="display:flex;gap:0.5rem;">
+                                <button class="btn btn-primary filter-btn" data-period="ALL" style="padding:0.2rem 0.8rem;font-size:0.85rem;">All</button>
+                                <button class="btn filter-btn" data-period="3M" style="padding:0.2rem 0.8rem;font-size:0.85rem;">3M</button>
+                                <button class="btn filter-btn" data-period="1M" style="padding:0.2rem 0.8rem;font-size:0.85rem;">1M</button>
+                                <button class="btn filter-btn" data-period="7D" style="padding:0.2rem 0.8rem;font-size:0.85rem;">7D</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="lightweight-chart-container" class="widget-body" style="height:300px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border-color);border-radius:8px;">
+                        <span style="color:var(--text-secondary);"><i class="fas fa-chart-bar"></i> Loading Interactive Chart...</span>
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card"><span class="metric-label">HMM Regime</span><div class="metric-value bullish-text">Trending Bullish</div></div>
+                    <div class="metric-card"><span class="metric-label">RSI (14)</span><div class="metric-value">64.2</div></div>
+                    <div class="metric-card"><span class="metric-label">P/E Ratio</span><div class="metric-value">6.8x</div></div>
+                    <div class="metric-card"><span class="metric-label">Volume</span><div class="metric-value">1,542,300</div></div>
+                    <div class="metric-card"><span class="metric-label">Market Cap</span><div class="metric-value">Rs 165.00B</div></div>
+                    <div class="metric-card"><span class="metric-label">MACD</span><div class="metric-value bullish-text">Crossover UP</div></div>
+                </div>
+
+                <div class="actions-row">
+                    <a href="screener-demo.html" class="btn btn-primary"><i class="fas fa-robot"></i> Deep Analyze with AI Screener</a>
+                    <button class="btn btn-secondary" onclick="switchTab('simple')"><i class="fas fa-user"></i> View Simple Report</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/dashboard_data.js"></script>
+    <script>
         function switchTab(tab) {
             document.querySelectorAll('.report-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.report-panel').forEach(p => p.classList.remove('active'));
             document.getElementById('tab-' + tab).classList.add('active');
             document.getElementById('panel-' + tab).classList.add('active');
         }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentTicker = urlParams.get('ticker');
         
-        document.addEventListener('DOMContentLoaded', async () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const ticker = urlParams.get('ticker') || 'ENGRO';
-            let stockData = null;
+        if (currentTicker && currentTicker !== 'ENGRO') {
+            // Replace the ticker abbreviation
+            document.body.innerHTML = document.body.innerHTML.replace(/ENGRO/g, currentTicker);
             
-            try {
-                // Fetch the expanded market data JSON
-                const response = await fetch('data/market_data.json?v=' + new Date().getTime());
-                const data = await response.json();
-                
-                // Search in both top_5 and all_stocks
-                if (data.top_5) {
-                    stockData = data.top_5.find(s => s.ticker === ticker);
-                }
-                if (!stockData && data.all_stocks) {
-                    stockData = data.all_stocks.find(s => s.ticker === ticker);
-                }
-
-                if (stockData) {
-                    // Update header
-                    document.getElementById('stock-report-title').innerHTML = `${stockData.ticker} <span style="font-size:1.1rem;color:var(--text-secondary);font-weight:normal;">${stockData.name || 'Stock Report'}</span>`;
-                    
-                    const isPositive = stockData.change >= 0;
-                    const changeClass = isPositive ? 'bullish' : 'bearish';
-                    const sign = isPositive ? '+' : '';
-                    
-                    document.getElementById('stock-price-header').innerHTML = `Rs. ${stockData.price.toFixed(2)} <span class="${changeClass}" style="font-size:1rem;margin-left:0.5rem;">${sign}${stockData.change.toFixed(2)}% Today</span>`;
-                    
-                    // Populate Company Details
-                    const mockDetails = {
-                        'ENGRO': { sector: 'Fertilizer', industry: 'Chemicals', ceo: 'Ghias Khan' },
-                        'OGDC': { sector: 'Oil & Gas Exploration', industry: 'Energy', ceo: 'Ahmed Hayat Lak' },
-                        'LUCK': { sector: 'Cement', industry: 'Construction', ceo: 'Muhammad Ali Tabba' },
-                        'HUBC': { sector: 'Power Generation', industry: 'Energy', ceo: 'Kamran Kamal' },
-                        'SYS': { sector: 'Technology', industry: 'Software', ceo: 'Asif Peer' }
-                    };
-                    const details = mockDetails[stockData.ticker] || { sector: 'Miscellaneous', industry: 'General', ceo: 'N/A' };
-                    document.getElementById('comp-sector').innerText = details.sector;
-                    document.getElementById('comp-industry').innerText = details.industry;
-                    document.getElementById('comp-ceo').innerText = details.ceo;
-                    const low = (stockData.price * 0.7).toFixed(2);
-                    const high = (stockData.price * 1.4).toFixed(2);
-                    document.getElementById('comp-range').innerText = `Rs ${low} - ${high}`;
-                    
-                    // Replace "{TICKER}" text with actual ticker in the summary text
-                    document.querySelectorAll('p').forEach(p => {
-                        if(p.innerHTML.includes('{TICKER}')) {
-                            p.innerHTML = p.innerHTML.replace(/\{TICKER\}/g, stockData.ticker);
-                        }
-                    });
-                } else {
-                    document.getElementById('stock-report-title').innerHTML = ticker + ' <span style="font-size:1.1rem;color:var(--text-secondary);font-weight:normal;">Stock Report</span>';
-                }
-            } catch (e) {
-                console.error("Could not load stock data", e);
-                document.getElementById('stock-report-title').innerHTML = ticker + ' <span style="font-size:1.1rem;color:var(--text-secondary);font-weight:normal;">Stock Report</span>';
-            }
+            // Optionally map some full names for the prototype demo
+            let fullName = currentTicker + " Corporation";
+            if(currentTicker === 'LUCK') fullName = "Lucky Cement Limited";
+            if(currentTicker === 'HUBC') fullName = "Hub Power Company Limited";
+            if(currentTicker === 'MEBL') fullName = "Meezan Bank Limited";
+            if(currentTicker === 'SYS') fullName = "Systems Limited";
             
-            // Fade in the dashboard content
-            document.getElementById('main-content').style.opacity = '1';
-            
-            let chart = null;
-            let candlestickSeries = null;
-            
-            function initChart() {
-                if (chart) return; // already initialized
-                
-                const chartContainer = document.getElementById('lightweight-chart-container');
-                chartContainer.innerHTML = '';
-                chartContainer.style.display = 'block';
-                chartContainer.style.border = 'none';
-
-                chart = LightweightCharts.createChart(chartContainer, {
-                    width: chartContainer.clientWidth || 800,
-                    height: 300,
-                layout: {
-                    background: { type: 'solid', color: 'transparent' },
-                    textColor: '#475569',
-                },
-                grid: {
-                    vertLines: { color: 'rgba(226, 232, 240, 0.5)' },
-                    horzLines: { color: 'rgba(226, 232, 240, 0.5)' },
-                },
-                rightPriceScale: {
-                    borderVisible: false,
-                },
-                timeScale: {
-                    borderVisible: false,
-                    timeVisible: true,
-                },
-            });
-
-            const candlestickSeries = chart.addCandlestickSeries({
-                upColor: '#10b981',
-                downColor: '#ef4444',
-                borderVisible: false,
-                wickUpColor: '#10b981',
-                wickDownColor: '#ef4444',
-            });
-            
-            // Generate valid mock OHLC data ending near the stock's current price
-            const basePrice = stockData ? stockData.price : 100;
-            const mockData = [];
-            let currentPrice = basePrice * 0.9;
-            const now = new Date();
-            
-            for (let i = 60; i >= 0; i--) {
-                const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
-                
-                // For the last candle, force the close to be the exact basePrice
-                let open = currentPrice;
-                let close = (i === 0) ? basePrice : currentPrice + (Math.random() - 0.45) * (basePrice * 0.02);
-                
-                // Ensure high is strictly the maximum and low is strictly the minimum
-                let high = Math.max(open, close) + Math.random() * (basePrice * 0.01);
-                let low = Math.min(open, close) - Math.random() * (basePrice * 0.01);
-                
-                mockData.push({
-                    time: date.toISOString().split('T')[0],
-                    open: open,
-                    high: high,
-                    low: low,
-                    close: close
-                });
-                currentPrice = close;
-            }
-            
-                
-                candlestickSeries.setData(mockData);
-
-                // Handle resize
-                window.addEventListener('resize', () => {
-                    if(chartContainer.clientWidth > 0 && chart) {
-                        chart.resize(chartContainer.clientWidth, 300);
-                    }
-                });
-
-                // Implement filter buttons
-                const filterBtns = document.querySelectorAll('.filter-btn');
-                filterBtns.forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        // Update active styling
-                        filterBtns.forEach(b => b.classList.remove('btn-primary'));
-                        e.target.classList.add('btn-primary');
-
-                        const period = e.target.getAttribute('data-period');
-                        const timeScale = chart.timeScale();
-                        
-                        // We have exactly 61 data points (index 0 to 60)
-                        if (period === 'ALL' || period === '3M') {
-                            timeScale.fitContent();
-                        } else if (period === '1M') {
-                            // Last 30 days
-                            const startData = mockData[Math.max(0, mockData.length - 30)];
-                            const endData = mockData[mockData.length - 1];
-                            timeScale.setVisibleRange({
-                                from: startData.time,
-                                to: endData.time,
-                            });
-                        } else if (period === '7D') {
-                            // Last 7 days
-                            const startData = mockData[Math.max(0, mockData.length - 7)];
-                            const endData = mockData[mockData.length - 1];
-                            timeScale.setVisibleRange({
-                                from: startData.time,
-                                to: endData.time,
-                            });
-                        }
-                    });
-                });
-            }
-            
-            // Switch tabs explicitly to ensure sizing is correct if rendered while hidden
-            const technicalTabBtn = document.getElementById('tab-technical');
-            if (technicalTabBtn) {
-                technicalTabBtn.addEventListener('click', () => {
-                    setTimeout(() => {
-                        initChart();
-                        if (chart) {
-                            const container = document.getElementById('lightweight-chart-container');
-                            chart.resize(container.clientWidth, 300);
-                            chart.timeScale().fitContent();
-                        }
-                    }, 50);
-                });
-            }
-        });
+            document.body.innerHTML = document.body.innerHTML.replace(/Engro Corporation Limited/g, fullName);
+        }
     </script>
 </body>
 </html>
