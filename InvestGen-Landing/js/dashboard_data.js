@@ -146,10 +146,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         // --- 7. Stock Report Data ---
         const stockReportTitle = document.querySelector('#stock-report-title');
         if (stockReportTitle) {
-            // Default to ENGRO for demo
-            const stock = data.stocks['ENGRO'];
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentTicker = urlParams.get('ticker') || 'ENGRO';
+            const stock = data.stocks[currentTicker];
             if(stock) {
                 stockReportTitle.innerHTML = `${stock.ticker} <span style="font-size: 1.2rem; color: var(--text-secondary); font-weight: normal;">${stock.name}</span>`;
+                
+                document.querySelectorAll('.dynamic-ticker').forEach(el => {
+                    el.textContent = stock.ticker;
+                });
                 
                 const headerPrice = document.querySelector('#stock-price-header');
                 if (headerPrice) headerPrice.innerHTML = `Rs. ${stock.price} <span class="${stock.change > 0 ? 'bullish' : 'bearish'}" style="font-size: 1.1rem; margin-left: 0.5rem;">${stock.change > 0 ? '+' : ''}${stock.change}% Today</span>`;

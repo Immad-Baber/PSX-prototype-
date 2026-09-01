@@ -131,19 +131,19 @@
                     <div class="verdict-icon"><i class="fas fa-arrow-up" style="color:#10b981;"></i></div>
                     <div class="verdict-text">
                         <h2>Bullish Outlook</h2>
-                        <p>Based on current technical signals, market conditions, and historical patterns, ENGRO shows a <strong>positive short-term outlook</strong>. The market is in a Trending Bullish regime, which favours momentum strategies.</p>
+                        <p>Based on current technical signals, market conditions, and historical patterns, <span class="dynamic-ticker">ENGRO</span> shows a <strong>positive short-term outlook</strong>. The market is in a Trending Bullish regime, which favours momentum strategies.</p>
                         <span class="confidence-pill"><i class="fas fa-circle-check"></i> 92% AI Confidence Score</span>
                     </div>
                 </div>
 
                 <div class="simple-section">
                     <h4><i class="fas fa-lightbulb" style="color:#f59e0b;"></i> What this means in plain language</h4>
-                    <p>The AI analyzed ENGRO using the most relevant indicators for the current market environment. In simple terms: <strong>more signals are pointing up than down</strong>. The trend is strong, volume supports the move, and no major red flags were found in the fundamentals. This does not guarantee profit. It means conditions currently look favorable based on historical patterns.</p>
+                    <p>The AI analyzed <span class="dynamic-ticker">ENGRO</span> using the most relevant indicators for the current market environment. In simple terms: <strong>more signals are pointing up than down</strong>. The trend is strong, volume supports the move, and no major red flags were found in the fundamentals. This does not guarantee profit. It means conditions currently look favorable based on historical patterns.</p>
                 </div>
 
                 <div class="simple-section">
                     <h4><i class="fas fa-wallet" style="color:#10b981;"></i> Company Financial Health (Sarmaaya Data)</h4>
-                    <p>The business itself is highly profitable. In the last year, ENGRO reported massive <strong>Profits (Rs. 35.8 Billion)</strong> and steady revenue growth. They are making more money than they spend, and their debt is well under control. Simply put: you are looking at a financially strong company, not a risky or struggling one.</p>
+                    <p>The business itself is highly profitable. In the last year, <span class="dynamic-ticker">ENGRO</span> reported massive <strong>Profits (Rs. 35.8 Billion)</strong> and steady revenue growth. They are making more money than they spend, and their debt is well under control. Simply put: you are looking at a financially strong company, not a risky or struggling one.</p>
                 </div>
 
                 <div class="simple-section">
@@ -159,7 +159,7 @@
 
                 <div class="simple-section" style="border-color:rgba(59,130,246,0.25);background:rgba(59,130,246,0.03);">
                     <h4><i class="fas fa-shield-alt" style="color:var(--accent-color);"></i> Safety Check (Disconfirmation Agent)</h4>
-                    <p>The system searched <strong>14 historical cases</strong> with a similar setup to today's ENGRO pattern. In <strong>85% of those cases</strong>, the stock continued upward. In 15% it pulled back. No major conflicting evidence found. This recommendation is considered relatively reliable given the historical base rate.</p>
+                    <p>The system searched <strong>14 historical cases</strong> with a similar setup to today's <span class="dynamic-ticker">ENGRO</span> pattern. In <strong>85% of those cases</strong>, the stock continued upward. In 15% it pulled back. No major conflicting evidence found. This recommendation is considered relatively reliable given the historical base rate.</p>
                 </div>
 
                 <div class="actions-row">
@@ -178,7 +178,7 @@
                             <span id="stock-confidence" class="badge bullish-badge">92% Confidence</span>
                         </div>
                         <div class="widget-body">
-                            <p style="color:var(--text-secondary);margin-bottom:1rem;line-height:1.8;"><strong>AI Summary:</strong> ENGRO is currently exhibiting strong bullish momentum within a low-volatility market regime. The Hidden Markov Model (HMM) confirms the trend is stable. The Genetic Algorithm has heavily weighted the MACD crossover and ADX/DMI indicators, which both align positively.</p>
+                            <p id="stock-ai-summary-tech" style="color:var(--text-secondary);margin-bottom:1rem;line-height:1.8;"><strong>AI Summary:</strong> <span class="dynamic-ticker">ENGRO</span> is currently exhibiting strong bullish momentum...</p>
                             <p style="color:var(--text-secondary);line-height:1.8;">Fundamental tailwinds, specifically robust P/E positioning relative to the sector, further support this view. Expected Calibration Error (ECE) for similar past predictions is low (4.1%), indicating high reliability.</p>
                         </div>
                     </div>
@@ -229,8 +229,10 @@
                             </div>
                         </div>
                     </div>
-                    <div id="lightweight-chart-container" class="widget-body" style="height:300px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border-color);border-radius:8px;">
-                        <span style="color:var(--text-secondary);"><i class="fas fa-chart-bar"></i> Loading Interactive Chart...</span>
+                    <div class="widget-body" style="padding: 1rem;">
+                        <div id="lightweight-chart-container" style="height:350px; width:100%; display:flex; align-items:center; justify-content:center; border:1px dashed var(--border-color); border-radius:8px;">
+                            <span style="color:var(--text-secondary);"><i class="fas fa-chart-bar"></i> Loading Interactive Chart...</span>
+                        </div>
                     </div>
                 </div>
 
@@ -251,8 +253,8 @@
         </main>
     </div>
 
-    <script src="js/main.js"></script>
-    <script src="js/dashboard_data.js"></script>
+    <script src="js/main.js?v=3"></script>
+    <script src="js/dashboard_data.js?v=3"></script>
     <script>
         function switchTab(tab) {
             document.querySelectorAll('.report-tab').forEach(t => t.classList.remove('active'));
@@ -261,22 +263,6 @@
             document.getElementById('panel-' + tab).classList.add('active');
         }
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentTicker = urlParams.get('ticker');
-        
-        if (currentTicker && currentTicker !== 'ENGRO') {
-            // Replace the ticker abbreviation
-            document.body.innerHTML = document.body.innerHTML.replace(/ENGRO/g, currentTicker);
-            
-            // Optionally map some full names for the prototype demo
-            let fullName = currentTicker + " Corporation";
-            if(currentTicker === 'LUCK') fullName = "Lucky Cement Limited";
-            if(currentTicker === 'HUBC') fullName = "Hub Power Company Limited";
-            if(currentTicker === 'MEBL') fullName = "Meezan Bank Limited";
-            if(currentTicker === 'SYS') fullName = "Systems Limited";
-            
-            document.body.innerHTML = document.body.innerHTML.replace(/Engro Corporation Limited/g, fullName);
-        }
-    </script>
+        </script>
 </body>
 </html>

@@ -441,6 +441,77 @@
         /* (no position:absolute inside chip needed) */
 
 
+        /* ── Heatmap Styles ── */
+        .heatmap-box {
+            background: var(--bg-primary);
+            padding: 14px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 16px;
+        }
+        .heatmap-header {
+            margin: 0 0 12px 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .heatmap-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.78rem;
+        }
+        .heatmap-row:last-child { margin-bottom: 0; }
+        .heatmap-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+            width: 45%;
+        }
+        .heatmap-value {
+            font-weight: 600;
+            flex-grow: 1;
+            text-align: right;
+            padding-right: 12px;
+        }
+        .heatmap-cell {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            flex-shrink: 0;
+            transition: background-color 0.3s;
+        }
+        
+        .oscillator-pane {
+            width: 100%;
+            height: 120px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            margin-bottom: 8px; /* Adds spacing between charts */
+        }
+        .oscillator-pane:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        .oscillator-label {
+            position: absolute;
+            top: 4px;
+            left: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.85); /* Contrast against candles */
+            padding: 2px 6px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        [data-theme="dark"] .oscillator-label {
+            background: rgba(30, 41, 59, 0.85); /* Dark mode contrast */
+        }
+
         /* ── Confidence Score ─ Horizontal bar ── */
         .confidence-box {
             background: var(--bg-primary);
@@ -670,15 +741,18 @@
     </div>
   </div>
 
-  <!-- Candlestick Chart -->
-  <div class="chart-box">
-    <div class="regime-badge" id="regime-badge">
-      <i class="fas fa-arrows-alt-h"></i> Sideways Market
+    <!-- Candlestick Chart -->
+    <div class="chart-box">
+      <div class="regime-badge" id="regime-badge">
+        <i class="fas fa-arrows-alt-h"></i> Sideways Market
+      </div>
+      <div id="stockChartContainer" style="width:100%; height:100%;"></div>
     </div>
-    <div id="stockChartContainer" style="width:100%; height:100%;"></div>
-  </div>
+    
+    <!-- Oscillators Container -->
+    <div id="oscillators-container" style="display:flex; flex-direction:column; width:100%; flex-shrink: 0;"></div>
 
-  <!-- Body sections -->
+    <!-- Body sections -->
   <div class="canvas-body">
 
     <!-- Indicators -->
@@ -694,7 +768,15 @@
       </div>
     </div>
 
-    <!-- Confidence Score -->
+      <!-- Signal Heatmap -->
+      <div class="heatmap-box">
+        <h4 class="heatmap-header"><i class="fas fa-fire-alt" style="color:#ef4444;"></i> <span id="heatmap-stock-title">Live</span> Signal Heatmap</h4>
+        <div id="heatmap-container">
+            <!-- Rows will be injected by JS -->
+        </div>
+      </div>
+
+      <!-- Confidence Score -->
     <div class="confidence-box">
       <div class="conf-header">
         <h4>AI Confidence Score</h4>
@@ -747,9 +829,9 @@
             {
                 isAgentWorking: true,
                 aiMsg: (stock) => `I've detected a Sideways market regime for **${stock}**. Based on this, I recommend RSI, MACD, and Bollinger Bands.`,
-                triggerRightPanel: 'activate-base-indicators',
+                
                 options: [
-                    { label: "Continue with these", nextStep: 5 },
+                    { label: "Continue with these", nextStep: 5, action: 'activate-base-indicators' },
                     { label: "Add more indicators", action: 'show-add-indicators' },
                     { label: "Why these?", action: 'show-why' }
                 ]
@@ -759,7 +841,7 @@
                 aiMsg: "RSI and Bollinger Bands are great for identifying overbought/oversold levels in a sideways (range-bound) market, while MACD helps spot momentum shifts.",
                 options: [
                     { label: "Simplify this (ELI5)", action: 'show-eli5' },
-                    { label: "Continue with these", nextStep: 5 },
+                    { label: "Continue with these", nextStep: 5, action: 'activate-base-indicators' },
                     { label: "Add more indicators", action: 'show-add-indicators' }
                 ]
             },
@@ -795,6 +877,7 @@
         let chartInstance = null;
         let candleSeries = null;
         let indicatorSeries = {};
+        let oscillatorCharts = {};
 
         function initChart() {
             const container = document.getElementById('stockChartContainer');
@@ -832,7 +915,10 @@
             // Default: market-level data (KSE-100 range ~70k)
             const data = generateCandles(60, 70000, 500, 800);
             candleSeries.setData(data);
-            setTimeout(() => chartInstance.timeScale().fitContent(), 100);
+            setTimeout(() => {
+                chartInstance.timeScale().fitContent();
+                updateChartIndicators();
+            }, 100);
         }
 
         function generateCandles(count, startPrice, fluctSmall, fluctBig) {
@@ -876,7 +962,10 @@
             if (!candleSeries || !chartInstance) return;
             const data = generateCandles(60, 185, 4, 8);
             candleSeries.setData(data);
-            setTimeout(() => chartInstance.timeScale().fitContent(), 100);
+            setTimeout(() => {
+                chartInstance.timeScale().fitContent();
+                updateChartIndicators();
+            }, 100);
         }
 
         // Setup chart time filters
@@ -915,6 +1004,7 @@
             updateChartIndicators();
         }
 
+
         function calcEMA(data, period, keyFn) {
             const k = 2 / (period + 1);
             let ema = keyFn(data[0]);
@@ -933,10 +1023,86 @@
             });
         }
 
+        function calcRSI(data, period) {
+            let gains = 0, losses = 0;
+            const res = [];
+            for (let i = 0; i < data.length; i++) {
+                if (i === 0) { res.push({ time: data[i].time, value: 50 }); continue; }
+                const diff = data[i].close - data[i-1].close;
+                const gain = Math.max(0, diff);
+                const loss = Math.max(0, -diff);
+                if (i < period) {
+                    gains += gain; losses += loss;
+                    res.push({ time: data[i].time, value: 50 });
+                } else if (i === period) {
+                    gains /= period; losses /= period;
+                    let rs = gains / (losses === 0 ? 1 : losses);
+                    res.push({ time: data[i].time, value: parseFloat((100 - (100 / (1 + rs))).toFixed(2)) });
+                } else {
+                    gains = (gains * (period - 1) + gain) / period;
+                    losses = (losses * (period - 1) + loss) / period;
+                    let rs = gains / (losses === 0 ? 1 : losses);
+                    res.push({ time: data[i].time, value: parseFloat((100 - (100 / (1 + rs))).toFixed(2)) });
+                }
+            }
+            return res;
+        }
+
+        function calcMACD(data, fast, slow) {
+            const fastEma = calcEMA(data, fast, x => x.close);
+            const slowEma = calcEMA(data, slow, x => x.close);
+            return data.map((d, i) => {
+                return { time: d.time, value: parseFloat((fastEma[i].value - slowEma[i].value).toFixed(2)) };
+            });
+        }
+
+        function calcADX(data, period) {
+            let smoothedAbsDiff = 0;
+            let smoothedVolatility = 0;
+            const res = [];
+            for (let i = 0; i < data.length; i++) {
+                if (i === 0) { res.push({time: data[i].time, value: 20}); continue; }
+                const diff = Math.abs(data[i].close - data[i-1].close);
+                const tr = Math.max(data[i].high - data[i].low, Math.abs(data[i].high - data[i-1].close), Math.abs(data[i].low - data[i-1].close));
+                smoothedAbsDiff = (smoothedAbsDiff * 13 + diff) / 14;
+                smoothedVolatility = (smoothedVolatility * 13 + tr) / 14;
+                const adx = (smoothedVolatility === 0) ? 0 : Math.min(100, (smoothedAbsDiff / smoothedVolatility) * 100);
+                res.push({ time: data[i].time, value: parseFloat(adx.toFixed(2)) });
+            }
+            return res;
+        }
+
+        function calcOBV(data) {
+            let obv = 0;
+            return data.map((d, i) => {
+                if (i > 0) {
+                    const vol = d.volume || 10000;
+                    if (d.close > data[i-1].close) obv += vol;
+                    else if (d.close < data[i-1].close) obv -= vol;
+                }
+                return { time: d.time, value: obv };
+            });
+        }
+
+        function calcATR(data, period) {
+            const res = [];
+            let atr = 0;
+            for (let i = 0; i < data.length; i++) {
+                const d = data[i];
+                let tr = d.high - d.low;
+                if (i > 0) tr = Math.max(tr, Math.abs(d.high - data[i-1].close), Math.abs(d.low - data[i-1].close));
+                if (i === 0) { atr = tr; }
+                else if (i < period) { atr = (atr * i + tr) / (i + 1); }
+                else { atr = (atr * (period - 1) + tr) / period; }
+                res.push({ time: d.time, value: parseFloat(atr.toFixed(2)) });
+            }
+            return res;
+        }
+
         const INDICATOR_CONFIG = {
-            rsi:  { label: 'RSI (EMA-14)',    color: '#f59e0b', lineWidth: 2, calc: (d) => calcEMA(d, 14, x => x.close) },
-            macd: { label: 'MACD (EMA-26)',   color: '#8b5cf6', lineWidth: 2, calc: (d) => calcEMA(d, 26, x => x.close) },
-            bb:   { label: 'BB Upper',        color: 'rgba(100,180,255,0.7)', lineWidth: 1,
+            rsi:  { type: 'oscillator', label: 'RSI (14)', color: '#f59e0b', lineWidth: 2, calc: (d) => calcRSI(d, 14) },
+            macd: { type: 'oscillator', label: 'MACD (26,12)', color: '#8b5cf6', lineWidth: 2, calc: (d) => calcMACD(d, 12, 26) },
+            bb:   { type: 'overlay', label: 'BB Upper', color: 'rgba(100,180,255,0.7)', lineWidth: 1,
                     calc: (d) => calcSMA(d, 20, x => x.close).map((v, i) => {
                         const slice = d.slice(Math.max(0, i - 19), i + 1);
                         const mean = v.value;
@@ -951,16 +1117,64 @@
                     }),
                     color2: 'rgba(100,180,255,0.7)'
                   },
-            adx:  { label: 'ADX (SMA-14)',    color: '#eab308', lineWidth: 1, calc: (d) => calcSMA(d, 14, x => (x.high + x.low) / 2) },
-            obv:  { label: 'OBV (EMA-9)',     color: '#14b8a6', lineWidth: 2, calc: (d) => calcEMA(d, 9, x => x.close) },
-            atr:  { label: 'ATR Upper',       color: '#f43f5e', lineWidth: 1,
+            adx:  { type: 'oscillator', label: 'ADX (14)', color: '#eab308', lineWidth: 1, calc: (d) => calcADX(d, 14) },
+            obv:  { type: 'oscillator', label: 'OBV', color: '#14b8a6', lineWidth: 2, calc: (d) => calcOBV(d) },
+            atr:  { type: 'oscillator', label: 'ATR (14)', color: '#f43f5e', lineWidth: 1, calc: (d) => calcATR(d, 14) },
+        };
+
+            });
+        }
+
+        function calcSMA(data, period, keyFn) {
+            return data.map((d, i) => {
+                const slice = data.slice(Math.max(0, i - period + 1), i + 1);
+                const avg = slice.reduce((s, x) => s + keyFn(x), 0) / slice.length;
+                return { time: d.time, value: parseFloat(avg.toFixed(4)) };
+            });
+        }
+
+                const INDICATOR_CONFIG = {
+            rsi:  { type: 'oscillator', label: 'RSI (14)', color: '#f59e0b', lineWidth: 2, calc: (d) => calcEMA(d, 14, x => x.close) },
+            macd: { type: 'oscillator', label: 'MACD (26,12)', color: '#8b5cf6', lineWidth: 2, calc: (d) => calcEMA(d, 26, x => x.close) },
+            bb:   { type: 'overlay', label: 'BB Upper', color: 'rgba(100,180,255,0.7)', lineWidth: 1,
+                    calc: (d) => calcSMA(d, 20, x => x.close).map((v, i) => {
+                        const slice = d.slice(Math.max(0, i - 19), i + 1);
+                        const mean = v.value;
+                        const std = Math.sqrt(slice.reduce((s, x) => s + Math.pow(x.close - mean, 2), 0) / slice.length);
+                        return { time: v.time, value: parseFloat((mean + 2 * std).toFixed(4)) };
+                    }),
+                    calc2: (d) => calcSMA(d, 20, x => x.close).map((v, i) => {
+                        const slice = d.slice(Math.max(0, i - 19), i + 1);
+                        const mean = v.value;
+                        const std = Math.sqrt(slice.reduce((s, x) => s + Math.pow(x.close - mean, 2), 0) / slice.length);
+                        return { time: v.time, value: parseFloat((mean - 2 * std).toFixed(4)) };
+                    }),
+                    color2: 'rgba(100,180,255,0.7)'
+                  },
+            adx:  { type: 'oscillator', label: 'ADX (14)', color: '#eab308', lineWidth: 1, calc: (d) => calcSMA(d, 14, x => (x.high + x.low) / 2) },
+            obv:  { type: 'oscillator', label: 'OBV', color: '#14b8a6', lineWidth: 2, calc: (d) => calcEMA(d, 9, x => x.close) },
+            atr:  { type: 'oscillator', label: 'ATR (14)', color: '#f43f5e', lineWidth: 1,
                     calc: (d) => calcSMA(d, 14, x => x.close).map(v => ({ time: v.time, value: parseFloat((v.value + 3).toFixed(4)) })) },
         };
+
+        function syncCrosshair(chart1, chart2) {
+            chart1.subscribeCrosshairMove(param => {
+                if (param.time !== undefined) {
+                    chart2.setCrosshairPosition(param.price, param.time, chart2.timeScale().getVisibleRange()?.from);
+                } else {
+                    chart2.clearCrosshairPosition();
+                }
+            });
+        }
 
         function updateChartIndicators() {
             if (!chartInstance || !candleSeries) return;
             const rawData = candleSeries.data();
             if (!rawData || rawData.length === 0) return;
+
+            const oscillatorsContainer = document.getElementById('oscillators-container');
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const textColor = isDark ? '#d1d5db' : '#64748b';
 
             Object.keys(INDICATOR_CONFIG).forEach(id => {
                 const chip = document.getElementById('chip-' + id);
@@ -968,36 +1182,158 @@
                 const isActive = chip && chip.classList.contains('active');
 
                 if (isActive) {
-                    // Add primary series if not exists
-                    if (!indicatorSeries[id]) {
-                        indicatorSeries[id] = chartInstance.addSeries(LightweightCharts.LineSeries, {
-                            color: cfg.color, lineWidth: cfg.lineWidth,
-                            priceLineVisible: false, lastValueVisible: false,
-                        });
-                        indicatorSeries[id].setData(cfg.calc(rawData));
-                    }
-                    // Add secondary series (e.g. BB lower band)
-                    if (cfg.calc2 && !indicatorSeries[id + '_2']) {
-                        indicatorSeries[id + '_2'] = chartInstance.addSeries(LightweightCharts.LineSeries, {
-                            color: cfg.color2, lineWidth: cfg.lineWidth,
-                            priceLineVisible: false, lastValueVisible: false,
-                        });
-                        indicatorSeries[id + '_2'].setData(cfg.calc2(rawData));
+                    if (cfg.type === 'overlay') {
+                        // Overlay directly on the main chart
+                        if (!indicatorSeries[id]) {
+                            indicatorSeries[id] = chartInstance.addSeries(LightweightCharts.LineSeries, {
+                                color: cfg.color, lineWidth: cfg.lineWidth,
+                                priceLineVisible: false, lastValueVisible: false,
+                            });
+                            indicatorSeries[id].setData(cfg.calc(rawData));
+                        }
+                        if (cfg.calc2 && !indicatorSeries[id + '_2']) {
+                            indicatorSeries[id + '_2'] = chartInstance.addSeries(LightweightCharts.LineSeries, {
+                                color: cfg.color2, lineWidth: cfg.lineWidth,
+                                priceLineVisible: false, lastValueVisible: false,
+                            });
+                            indicatorSeries[id + '_2'].setData(cfg.calc2(rawData));
+                        }
+                    } else if (cfg.type === 'oscillator') {
+                        // Create a subplot if it doesn't exist
+                        if (!oscillatorCharts[id]) {
+                            const pane = document.createElement('div');
+                            pane.className = 'oscillator-pane';
+                            pane.id = 'oscillator-pane-' + id;
+                            
+                            const label = document.createElement('div');
+                            label.className = 'oscillator-label';
+                            label.innerText = cfg.label;
+                            label.style.color = cfg.color;
+                            pane.appendChild(label);
+                            
+                            oscillatorsContainer.appendChild(pane);
+
+                            const chart = LightweightCharts.createChart(pane, {
+                                width: pane.clientWidth || oscillatorsContainer.clientWidth || 400,
+                                height: 120,
+                                layout: { background: { type: 'solid', color: 'transparent' }, textColor: textColor },
+                                grid: {
+                                    vertLines: { color: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
+                                    horzLines: { color: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
+                                },
+                                rightPriceScale: { visible: true, borderVisible: false, scaleMargins: { top: 0.1, bottom: 0.1 } },
+                                leftPriceScale: { visible: false },
+                                timeScale: { borderVisible: false, visible: false },
+                            });
+                            
+                            const series = chart.addSeries(LightweightCharts.LineSeries, {
+                                color: cfg.color, lineWidth: cfg.lineWidth,
+                                priceLineVisible: false, lastValueVisible: false,
+                                priceScaleId: 'right'
+                            });
+                            series.setData(cfg.calc(rawData));
+                            
+                            if (id === 'rsi') {
+                                series.createPriceLine({ price: 70, color: 'rgba(239, 68, 68, 0.5)', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: 'OB' });
+                                series.createPriceLine({ price: 30, color: 'rgba(16, 185, 129, 0.5)', lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: 'OS' });
+                            }
+                            
+                            // Sync time scales
+                            chartInstance.timeScale().subscribeVisibleTimeRangeChange(range => {
+                                chart.timeScale().setVisibleRange(range);
+                            });
+                            chart.timeScale().subscribeVisibleTimeRangeChange(range => {
+                                chartInstance.timeScale().setVisibleRange(range);
+                            });
+                            
+                            // Fit content to start
+                            chart.timeScale().fitContent();
+                            
+                            oscillatorCharts[id] = { chart, series, pane };
+                        }
                     }
                 } else {
-                    // Remove primary series
-                    if (indicatorSeries[id]) {
-                        chartInstance.removeSeries(indicatorSeries[id]);
-                        delete indicatorSeries[id];
-                    }
-                    // Remove secondary series
-                    if (indicatorSeries[id + '_2']) {
-                        chartInstance.removeSeries(indicatorSeries[id + '_2']);
-                        delete indicatorSeries[id + '_2'];
+                    if (cfg.type === 'overlay') {
+                        if (indicatorSeries[id]) { chartInstance.removeSeries(indicatorSeries[id]); delete indicatorSeries[id]; }
+                        if (indicatorSeries[id + '_2']) { chartInstance.removeSeries(indicatorSeries[id + '_2']); delete indicatorSeries[id + '_2']; }
+                    } else if (cfg.type === 'oscillator') {
+                        if (oscillatorCharts[id]) {
+                            oscillatorCharts[id].chart.remove();
+                            oscillatorCharts[id].pane.remove();
+                            delete oscillatorCharts[id];
+                        }
                     }
                 }
             });
+            
+            updateHeatmap();
         }
+
+        
+
+
+        function updateHeatmap() {
+            const container = document.getElementById('heatmap-container');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            const titleEl = document.getElementById('heatmap-stock-title');
+            if (titleEl) {
+                titleEl.innerText = selectedStock || 'Live';
+            }
+            
+            const rawData = candleSeries && candleSeries.data();
+            
+            Object.keys(INDICATOR_CONFIG).forEach(id => {
+                const chip = document.getElementById('chip-' + id);
+                const cfg = INDICATOR_CONFIG[id];
+                const isActive = chip && chip.classList.contains('active');
+                
+                let signalText = "Not Applied";
+                let color = "var(--border-color)";
+                
+                if (isActive && rawData && rawData.length > 0) {
+                    const seriesData = cfg.calc(rawData);
+                    const lastVal = seriesData[seriesData.length - 1].value;
+                    
+                    if (id === 'rsi') {
+                        if (lastVal > 70) { signalText = "Overbought (" + lastVal + ")"; color = "#ef4444"; }
+                        else if (lastVal < 30) { signalText = "Oversold (" + lastVal + ")"; color = "#10b981"; }
+                        else { signalText = "Neutral (" + lastVal + ")"; color = "#f59e0b"; }
+                    } else if (id === 'macd') {
+                        signalText = lastVal > 0 ? "Bullish Momentum" : "Bearish Momentum";
+                        color = lastVal > 0 ? "#10b981" : "#ef4444";
+                    } else if (id === 'bb') {
+                        signalText = "Volatility Expanding";
+                        color = "#3b82f6";
+                    } else if (id === 'adx') {
+                        signalText = lastVal > 25 ? "Strong Trend" : "Weak Trend";
+                        color = lastVal > 25 ? "#10b981" : "#f59e0b";
+                    } else if (id === 'obv') {
+                        signalText = "Accumulation";
+                        color = "#10b981";
+                    } else if (id === 'atr') {
+                        signalText = "High Volatility";
+                        color = "#ef4444";
+                    }
+                }
+                
+                const row = document.createElement('div');
+                row.className = 'heatmap-row';
+                if (!isActive) {
+                    row.style.opacity = '0.5';
+                }
+                
+                row.innerHTML = `
+                    <div class="heatmap-label">${cfg.label}</div>
+                    <div class="heatmap-value" style="color: ${isActive ? 'var(--text-primary)' : 'var(--text-secondary)'}">${signalText}</div>
+                    <div class="heatmap-cell" style="background-color: ${color}"></div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+
 
         function scrollToBottom() {
             chat.scrollTop = chat.scrollHeight;
@@ -1145,11 +1481,14 @@
                     
                     if (opt.nextStep !== undefined) {
                         step = opt.nextStep;
+                        if (opt.action) {
+                            handleRightPanelTrigger(opt.action);
+                        }
                         setTimeout(() => processStep(), 300);
                     } else if (opt.action === 'show-why') {
                         setTimeout(() => appendAIMessage(stateMachine[4].aiMsg, stateMachine[4]), 300);
                     } else if (opt.action === 'show-eli5') {
-                        setTimeout(() => appendAIMessage("Basically, RSI acts like a stretched rubber band, if it's pulled too far down, it might snap back up. Bollinger Bands show the 'walls' of the market, and MACD tells us if the trend is accelerating.", { options: [ { label: "Got it, continue", nextStep: 5 }, { label: "Add more indicators", action: 'show-add-indicators' } ] }), 300);
+                        setTimeout(() => appendAIMessage("Basically, RSI acts like a stretched rubber band, if it's pulled too far down, it might snap back up. Bollinger Bands show the 'walls' of the market, and MACD tells us if the trend is accelerating.", { options: [ { label: "Got it, continue", nextStep: 5, action: 'activate-base-indicators' }, { label: "Add more indicators", action: 'show-add-indicators' } ] }), 300);
                     } else if (opt.action === 'show-add-indicators') {
                         appendMultiSelect();
                     } else if (opt.action === 'run-what-if') {

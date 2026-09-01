@@ -130,10 +130,26 @@ def generate_market_data():
             
             regime, ai_summary, confidence, disconf = mock_genai_logic(current_rsi, change_pct)
             
+            # LightweightCharts requires data to be sorted chronologically
+            if 'date' in df.columns:
+                df = df.sort_values('date')
+            elif 'Date' in df.columns:
+                df = df.sort_values('Date')
+            else:
+                df = df.sort_index()
+                
             chart_data = []
-            for date, row in df.iterrows():
+            for idx, row in df.iterrows():
+                # Get the actual date string whether it's in the index or a column
+                if 'date' in df.columns:
+                    time_str = str(row['date']).split(' ')[0]
+                elif 'Date' in df.columns:
+                    time_str = str(row['Date']).split(' ')[0]
+                else:
+                    time_str = idx.strftime('%Y-%m-%d') if isinstance(idx, pd.Timestamp) else str(idx)
+                    
                 chart_data.append({
-                    "time": date.strftime('%Y-%m-%d') if isinstance(date, pd.Timestamp) else str(date),
+                    "time": time_str,
                     "open": round(float(row['Open']), 2),
                     "high": round(float(row['High']), 2),
                     "low": round(float(row['Low']), 2),

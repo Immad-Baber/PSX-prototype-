@@ -1,16 +1,11 @@
 {
     "metadata": {
-        "generated_at": "2026-08-30T20:19:10.174468",
-        "description": "Multi-Regime Quantitative Model Comparison on Real Historical PSX Data",
+        "generated_at": "2026-09-01T11:19:57.967929",
+        "description": "Unified Multi-Regime Quantitative Model Comparison (All metrics from pure Python)",
         "models_evaluated": [
             "HMM",
             "GMM",
             "Rule-Based"
-        ],
-        "features_used": [
-            "Daily Returns (Normalized)",
-            "Rolling 20-Day Volatility",
-            "EMA Crossovers"
         ]
     },
     "test_cases": {
@@ -26,19 +21,31 @@
             "test_purpose": "Tests whether the model can avoid interpreting random fluctuations and chop as genuine regime changes.",
             "metrics": {
                 "HMM": {
-                    "brier_score": 0.4927,
+                    "brier_score": 0.4919,
                     "flip_rate_pct": 18.5,
-                    "directional_acc_pct": 30.5
+                    "directional_acc_pct": 40.2,
+                    "accuracy": 0.4024,
+                    "auc_roc": 0.3407,
+                    "log_loss": 3.8824,
+                    "ece": 0.4838
                 },
                 "GMM": {
                     "brier_score": 0.6508,
                     "flip_rate_pct": 19.8,
-                    "directional_acc_pct": 17.1
+                    "directional_acc_pct": 28.0,
+                    "accuracy": 0.2805,
+                    "auc_roc": 0.2943,
+                    "log_loss": 3.315,
+                    "ece": 0.6363
                 },
                 "Rule-Based": {
                     "brier_score": 0.2032,
                     "flip_rate_pct": 19.8,
-                    "directional_acc_pct": 69.5
+                    "directional_acc_pct": 74.4,
+                    "accuracy": 0.7439,
+                    "auc_roc": 0.5161,
+                    "log_loss": 0.5962,
+                    "ece": 0.1439
                 }
             },
             "chart_data": [
@@ -958,19 +965,31 @@
             "test_purpose": "Tests how quickly and reliably the model detects changing underlying market conditions without excessive lag.",
             "metrics": {
                 "HMM": {
-                    "brier_score": 0.3572,
-                    "flip_rate_pct": 9.8,
-                    "directional_acc_pct": 48.2
+                    "brier_score": 0.3119,
+                    "flip_rate_pct": 4.9,
+                    "directional_acc_pct": 54.2,
+                    "accuracy": 0.5422,
+                    "auc_roc": 0.7074,
+                    "log_loss": 2.8791,
+                    "ece": 0.3154
                 },
                 "GMM": {
                     "brier_score": 0.2892,
                     "flip_rate_pct": 35.4,
-                    "directional_acc_pct": 50.6
+                    "directional_acc_pct": 61.4,
+                    "accuracy": 0.6145,
+                    "auc_roc": 0.6389,
+                    "log_loss": 0.8632,
+                    "ece": 0.2417
                 },
                 "Rule-Based": {
                     "brier_score": 0.2298,
                     "flip_rate_pct": 23.2,
-                    "directional_acc_pct": 50.6
+                    "directional_acc_pct": 63.9,
+                    "accuracy": 0.6386,
+                    "auc_roc": 0.641,
+                    "log_loss": 0.652,
+                    "ece": 0.0373
                 }
             },
             "chart_data": [
@@ -1058,7 +1077,7 @@
                     "low": 247.8,
                     "close": 248.06,
                     "volume": 100529,
-                    "hmm_regime": "Bullish",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Bearish",
                     "rule_regime": "Bearish"
                 },
@@ -1069,7 +1088,7 @@
                     "low": 245.0,
                     "close": 247.07,
                     "volume": 62328,
-                    "hmm_regime": "Bullish",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Bearish",
                     "rule_regime": "Bearish"
                 },
@@ -1344,7 +1363,7 @@
                     "low": 265.0,
                     "close": 279.19,
                     "volume": 1447460,
-                    "hmm_regime": "Bullish",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Bullish",
                     "rule_regime": "Bullish"
                 },
@@ -1652,7 +1671,7 @@
                     "low": 297.0,
                     "close": 298.89,
                     "volume": 1053268,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -1795,7 +1814,7 @@
                     "low": 316.01,
                     "close": 316.83,
                     "volume": 600823,
-                    "hmm_regime": "Bullish",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Bearish",
                     "rule_regime": "Sideways"
                 },
@@ -1901,19 +1920,31 @@
             "test_purpose": "Tests whether the model can distinguish pure volatility shocks from fundamental directional regime shifts.",
             "metrics": {
                 "HMM": {
-                    "brier_score": 0.3922,
+                    "brier_score": 0.3925,
                     "flip_rate_pct": 3.3,
-                    "directional_acc_pct": 42.9
+                    "directional_acc_pct": 53.8,
+                    "accuracy": 0.5385,
+                    "auc_roc": 0.5061,
+                    "log_loss": 5.348,
+                    "ece": 0.3218
                 },
                 "GMM": {
                     "brier_score": 0.4317,
                     "flip_rate_pct": 14.4,
-                    "directional_acc_pct": 39.6
+                    "directional_acc_pct": 41.8,
+                    "accuracy": 0.4176,
+                    "auc_roc": 0.4613,
+                    "log_loss": 9.7317,
+                    "ece": 0.3747
                 },
                 "Rule-Based": {
                     "brier_score": 0.2904,
                     "flip_rate_pct": 40.0,
-                    "directional_acc_pct": 30.8
+                    "directional_acc_pct": 45.1,
+                    "accuracy": 0.4505,
+                    "auc_roc": 0.424,
+                    "log_loss": 0.7802,
+                    "ece": 0.1637
                 }
             },
             "chart_data": [
@@ -2932,19 +2963,31 @@
             "test_purpose": "Provides a control case to verify whether all models can correctly identify an obvious, unambiguous trend.",
             "metrics": {
                 "HMM": {
-                    "brier_score": 0.294,
-                    "flip_rate_pct": 14.0,
-                    "directional_acc_pct": 38.3
+                    "brier_score": 0.2874,
+                    "flip_rate_pct": 5.4,
+                    "directional_acc_pct": 64.9,
+                    "accuracy": 0.6489,
+                    "auc_roc": 0.7579,
+                    "log_loss": 4.7645,
+                    "ece": 0.3003
                 },
                 "GMM": {
                     "brier_score": 0.2737,
                     "flip_rate_pct": 12.9,
-                    "directional_acc_pct": 36.2
+                    "directional_acc_pct": 47.9,
+                    "accuracy": 0.4787,
+                    "auc_roc": 0.5416,
+                    "log_loss": 1.072,
+                    "ece": 0.0998
                 },
                 "Rule-Based": {
                     "brier_score": 0.2432,
                     "flip_rate_pct": 26.9,
-                    "directional_acc_pct": 54.3
+                    "directional_acc_pct": 61.7,
+                    "accuracy": 0.617,
+                    "auc_roc": 0.6047,
+                    "log_loss": 0.6803,
+                    "ece": 0.0894
                 }
             },
             "chart_data": [
@@ -2955,7 +2998,7 @@
                     "low": 405.0,
                     "close": 412.76,
                     "volume": 715217,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -2966,7 +3009,7 @@
                     "low": 407.0,
                     "close": 409.29,
                     "volume": 550269,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -2977,7 +3020,7 @@
                     "low": 408.4,
                     "close": 411.7,
                     "volume": 455288,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -2988,7 +3031,7 @@
                     "low": 412.0,
                     "close": 415.91,
                     "volume": 378684,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -2999,7 +3042,7 @@
                     "low": 413.82,
                     "close": 418.19,
                     "volume": 544969,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3010,7 +3053,7 @@
                     "low": 415.0,
                     "close": 415.49,
                     "volume": 190079,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3021,7 +3064,7 @@
                     "low": 411.51,
                     "close": 414.09,
                     "volume": 151364,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3043,7 +3086,7 @@
                     "low": 428.0,
                     "close": 432.07,
                     "volume": 1084532,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3054,7 +3097,7 @@
                     "low": 409.22,
                     "close": 413.9,
                     "volume": 899215,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3065,7 +3108,7 @@
                     "low": 409.32,
                     "close": 410.39,
                     "volume": 353639,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3076,7 +3119,7 @@
                     "low": 410.02,
                     "close": 415.01,
                     "volume": 357346,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3087,7 +3130,7 @@
                     "low": 415.0,
                     "close": 419.45,
                     "volume": 322176,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3098,7 +3141,7 @@
                     "low": 416.0,
                     "close": 417.36,
                     "volume": 346658,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3109,7 +3152,7 @@
                     "low": 417.0,
                     "close": 420.73,
                     "volume": 432522,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3120,7 +3163,7 @@
                     "low": 417.8,
                     "close": 418.25,
                     "volume": 1138332,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3131,7 +3174,7 @@
                     "low": 417.16,
                     "close": 420.17,
                     "volume": 703290,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3142,7 +3185,7 @@
                     "low": 417.17,
                     "close": 421.29,
                     "volume": 495857,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3153,7 +3196,7 @@
                     "low": 420.0,
                     "close": 422.98,
                     "volume": 638750,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3164,7 +3207,7 @@
                     "low": 423.0,
                     "close": 425.22,
                     "volume": 549467,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3175,7 +3218,7 @@
                     "low": 425.0,
                     "close": 435.38,
                     "volume": 1071785,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3186,7 +3229,7 @@
                     "low": 433.0,
                     "close": 435.27,
                     "volume": 561410,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3197,7 +3240,7 @@
                     "low": 434.6,
                     "close": 438.33,
                     "volume": 393858,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3208,7 +3251,7 @@
                     "low": 440.0,
                     "close": 443.34,
                     "volume": 478955,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3219,7 +3262,7 @@
                     "low": 437.21,
                     "close": 437.97,
                     "volume": 271103,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3230,7 +3273,7 @@
                     "low": 438.03,
                     "close": 439.49,
                     "volume": 565852,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3241,7 +3284,7 @@
                     "low": 437.2,
                     "close": 440.3,
                     "volume": 334282,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3263,7 +3306,7 @@
                     "low": 465.0,
                     "close": 468.89,
                     "volume": 1028170,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3274,7 +3317,7 @@
                     "low": 460.0,
                     "close": 462.56,
                     "volume": 380200,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3285,7 +3328,7 @@
                     "low": 450.5,
                     "close": 455.78,
                     "volume": 454057,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3296,7 +3339,7 @@
                     "low": 451.02,
                     "close": 457.29,
                     "volume": 578406,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3307,7 +3350,7 @@
                     "low": 453.91,
                     "close": 460.72,
                     "volume": 235335,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3318,7 +3361,7 @@
                     "low": 459.0,
                     "close": 464.31,
                     "volume": 244963,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3329,7 +3372,7 @@
                     "low": 462.4,
                     "close": 464.91,
                     "volume": 356764,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3340,7 +3383,7 @@
                     "low": 455.5,
                     "close": 459.81,
                     "volume": 448395,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3362,7 +3405,7 @@
                     "low": 463.0,
                     "close": 467.11,
                     "volume": 517881,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3373,7 +3416,7 @@
                     "low": 461.5,
                     "close": 462.92,
                     "volume": 789675,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3384,7 +3427,7 @@
                     "low": 457.0,
                     "close": 464.49,
                     "volume": 397346,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3395,7 +3438,7 @@
                     "low": 461.97,
                     "close": 462.37,
                     "volume": 216120,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3406,7 +3449,7 @@
                     "low": 451.0,
                     "close": 453.43,
                     "volume": 267678,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3417,7 +3460,7 @@
                     "low": 440.01,
                     "close": 452.98,
                     "volume": 403796,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3428,7 +3471,7 @@
                     "low": 448.0,
                     "close": 452.29,
                     "volume": 242038,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bullish"
                 },
@@ -3439,7 +3482,7 @@
                     "low": 446.62,
                     "close": 447.6,
                     "volume": 227111,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3450,7 +3493,7 @@
                     "low": 429.1,
                     "close": 430.53,
                     "volume": 531256,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3461,7 +3504,7 @@
                     "low": 422.01,
                     "close": 431.1,
                     "volume": 368707,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3472,7 +3515,7 @@
                     "low": 424.0,
                     "close": 428.55,
                     "volume": 241159,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3483,7 +3526,7 @@
                     "low": 420.0,
                     "close": 422.34,
                     "volume": 282998,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3494,7 +3537,7 @@
                     "low": 409.0,
                     "close": 414.67,
                     "volume": 253861,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3516,7 +3559,7 @@
                     "low": 419.01,
                     "close": 425.05,
                     "volume": 719303,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3527,7 +3570,7 @@
                     "low": 420.0,
                     "close": 423.56,
                     "volume": 216382,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3549,7 +3592,7 @@
                     "low": 437.0,
                     "close": 441.08,
                     "volume": 197802,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3560,7 +3603,7 @@
                     "low": 436.5,
                     "close": 437.13,
                     "volume": 233563,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3571,7 +3614,7 @@
                     "low": 430.0,
                     "close": 431.79,
                     "volume": 152811,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3582,7 +3625,7 @@
                     "low": 420.0,
                     "close": 430.54,
                     "volume": 150448,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3593,7 +3636,7 @@
                     "low": 427.0,
                     "close": 428.91,
                     "volume": 108916,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3604,7 +3647,7 @@
                     "low": 421.61,
                     "close": 424.96,
                     "volume": 194307,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3615,7 +3658,7 @@
                     "low": 422.0,
                     "close": 424.24,
                     "volume": 128903,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3626,7 +3669,7 @@
                     "low": 423.0,
                     "close": 424.54,
                     "volume": 189540,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3637,7 +3680,7 @@
                     "low": 419.55,
                     "close": 422.44,
                     "volume": 124866,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3648,7 +3691,7 @@
                     "low": 415.0,
                     "close": 417.6,
                     "volume": 102398,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3659,7 +3702,7 @@
                     "low": 415.0,
                     "close": 420.1,
                     "volume": 107196,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3670,7 +3713,7 @@
                     "low": 415.2,
                     "close": 416.54,
                     "volume": 83825,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3681,7 +3724,7 @@
                     "low": 411.0,
                     "close": 413.85,
                     "volume": 106852,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3692,7 +3735,7 @@
                     "low": 412.0,
                     "close": 412.68,
                     "volume": 133069,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3703,7 +3746,7 @@
                     "low": 410.0,
                     "close": 412.75,
                     "volume": 80208,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3714,7 +3757,7 @@
                     "low": 407.13,
                     "close": 409.63,
                     "volume": 417235,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3725,7 +3768,7 @@
                     "low": 409.0,
                     "close": 409.85,
                     "volume": 722358,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3736,7 +3779,7 @@
                     "low": 405.0,
                     "close": 405.87,
                     "volume": 371979,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3747,7 +3790,7 @@
                     "low": 399.0,
                     "close": 400.18,
                     "volume": 515669,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3758,7 +3801,7 @@
                     "low": 392.0,
                     "close": 392.95,
                     "volume": 746886,
-                    "hmm_regime": "Bearish",
+                    "hmm_regime": "Sideways",
                     "gmm_regime": "Bearish",
                     "rule_regime": "Bearish"
                 },
@@ -3769,7 +3812,7 @@
                     "low": 391.0,
                     "close": 392.59,
                     "volume": 424273,
-                    "hmm_regime": "Bearish",
+                    "hmm_regime": "Sideways",
                     "gmm_regime": "Bearish",
                     "rule_regime": "Bearish"
                 },
@@ -3780,7 +3823,7 @@
                     "low": 393.0,
                     "close": 393.55,
                     "volume": 472749,
-                    "hmm_regime": "Bearish",
+                    "hmm_regime": "Sideways",
                     "gmm_regime": "Bearish",
                     "rule_regime": "Bearish"
                 },
@@ -3791,7 +3834,7 @@
                     "low": 393.94,
                     "close": 395.39,
                     "volume": 190689,
-                    "hmm_regime": "Bearish",
+                    "hmm_regime": "Sideways",
                     "gmm_regime": "Bearish",
                     "rule_regime": "Bearish"
                 },
@@ -3802,7 +3845,7 @@
                     "low": 395.5,
                     "close": 397.5,
                     "volume": 215477,
-                    "hmm_regime": "Bearish",
+                    "hmm_regime": "Sideways",
                     "gmm_regime": "Bearish",
                     "rule_regime": "Bearish"
                 },
@@ -3813,7 +3856,7 @@
                     "low": 393.45,
                     "close": 394.14,
                     "volume": 166267,
-                    "hmm_regime": "Bearish",
+                    "hmm_regime": "Sideways",
                     "gmm_regime": "Bearish",
                     "rule_regime": "Bearish"
                 },
@@ -3824,7 +3867,7 @@
                     "low": 394.15,
                     "close": 395.1,
                     "volume": 366814,
-                    "hmm_regime": "Bearish",
+                    "hmm_regime": "Sideways",
                     "gmm_regime": "Bearish",
                     "rule_regime": "Bearish"
                 },
@@ -3835,7 +3878,7 @@
                     "low": 370.0,
                     "close": 389.77,
                     "volume": 369837,
-                    "hmm_regime": "Bearish",
+                    "hmm_regime": "Sideways",
                     "gmm_regime": "Bearish",
                     "rule_regime": "Bearish"
                 },
@@ -3846,7 +3889,7 @@
                     "low": 375.1,
                     "close": 381.14,
                     "volume": 337292,
-                    "hmm_regime": "Bearish",
+                    "hmm_regime": "Sideways",
                     "gmm_regime": "Bearish",
                     "rule_regime": "Bearish"
                 },
@@ -3857,7 +3900,7 @@
                     "low": 374.0,
                     "close": 380.18,
                     "volume": 368017,
-                    "hmm_regime": "Bearish",
+                    "hmm_regime": "Sideways",
                     "gmm_regime": "Bearish",
                     "rule_regime": "Bearish"
                 },
@@ -3868,7 +3911,7 @@
                     "low": 381.0,
                     "close": 389.99,
                     "volume": 509549,
-                    "hmm_regime": "Bearish",
+                    "hmm_regime": "Sideways",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3879,7 +3922,7 @@
                     "low": 379.01,
                     "close": 382.05,
                     "volume": 297485,
-                    "hmm_regime": "Bearish",
+                    "hmm_regime": "Sideways",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3890,7 +3933,7 @@
                     "low": 368.0,
                     "close": 370.87,
                     "volume": 403248,
-                    "hmm_regime": "Bearish",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3901,7 +3944,7 @@
                     "low": 361.0,
                     "close": 370.86,
                     "volume": 281412,
-                    "hmm_regime": "Bearish",
+                    "hmm_regime": "Bullish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3945,7 +3988,7 @@
                     "low": 402.01,
                     "close": 408.62,
                     "volume": 255195,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Bearish"
                 },
@@ -3956,7 +3999,7 @@
                     "low": 408.63,
                     "close": 414.18,
                     "volume": 471070,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3967,7 +4010,7 @@
                     "low": 410.1,
                     "close": 413.51,
                     "volume": 729056,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 },
@@ -3978,7 +4021,7 @@
                     "low": 407.5,
                     "close": 408.6,
                     "volume": 288819,
-                    "hmm_regime": "Sideways",
+                    "hmm_regime": "Bearish",
                     "gmm_regime": "Sideways",
                     "rule_regime": "Sideways"
                 }
@@ -3992,19 +4035,31 @@
             "dates": "2023-04-10 to 2023-08-15",
             "observations": 82,
             "hmm": {
-                "brier_score": 0.4927,
+                "brier_score": 0.4919,
                 "flip_rate_pct": 18.5,
-                "directional_acc_pct": 30.5
+                "directional_acc_pct": 40.2,
+                "accuracy": 0.4024,
+                "auc_roc": 0.3407,
+                "log_loss": 3.8824,
+                "ece": 0.4838
             },
             "gmm": {
                 "brier_score": 0.6508,
                 "flip_rate_pct": 19.8,
-                "directional_acc_pct": 17.1
+                "directional_acc_pct": 28.0,
+                "accuracy": 0.2805,
+                "auc_roc": 0.2943,
+                "log_loss": 3.315,
+                "ece": 0.6363
             },
             "rule_based": {
                 "brier_score": 0.2032,
                 "flip_rate_pct": 19.8,
-                "directional_acc_pct": 69.5
+                "directional_acc_pct": 74.4,
+                "accuracy": 0.7439,
+                "auc_roc": 0.5161,
+                "log_loss": 0.5962,
+                "ece": 0.1439
             }
         },
         {
@@ -4013,19 +4068,31 @@
             "dates": "2023-09-01 to 2023-12-29",
             "observations": 83,
             "hmm": {
-                "brier_score": 0.3572,
-                "flip_rate_pct": 9.8,
-                "directional_acc_pct": 48.2
+                "brier_score": 0.3119,
+                "flip_rate_pct": 4.9,
+                "directional_acc_pct": 54.2,
+                "accuracy": 0.5422,
+                "auc_roc": 0.7074,
+                "log_loss": 2.8791,
+                "ece": 0.3154
             },
             "gmm": {
                 "brier_score": 0.2892,
                 "flip_rate_pct": 35.4,
-                "directional_acc_pct": 50.6
+                "directional_acc_pct": 61.4,
+                "accuracy": 0.6145,
+                "auc_roc": 0.6389,
+                "log_loss": 0.8632,
+                "ece": 0.2417
             },
             "rule_based": {
                 "brier_score": 0.2298,
                 "flip_rate_pct": 23.2,
-                "directional_acc_pct": 50.6
+                "directional_acc_pct": 63.9,
+                "accuracy": 0.6386,
+                "auc_roc": 0.641,
+                "log_loss": 0.652,
+                "ece": 0.0373
             }
         },
         {
@@ -4034,19 +4101,31 @@
             "dates": "2024-01-15 to 2024-05-30",
             "observations": 91,
             "hmm": {
-                "brier_score": 0.3922,
+                "brier_score": 0.3925,
                 "flip_rate_pct": 3.3,
-                "directional_acc_pct": 42.9
+                "directional_acc_pct": 53.8,
+                "accuracy": 0.5385,
+                "auc_roc": 0.5061,
+                "log_loss": 5.348,
+                "ece": 0.3218
             },
             "gmm": {
                 "brier_score": 0.4317,
                 "flip_rate_pct": 14.4,
-                "directional_acc_pct": 39.6
+                "directional_acc_pct": 41.8,
+                "accuracy": 0.4176,
+                "auc_roc": 0.4613,
+                "log_loss": 9.7317,
+                "ece": 0.3747
             },
             "rule_based": {
                 "brier_score": 0.2904,
                 "flip_rate_pct": 40.0,
-                "directional_acc_pct": 30.8
+                "directional_acc_pct": 45.1,
+                "accuracy": 0.4505,
+                "auc_roc": 0.424,
+                "log_loss": 0.7802,
+                "ece": 0.1637
             }
         },
         {
@@ -4055,27 +4134,37 @@
             "dates": "2023-10-16 to 2024-02-28",
             "observations": 94,
             "hmm": {
-                "brier_score": 0.294,
-                "flip_rate_pct": 14.0,
-                "directional_acc_pct": 38.3
+                "brier_score": 0.2874,
+                "flip_rate_pct": 5.4,
+                "directional_acc_pct": 64.9,
+                "accuracy": 0.6489,
+                "auc_roc": 0.7579,
+                "log_loss": 4.7645,
+                "ece": 0.3003
             },
             "gmm": {
                 "brier_score": 0.2737,
                 "flip_rate_pct": 12.9,
-                "directional_acc_pct": 36.2
+                "directional_acc_pct": 47.9,
+                "accuracy": 0.4787,
+                "auc_roc": 0.5416,
+                "log_loss": 1.072,
+                "ece": 0.0998
             },
             "rule_based": {
                 "brier_score": 0.2432,
                 "flip_rate_pct": 26.9,
-                "directional_acc_pct": 54.3
+                "directional_acc_pct": 61.7,
+                "accuracy": 0.617,
+                "auc_roc": 0.6047,
+                "log_loss": 0.6803,
+                "ece": 0.0894
             }
         }
     ],
     "overall_poc_finding": {
-        "primary_outcome": "Rule-Based performs best overall",
-        "detailed_finding": "Traditional Rule-Based momentum logic achieved the lowest overall Brier error across these historical PSX datasets, indicating standard technical moving average rules remain resilient and less prone to short-sample overfitting than unsupervised clustering or transition matrices.",
         "avg_brier_scores": {
-            "HMM": 0.384,
+            "HMM": 0.3709,
             "GMM": 0.4114,
             "Rule-Based": 0.2417
         }

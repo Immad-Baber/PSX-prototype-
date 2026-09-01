@@ -1,0 +1,673 @@
+{
+    "metadata": {
+        "generated_at": "2026-09-01T11:02:54.649066",
+        "description": "5-Metric Comparison: Accuracy, AUC-ROC, Log Loss, Brier Score, ECE",
+        "note": "Same models/data/seeds as poc_feasibility_spike.py. HMM uses pure-Python implementation (may have minor numerical differences from hmmlearn). GMM and Rule-Based are identical."
+    },
+    "per_test_case": [
+        {
+            "test_case": "Sideways / Noisy Market",
+            "ticker": "LUCK",
+            "observations": 82,
+            "HMM": {
+                "accuracy": 0.4024,
+                "auc_roc": 0.3407,
+                "log_loss": 3.8824,
+                "brier_score": 0.4919,
+                "ece": 0.4838,
+                "ece_bin_details": [
+                    {
+                        "bin": "0.0-0.1",
+                        "count": 29,
+                        "avg_confidence": 0.03,
+                        "avg_accuracy": 0.8621,
+                        "gap": 0.8321
+                    },
+                    {
+                        "bin": "0.1-0.2",
+                        "count": 3,
+                        "avg_confidence": 0.1529,
+                        "avg_accuracy": 1.0,
+                        "gap": 0.8471
+                    },
+                    {
+                        "bin": "0.2-0.3",
+                        "count": 4,
+                        "avg_confidence": 0.2445,
+                        "avg_accuracy": 1.0,
+                        "gap": 0.7555
+                    },
+                    {
+                        "bin": "0.3-0.4",
+                        "count": 1,
+                        "avg_confidence": 0.3548,
+                        "avg_accuracy": 1.0,
+                        "gap": 0.6452
+                    },
+                    {
+                        "bin": "0.4-0.5",
+                        "count": 2,
+                        "avg_confidence": 0.4554,
+                        "avg_accuracy": 1.0,
+                        "gap": 0.5446
+                    },
+                    {
+                        "bin": "0.5-0.6",
+                        "count": 20,
+                        "avg_confidence": 0.5,
+                        "avg_accuracy": 0.6,
+                        "gap": 0.1
+                    },
+                    {
+                        "bin": "0.6-0.7",
+                        "count": 1,
+                        "avg_confidence": 0.6454,
+                        "avg_accuracy": 1.0,
+                        "gap": 0.3546
+                    },
+                    {
+                        "bin": "0.9-1.0",
+                        "count": 22,
+                        "avg_confidence": 0.9951,
+                        "avg_accuracy": 0.7273,
+                        "gap": 0.2678
+                    }
+                ],
+                "n_evaluated": 82
+            },
+            "GMM": {
+                "accuracy": 0.2805,
+                "auc_roc": 0.2943,
+                "log_loss": 3.315,
+                "brier_score": 0.6508,
+                "ece": 0.6363,
+                "ece_bin_details": [
+                    {
+                        "bin": "0.0-0.1",
+                        "count": 48,
+                        "avg_confidence": 0.0114,
+                        "avg_accuracy": 0.875,
+                        "gap": 0.8636
+                    },
+                    {
+                        "bin": "0.1-0.2",
+                        "count": 3,
+                        "avg_confidence": 0.1149,
+                        "avg_accuracy": 1.0,
+                        "gap": 0.8851
+                    },
+                    {
+                        "bin": "0.4-0.5",
+                        "count": 2,
+                        "avg_confidence": 0.4859,
+                        "avg_accuracy": 1.0,
+                        "gap": 0.5141
+                    },
+                    {
+                        "bin": "0.5-0.6",
+                        "count": 22,
+                        "avg_confidence": 0.5044,
+                        "avg_accuracy": 0.6364,
+                        "gap": 0.132
+                    },
+                    {
+                        "bin": "0.7-0.8",
+                        "count": 1,
+                        "avg_confidence": 0.7677,
+                        "avg_accuracy": 1.0,
+                        "gap": 0.2323
+                    },
+                    {
+                        "bin": "0.9-1.0",
+                        "count": 6,
+                        "avg_confidence": 0.9842,
+                        "avg_accuracy": 0.3333,
+                        "gap": 0.6509
+                    }
+                ],
+                "n_evaluated": 82
+            },
+            "Rule-Based": {
+                "accuracy": 0.7439,
+                "auc_roc": 0.5161,
+                "log_loss": 0.5962,
+                "brier_score": 0.2032,
+                "ece": 0.1439,
+                "ece_bin_details": [
+                    {
+                        "bin": "0.2-0.3",
+                        "count": 9,
+                        "avg_confidence": 0.3,
+                        "avg_accuracy": 0.6667,
+                        "gap": 0.3667
+                    },
+                    {
+                        "bin": "0.5-0.6",
+                        "count": 8,
+                        "avg_confidence": 0.5,
+                        "avg_accuracy": 0.875,
+                        "gap": 0.375
+                    },
+                    {
+                        "bin": "0.6-0.7",
+                        "count": 65,
+                        "avg_confidence": 0.7,
+                        "avg_accuracy": 0.7846,
+                        "gap": 0.0846
+                    }
+                ],
+                "n_evaluated": 82
+            }
+        },
+        {
+            "test_case": "Regime Transition",
+            "ticker": "ENGRO",
+            "observations": 83,
+            "HMM": {
+                "accuracy": 0.5422,
+                "auc_roc": 0.7074,
+                "log_loss": 2.8791,
+                "brier_score": 0.3119,
+                "ece": 0.3154,
+                "ece_bin_details": [
+                    {
+                        "bin": "0.0-0.1",
+                        "count": 37,
+                        "avg_confidence": 0.0003,
+                        "avg_accuracy": 0.3784,
+                        "gap": 0.3781
+                    },
+                    {
+                        "bin": "0.3-0.4",
+                        "count": 1,
+                        "avg_confidence": 0.3393,
+                        "avg_accuracy": 0.0,
+                        "gap": 0.3393
+                    },
+                    {
+                        "bin": "0.4-0.5",
+                        "count": 24,
+                        "avg_confidence": 0.5,
+                        "avg_accuracy": 0.75,
+                        "gap": 0.25
+                    },
+                    {
+                        "bin": "0.9-1.0",
+                        "count": 21,
+                        "avg_confidence": 0.9928,
+                        "avg_accuracy": 0.7143,
+                        "gap": 0.2785
+                    }
+                ],
+                "n_evaluated": 83
+            },
+            "GMM": {
+                "accuracy": 0.6145,
+                "auc_roc": 0.6389,
+                "log_loss": 0.8632,
+                "brier_score": 0.2892,
+                "ece": 0.2417,
+                "ece_bin_details": [
+                    {
+                        "bin": "0.0-0.1",
+                        "count": 14,
+                        "avg_confidence": 0.0662,
+                        "avg_accuracy": 0.2857,
+                        "gap": 0.2195
+                    },
+                    {
+                        "bin": "0.1-0.2",
+                        "count": 16,
+                        "avg_confidence": 0.1485,
+                        "avg_accuracy": 0.5625,
+                        "gap": 0.414
+                    },
+                    {
+                        "bin": "0.2-0.3",
+                        "count": 6,
+                        "avg_confidence": 0.2425,
+                        "avg_accuracy": 0.5,
+                        "gap": 0.2575
+                    },
+                    {
+                        "bin": "0.3-0.4",
+                        "count": 5,
+                        "avg_confidence": 0.3478,
+                        "avg_accuracy": 0.4,
+                        "gap": 0.0522
+                    },
+                    {
+                        "bin": "0.4-0.5",
+                        "count": 1,
+                        "avg_confidence": 0.483,
+                        "avg_accuracy": 1.0,
+                        "gap": 0.517
+                    },
+                    {
+                        "bin": "0.5-0.6",
+                        "count": 25,
+                        "avg_confidence": 0.5245,
+                        "avg_accuracy": 0.72,
+                        "gap": 0.1955
+                    },
+                    {
+                        "bin": "0.6-0.7",
+                        "count": 5,
+                        "avg_confidence": 0.6444,
+                        "avg_accuracy": 0.6,
+                        "gap": 0.0444
+                    },
+                    {
+                        "bin": "0.7-0.8",
+                        "count": 1,
+                        "avg_confidence": 0.7115,
+                        "avg_accuracy": 0.0,
+                        "gap": 0.7115
+                    },
+                    {
+                        "bin": "0.8-0.9",
+                        "count": 4,
+                        "avg_confidence": 0.8442,
+                        "avg_accuracy": 0.75,
+                        "gap": 0.0942
+                    },
+                    {
+                        "bin": "0.9-1.0",
+                        "count": 6,
+                        "avg_confidence": 0.9734,
+                        "avg_accuracy": 0.6667,
+                        "gap": 0.3067
+                    }
+                ],
+                "n_evaluated": 83
+            },
+            "Rule-Based": {
+                "accuracy": 0.6386,
+                "auc_roc": 0.641,
+                "log_loss": 0.652,
+                "brier_score": 0.2298,
+                "ece": 0.0373,
+                "ece_bin_details": [
+                    {
+                        "bin": "0.2-0.3",
+                        "count": 20,
+                        "avg_confidence": 0.3,
+                        "avg_accuracy": 0.35,
+                        "gap": 0.05
+                    },
+                    {
+                        "bin": "0.5-0.6",
+                        "count": 25,
+                        "avg_confidence": 0.5,
+                        "avg_accuracy": 0.56,
+                        "gap": 0.06
+                    },
+                    {
+                        "bin": "0.6-0.7",
+                        "count": 38,
+                        "avg_confidence": 0.7,
+                        "avg_accuracy": 0.6842,
+                        "gap": 0.0158
+                    }
+                ],
+                "n_evaluated": 83
+            }
+        },
+        {
+            "test_case": "High Volatility",
+            "ticker": "OGDC",
+            "observations": 91,
+            "HMM": {
+                "accuracy": 0.5385,
+                "auc_roc": 0.5061,
+                "log_loss": 5.348,
+                "brier_score": 0.3925,
+                "ece": 0.3218,
+                "ece_bin_details": [
+                    {
+                        "bin": "0.0-0.1",
+                        "count": 20,
+                        "avg_confidence": 0.0028,
+                        "avg_accuracy": 0.55,
+                        "gap": 0.5472
+                    },
+                    {
+                        "bin": "0.5-0.6",
+                        "count": 39,
+                        "avg_confidence": 0.5023,
+                        "avg_accuracy": 0.5897,
+                        "gap": 0.0874
+                    },
+                    {
+                        "bin": "0.9-1.0",
+                        "count": 32,
+                        "avg_confidence": 0.998,
+                        "avg_accuracy": 0.5312,
+                        "gap": 0.4667
+                    }
+                ],
+                "n_evaluated": 91
+            },
+            "GMM": {
+                "accuracy": 0.4176,
+                "auc_roc": 0.4613,
+                "log_loss": 9.7317,
+                "brier_score": 0.4317,
+                "ece": 0.3747,
+                "ece_bin_details": [
+                    {
+                        "bin": "0.0-0.1",
+                        "count": 47,
+                        "avg_confidence": 0.0,
+                        "avg_accuracy": 0.5532,
+                        "gap": 0.5532
+                    },
+                    {
+                        "bin": "0.3-0.4",
+                        "count": 1,
+                        "avg_confidence": 0.3914,
+                        "avg_accuracy": 1.0,
+                        "gap": 0.6086
+                    },
+                    {
+                        "bin": "0.4-0.5",
+                        "count": 37,
+                        "avg_confidence": 0.4904,
+                        "avg_accuracy": 0.5946,
+                        "gap": 0.1042
+                    },
+                    {
+                        "bin": "0.8-0.9",
+                        "count": 1,
+                        "avg_confidence": 0.8349,
+                        "avg_accuracy": 0.0,
+                        "gap": 0.8349
+                    },
+                    {
+                        "bin": "0.9-1.0",
+                        "count": 5,
+                        "avg_confidence": 0.9598,
+                        "avg_accuracy": 0.4,
+                        "gap": 0.5598
+                    }
+                ],
+                "n_evaluated": 91
+            },
+            "Rule-Based": {
+                "accuracy": 0.4505,
+                "auc_roc": 0.424,
+                "log_loss": 0.7802,
+                "brier_score": 0.2904,
+                "ece": 0.1637,
+                "ece_bin_details": [
+                    {
+                        "bin": "0.2-0.3",
+                        "count": 16,
+                        "avg_confidence": 0.3,
+                        "avg_accuracy": 0.8125,
+                        "gap": 0.5125
+                    },
+                    {
+                        "bin": "0.5-0.6",
+                        "count": 39,
+                        "avg_confidence": 0.5,
+                        "avg_accuracy": 0.4872,
+                        "gap": 0.0128
+                    },
+                    {
+                        "bin": "0.6-0.7",
+                        "count": 36,
+                        "avg_confidence": 0.7,
+                        "avg_accuracy": 0.5278,
+                        "gap": 0.1722
+                    }
+                ],
+                "n_evaluated": 91
+            }
+        },
+        {
+            "test_case": "Clear Trend",
+            "ticker": "SYS",
+            "observations": 94,
+            "HMM": {
+                "accuracy": 0.6489,
+                "auc_roc": 0.7579,
+                "log_loss": 4.7645,
+                "brier_score": 0.2874,
+                "ece": 0.3003,
+                "ece_bin_details": [
+                    {
+                        "bin": "0.0-0.1",
+                        "count": 19,
+                        "avg_confidence": 0.0024,
+                        "avg_accuracy": 0.0,
+                        "gap": 0.0024
+                    },
+                    {
+                        "bin": "0.2-0.3",
+                        "count": 1,
+                        "avg_confidence": 0.2874,
+                        "avg_accuracy": 0.0,
+                        "gap": 0.2874
+                    },
+                    {
+                        "bin": "0.5-0.6",
+                        "count": 11,
+                        "avg_confidence": 0.5024,
+                        "avg_accuracy": 0.1818,
+                        "gap": 0.3205
+                    },
+                    {
+                        "bin": "0.6-0.7",
+                        "count": 1,
+                        "avg_confidence": 0.6053,
+                        "avg_accuracy": 1.0,
+                        "gap": 0.3947
+                    },
+                    {
+                        "bin": "0.9-1.0",
+                        "count": 62,
+                        "avg_confidence": 0.9996,
+                        "avg_accuracy": 0.6129,
+                        "gap": 0.3867
+                    }
+                ],
+                "n_evaluated": 94
+            },
+            "GMM": {
+                "accuracy": 0.4787,
+                "auc_roc": 0.5416,
+                "log_loss": 1.072,
+                "brier_score": 0.2737,
+                "ece": 0.0998,
+                "ece_bin_details": [
+                    {
+                        "bin": "0.0-0.1",
+                        "count": 10,
+                        "avg_confidence": 0.0094,
+                        "avg_accuracy": 0.2,
+                        "gap": 0.1906
+                    },
+                    {
+                        "bin": "0.4-0.5",
+                        "count": 2,
+                        "avg_confidence": 0.5,
+                        "avg_accuracy": 1.0,
+                        "gap": 0.5
+                    },
+                    {
+                        "bin": "0.5-0.6",
+                        "count": 77,
+                        "avg_confidence": 0.5,
+                        "avg_accuracy": 0.4675,
+                        "gap": 0.0325
+                    },
+                    {
+                        "bin": "0.9-1.0",
+                        "count": 5,
+                        "avg_confidence": 0.9949,
+                        "avg_accuracy": 0.2,
+                        "gap": 0.7949
+                    }
+                ],
+                "n_evaluated": 94
+            },
+            "Rule-Based": {
+                "accuracy": 0.617,
+                "auc_roc": 0.6047,
+                "log_loss": 0.6803,
+                "brier_score": 0.2432,
+                "ece": 0.0894,
+                "ece_bin_details": [
+                    {
+                        "bin": "0.2-0.3",
+                        "count": 41,
+                        "avg_confidence": 0.3,
+                        "avg_accuracy": 0.2927,
+                        "gap": 0.0073
+                    },
+                    {
+                        "bin": "0.5-0.6",
+                        "count": 35,
+                        "avg_confidence": 0.5,
+                        "avg_accuracy": 0.6,
+                        "gap": 0.1
+                    },
+                    {
+                        "bin": "0.6-0.7",
+                        "count": 18,
+                        "avg_confidence": 0.7,
+                        "avg_accuracy": 0.4444,
+                        "gap": 0.2556
+                    }
+                ],
+                "n_evaluated": 94
+            }
+        }
+    ],
+    "averages": {
+        "HMM": {
+            "accuracy": 0.533,
+            "auc_roc": 0.578,
+            "log_loss": 4.2185,
+            "brier_score": 0.3709,
+            "ece": 0.3553
+        },
+        "GMM": {
+            "accuracy": 0.4478,
+            "auc_roc": 0.484,
+            "log_loss": 3.7455,
+            "brier_score": 0.4114,
+            "ece": 0.3381
+        },
+        "Rule-Based": {
+            "accuracy": 0.6125,
+            "auc_roc": 0.5464,
+            "log_loss": 0.6772,
+            "brier_score": 0.2417,
+            "ece": 0.1086
+        }
+    },
+    "divergence_analysis": {
+        "accuracy_vs_calibration": [
+            {
+                "type": "accurate_but_miscalibrated",
+                "description": "Correct direction often, but stated probabilities don't match real reliability",
+                "test_case": "Sideways / Noisy Market",
+                "method": "Rule-Based",
+                "accuracy": 0.7439,
+                "auc_roc": 0.5161,
+                "brier_score": 0.2032,
+                "ece": 0.1439
+            },
+            {
+                "type": "good_ranking_poor_calibration",
+                "description": "Ranks predictions well but probability values are miscalibrated",
+                "test_case": "Regime Transition",
+                "method": "HMM",
+                "accuracy": 0.5422,
+                "auc_roc": 0.7074,
+                "brier_score": 0.3119,
+                "ece": 0.3154
+            },
+            {
+                "type": "accurate_but_miscalibrated",
+                "description": "Correct direction often, but stated probabilities don't match real reliability",
+                "test_case": "Regime Transition",
+                "method": "GMM",
+                "accuracy": 0.6145,
+                "auc_roc": 0.6389,
+                "brier_score": 0.2892,
+                "ece": 0.2417
+            },
+            {
+                "type": "accurate_but_miscalibrated",
+                "description": "Correct direction often, but stated probabilities don't match real reliability",
+                "test_case": "Clear Trend",
+                "method": "HMM",
+                "accuracy": 0.6489,
+                "auc_roc": 0.7579,
+                "brier_score": 0.2874,
+                "ece": 0.3003
+            }
+        ],
+        "logloss_vs_brier": [
+            {
+                "test_case": "Sideways / Noisy Market",
+                "method": "HMM",
+                "log_loss": 3.8824,
+                "brier_score": 0.4919,
+                "ratio": 7.89,
+                "note": "Log Loss disproportionately high (outlier sensitivity)"
+            },
+            {
+                "test_case": "Sideways / Noisy Market",
+                "method": "GMM",
+                "log_loss": 3.315,
+                "brier_score": 0.6508,
+                "ratio": 5.09,
+                "note": "Log Loss disproportionately high (outlier sensitivity)"
+            },
+            {
+                "test_case": "Regime Transition",
+                "method": "HMM",
+                "log_loss": 2.8791,
+                "brier_score": 0.3119,
+                "ratio": 9.23,
+                "note": "Log Loss disproportionately high (outlier sensitivity)"
+            },
+            {
+                "test_case": "High Volatility",
+                "method": "HMM",
+                "log_loss": 5.348,
+                "brier_score": 0.3925,
+                "ratio": 13.63,
+                "note": "Log Loss disproportionately high (outlier sensitivity)"
+            },
+            {
+                "test_case": "High Volatility",
+                "method": "GMM",
+                "log_loss": 9.7317,
+                "brier_score": 0.4317,
+                "ratio": 22.54,
+                "note": "Log Loss disproportionately high (outlier sensitivity)"
+            },
+            {
+                "test_case": "Clear Trend",
+                "method": "HMM",
+                "log_loss": 4.7645,
+                "brier_score": 0.2874,
+                "ratio": 16.58,
+                "note": "Log Loss disproportionately high (outlier sensitivity)"
+            },
+            {
+                "test_case": "Clear Trend",
+                "method": "GMM",
+                "log_loss": 1.072,
+                "brier_score": 0.2737,
+                "ratio": 3.92,
+                "note": "Log Loss disproportionately high (outlier sensitivity)"
+            }
+        ]
+    }
+}
