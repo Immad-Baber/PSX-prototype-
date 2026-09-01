@@ -1122,41 +1122,6 @@
             atr:  { type: 'oscillator', label: 'ATR (14)', color: '#f43f5e', lineWidth: 1, calc: (d) => calcATR(d, 14) },
         };
 
-            });
-        }
-
-        function calcSMA(data, period, keyFn) {
-            return data.map((d, i) => {
-                const slice = data.slice(Math.max(0, i - period + 1), i + 1);
-                const avg = slice.reduce((s, x) => s + keyFn(x), 0) / slice.length;
-                return { time: d.time, value: parseFloat(avg.toFixed(4)) };
-            });
-        }
-
-                const INDICATOR_CONFIG = {
-            rsi:  { type: 'oscillator', label: 'RSI (14)', color: '#f59e0b', lineWidth: 2, calc: (d) => calcEMA(d, 14, x => x.close) },
-            macd: { type: 'oscillator', label: 'MACD (26,12)', color: '#8b5cf6', lineWidth: 2, calc: (d) => calcEMA(d, 26, x => x.close) },
-            bb:   { type: 'overlay', label: 'BB Upper', color: 'rgba(100,180,255,0.7)', lineWidth: 1,
-                    calc: (d) => calcSMA(d, 20, x => x.close).map((v, i) => {
-                        const slice = d.slice(Math.max(0, i - 19), i + 1);
-                        const mean = v.value;
-                        const std = Math.sqrt(slice.reduce((s, x) => s + Math.pow(x.close - mean, 2), 0) / slice.length);
-                        return { time: v.time, value: parseFloat((mean + 2 * std).toFixed(4)) };
-                    }),
-                    calc2: (d) => calcSMA(d, 20, x => x.close).map((v, i) => {
-                        const slice = d.slice(Math.max(0, i - 19), i + 1);
-                        const mean = v.value;
-                        const std = Math.sqrt(slice.reduce((s, x) => s + Math.pow(x.close - mean, 2), 0) / slice.length);
-                        return { time: v.time, value: parseFloat((mean - 2 * std).toFixed(4)) };
-                    }),
-                    color2: 'rgba(100,180,255,0.7)'
-                  },
-            adx:  { type: 'oscillator', label: 'ADX (14)', color: '#eab308', lineWidth: 1, calc: (d) => calcSMA(d, 14, x => (x.high + x.low) / 2) },
-            obv:  { type: 'oscillator', label: 'OBV', color: '#14b8a6', lineWidth: 2, calc: (d) => calcEMA(d, 9, x => x.close) },
-            atr:  { type: 'oscillator', label: 'ATR (14)', color: '#f43f5e', lineWidth: 1,
-                    calc: (d) => calcSMA(d, 14, x => x.close).map(v => ({ time: v.time, value: parseFloat((v.value + 3).toFixed(4)) })) },
-        };
-
         function syncCrosshair(chart1, chart2) {
             chart1.subscribeCrosshairMove(param => {
                 if (param.time !== undefined) {
