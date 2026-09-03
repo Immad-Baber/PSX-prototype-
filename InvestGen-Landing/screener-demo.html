@@ -1187,10 +1187,21 @@
                                     horzLines: { color: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
                                 },
                                 rightPriceScale: { visible: true, borderVisible: false, scaleMargins: { top: 0.1, bottom: 0.1 } },
-                                leftPriceScale: { visible: false },
+                                leftPriceScale: { visible: true, borderVisible: false, scaleMargins: { top: 0.1, bottom: 0.1 } },
                                 timeScale: { borderVisible: false, visible: false },
                             });
                             
+                            // Add a faded candlestick series on the LEFT axis (price scale)
+                            const cloneCandles = chart.addSeries(LightweightCharts.CandlestickSeries, {
+                                upColor: 'rgba(16, 185, 129, 0.3)', downColor: 'rgba(239, 68, 68, 0.3)',
+                                borderVisible: false, wickUpColor: 'rgba(16, 185, 129, 0.3)', wickDownColor: 'rgba(239, 68, 68, 0.3)',
+                                priceScaleId: 'left',
+                                lastValueVisible: false,
+                                priceLineVisible: false
+                            });
+                            cloneCandles.setData(rawData);
+                            
+                            // Indicator line on the RIGHT axis (indicator scale)
                             const series = chart.addSeries(LightweightCharts.LineSeries, {
                                 color: cfg.color, lineWidth: cfg.lineWidth,
                                 priceLineVisible: false, lastValueVisible: false,
